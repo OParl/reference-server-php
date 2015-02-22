@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSystem.phpsTable extends Migration {
+class CreateLegislativetermsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,16 @@ class CreateSystem.phpsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('system.phps', function(Blueprint $table)
+		Schema::create('legislativeterms', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->timestamps();
+
+			$table->foreign('body_id')->references('id')->on('bodies');
+			$table->string('name');
+
+			$table->date('start_date')->nullable();
+			$table->date('end_date')->nullable();
 		});
 	}
 
@@ -26,7 +32,7 @@ class CreateSystem.phpsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('system.phps');
+		Schema::drop('legislativeterms');
 	}
 
 }
