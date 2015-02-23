@@ -17,6 +17,7 @@ class CreateLegislativetermsTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 
+			$table->integer('body_id');
 			$table->foreign('body_id')->references('id')->on('bodies');
 			$table->string('name');
 

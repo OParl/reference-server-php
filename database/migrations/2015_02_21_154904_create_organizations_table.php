@@ -17,12 +17,15 @@ class CreateOrganizationsTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 
+			$table->integer('body_id')->nullable();
 			$table->foreign('body_id')->references('id')->on('bodies')->onDelete('cascade');
 
 			$table->string('name')->unique();
 			$table->string('short_name')->unique();
 
 			$table->string('post')->nullable();
+
+			$table->integer('suborganization_of')->nullable();
 			$table->foreign('suborganization_of')->references('id')->on('organizations')->onDelete('cascade');
 
 			$table->string('classification')->nullable();

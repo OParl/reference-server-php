@@ -32,7 +32,9 @@ class CreateFilesTable extends Migration {
 
 			// meetings_files, papers_files contain references to meetings and papers
 
+			$table->integer('master_file_id')->nullable();
 			$table->foreign('master_file_id')->references('id')->on('files');
+
 			$table->string('license');
 			$table->string('file_role');
 
@@ -40,7 +42,10 @@ class CreateFilesTable extends Migration {
 		});
 
 		// pivot table for derivative files
-		Schema::create('derivative_files', function(Blueprint $table) {
+		Schema::create('files_derivatives', function(Blueprint $table) {
+			$table->integer('file_id');
+			$table->integer('derivative_id');
+
 			$table->foreign('file_id')->references('id')->on('files');
 			$table->foreign('derivative_id')->references('id')->on('files');
 		});
@@ -53,6 +58,8 @@ class CreateFilesTable extends Migration {
 	 */
 	public function down()
 	{
+		Schema::drop('files_derivatives');
+
 		Schema::drop('files');
 	}
 

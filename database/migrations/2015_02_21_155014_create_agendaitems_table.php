@@ -18,15 +18,19 @@ class CreateAgendaitemsTable extends Migration {
 			$table->timestamps();
 
 			$table->integer('number');
+
+			$table->integer('meeting_id')->nullable();
 			$table->foreign('meeting_id')->references('id')->on('meetings');
 
 			$table->string('name');
 			$table->boolean('public');
 
+			$table->integer('consulation_id')->nullable();
 			$table->foreign('consulation_id')->references('id')->on('consulations');
 			
 			$table->string('result');
 
+			$table->integer('resolution_id')->nullable();
 			$table->foreign('resolution_id')->references('id')->on('files');
 
 			$table->json('keywords');
@@ -34,6 +38,9 @@ class CreateAgendaitemsTable extends Migration {
 
 		// pivot table for auxiliary files
 		Schema::create('agendaitems_auxiliary_files', function(Blueprint $table) {
+			$table->integer('agendaitem_id');
+			$table->integer('auxiliary_id');
+
 			$table->foreign('agendaitem_id')->references('id')->on('agendaitems');
 			$table->foreign('auxiliary_id')->references('id')->on('users');
 		});
@@ -46,6 +53,8 @@ class CreateAgendaitemsTable extends Migration {
 	 */
 	public function down()
 	{
+		Schema::drop('agendaitems_auxiliary_files');
+
 		Schema::drop('agendaitems');
 	}
 

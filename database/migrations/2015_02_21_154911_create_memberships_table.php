@@ -17,12 +17,17 @@ class CreateMembershipsTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 
+			$table->integer('person_id')->nullable();
 			$table->foreign('person_id')->references('id')->on('people');
+
+			$table->integer('organization_id')->nullable();
 			$table->foreign('organization_id')->references('id')->on('organizations');
 
 			$table->string('role')->nullable();
 			$table->string('post')->nullable();
 
+			// FIXME: This is bad schema design since on_behalf_of can be either person or organization which
+			//        are two very distinct entities and thus not eligible for morphing
 			$table->string('on_behalf_of')->nullable();
 			$table->boolean('voting_right')->nullable();
 
