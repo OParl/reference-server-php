@@ -18,11 +18,11 @@ class CreateMeetingsTable extends Migration {
 			$table->timestamps();
 
 			$table->date('start');
-			$table->date('end');
+			$table->date('end')->nullable();
 
-			$table->string('street_address');
-			$table->string('postal_code');
-			$table->string('locality');
+			$table->string('street_address')->nullable();
+			$table->string('postal_code')->nullable();
+			$table->string('locality')->nullable();
 
 			$table->integer('location_id')->nullable();
 			$table->foreign('location_id')->references('id')->on('locations');
@@ -60,7 +60,7 @@ class CreateMeetingsTable extends Migration {
 			$table->integer('invitation_id');
 
 			$table->foreign('meeting_id')->references('id')->on('meetings');
-			$table->foreign('invitation_id')->references('id')->on('users');
+			$table->foreign('invitation_id')->references('id')->on('files');
 		});
 
 		// pivot table for auxiliary files
@@ -69,7 +69,7 @@ class CreateMeetingsTable extends Migration {
 			$table->integer('auxiliary_id');
 
 			$table->foreign('meeting_id')->references('id')->on('meetings');
-			$table->foreign('auxiliary_id')->references('id')->on('users');
+			$table->foreign('auxiliary_id')->references('id')->on('files');
 		});
 
 		// agendaItem references are stored in the agendaitems table

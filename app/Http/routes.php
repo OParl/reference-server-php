@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', 'HomeController@showIndex');
+Route::get('/home', function() { return Redirect::to('/'); });
 
-Route::get('home', 'HomeController@index');
+//Route::get('api/', 'APIController@showIndex');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

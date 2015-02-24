@@ -18,6 +18,8 @@ class CreateFilesTable extends Migration {
 			$table->timestamps();
 
 			$table->string('file_name');
+			$table->date('file_modified');
+
 			$table->string('name')->nullable();
 			
 			$table->string('mime_type')->nullable();
@@ -35,10 +37,10 @@ class CreateFilesTable extends Migration {
 			$table->integer('master_file_id')->nullable();
 			$table->foreign('master_file_id')->references('id')->on('files');
 
-			$table->string('license');
-			$table->string('file_role');
+			$table->string('license')->nullable();
+			$table->string('file_role')->nullable();
 
-			$table->json('keywords');
+			$table->json('keyword')->nullable();
 		});
 
 		// pivot table for derivative files

@@ -33,7 +33,11 @@ class CreateBodiesTable extends Migration {
 			$table->string('contact_name')->nullable();
 
 			$table->integer('system_id')->nullable();
-			$table->foreign('system_id')->references('id')->on('systems')->onDelete('cascade');
+			$table->foreign('system_id')->references('id')->on('systems');
+
+			$table->json('keyword')->nullable();
+			
+			$table->string('classification')->nullable();
 		});
 	}
 

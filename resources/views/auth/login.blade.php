@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">
-				<div class="panel-heading">Login</div>
+				<div class="panel-heading">Einloggen</div>
 				<div class="panel-body">
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
@@ -25,6 +25,9 @@
 							<label class="col-md-4 control-label">E-Mail Address</label>
 							<div class="col-md-6">
 								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<p class="help-block">
+									nutzer@oparl-de.mo
+								</p>
 							</div>
 						</div>
 
@@ -32,6 +35,9 @@
 							<label class="col-md-4 control-label">Password</label>
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="password">
+								<p class="help-block">
+									testpasswort
+								</p>
 							</div>
 						</div>
 

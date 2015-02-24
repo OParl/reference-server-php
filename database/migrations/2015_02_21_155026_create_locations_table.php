@@ -18,9 +18,10 @@ class CreateLocationsTable extends Migration {
 			$table->timestamps();
 
 			$table->string('description')->nullable();
+			$table->string('address')->nullable();
 			$table->string('geometry')->nullable();
 
-			$table->json('keywords')->nullable();
+			$table->json('keyword')->nullable();
 		});
 	}
 

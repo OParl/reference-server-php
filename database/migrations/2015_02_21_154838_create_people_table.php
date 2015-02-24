@@ -18,7 +18,7 @@ class CreatePeopleTable extends Migration {
 			$table->timestamps();
 
 			$table->integer('body_id')->nullable();
-			$table->foreign('body_id')->references('id')->on('body')->onDelete('cascade');
+			$table->foreign('body_id')->references('id')->on('body');
 
 			$table->string('name');
 			
@@ -37,7 +37,9 @@ class CreatePeopleTable extends Migration {
 
 			$table->string('locality')->nullable();
 
-			$table->json('keywords');
+			$table->string('status')->nullable();
+
+			$table->json('keyword')->nullable();
 		});
 	}
 

@@ -17,10 +17,17 @@ class CreateSystemsTable extends Migration {
 			$table->string('id');
 			$table->timestamps();
 
-			$table->string('body');
-			$table->string('contact_name');
-			$table->string('contact_email');
-			$table->string('website');
+			$table->string('contact_name')->nullable();
+			$table->string('contact_email')->nullable();
+			$table->string('website')->nullable();
+		});
+
+		Schema::create('systems_bodies', function(Blueprint $table) {
+			$table->integer('system_id');
+			$table->integer('body_id');
+
+			$table->foreign('system_id')->references('id')->on('systems')->onDelete('cascade');
+			$table->foreign('body_id')->references('id')->on('body')->onDelete('cascade');
 		});
 	}
 

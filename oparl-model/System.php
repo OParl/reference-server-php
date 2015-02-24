@@ -20,11 +20,12 @@ class System extends Model {
     return $this->attributes['website'];
   }
 
-  public function bodyAttribute()
+  public function body()
   {
-    return $this->website . 'body/';
+    return $this->belongsToMany('Oparl\Body', 'systems_bodies', 'system_id', 'body_id');
   }
 
+  // TODO: fix urls
   public function newObjectsAttribute()
   {
     return $this->website . 'new_objects/';

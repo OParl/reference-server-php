@@ -17,6 +17,8 @@ class CreatePapersTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 
+			$table->string('name')->nullable();
+
 			$table->integer('body_id')->nullable();
 			$table->foreign('body_id')->references('id')->on('bodies')->onDelete('cascade');
 
@@ -24,22 +26,31 @@ class CreatePapersTable extends Migration {
 			$table->string('paper_type')->nullable();
 			$table->string('reference')->nullable();
 
-			$table->integer('related_paper_id')->nullable();
-			$table->foreign('related_paper_id')->references('id')->on('papers')->onDelete('cascade');
-
 			$table->integer('main_file_id')->nullable();
 			$table->foreign('main_file_id')->references('id')->on('files');
-
-			$table->integer('location_id')->nullable();
-			$table->foreign('location_id')->references('id')->on('locations');
-
-			$table->integer('consulation_id')->nullable();
-			$table->foreign('consulation_id')->references('id')->on('consulations')->onDelete('cascade');
 
 			$table->json('keywords');
 
 			$table->integer('under_direction_of_id')->nullable();
 			$table->foreign('under_direction_of_id')->references('id')->on('organizations');
+		});
+
+		// pivot table for locations
+		Schema::create('papers_locations', function(Blueprint $table) {
+			$table->integer('paper_id');
+			$table->integer('location_id');
+
+			$table->foreign('paper_id')->references('id')->on('papers');
+			$table->foreign('location_id')->references('id')->on('locations');
+		});
+
+		// pivot table for related papers
+		Schema::create('papers_related_papers', function(Blueprint $table) {
+			$table->integer('paper_id');
+			$table->integer('related_id');
+
+			$table->foreign('paper_id')->references('id')->on('papers');
+			$table->foreign('related_id')->references('id')->on('papers');
 		});
 
 		// pivot table for auxiliary files
@@ -54,6 +65,9 @@ class CreatePapersTable extends Migration {
 		Schema::create('papers_originaters', function(Blueprint $table) {
 			$table->integer('paper_id');
 			$table->integer('originator_id');
+
+			// spec 1.0-draft:
+			// $table->string('originator');
 
 			$table->foreign('paper_id')->references('id')->on('papers');
 			$table->foreign('originator_id')->references('id')->on('persons');

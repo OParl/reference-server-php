@@ -1,4 +1,4 @@
-<?php namespace Location;
+<?php namespace OParl;
 
 use Illuminate\Database\Eloquent\Model;
 

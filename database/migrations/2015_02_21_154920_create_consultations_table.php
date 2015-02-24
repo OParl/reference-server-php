@@ -22,14 +22,19 @@ class CreateConsultationsTable extends Migration {
 			
 			$table->integer('agenda_item_id')->nullable();
 			$table->foreign('agenda_item_id')->references('id')->on('agendaitems');
-			
-			$table->integer('organization_id')->nullable();
-			$table->foreign('organization_id')->references('id')->on('organizations');
 
 			$table->boolean('authoritative')->nullable();
 			$table->string('role')->nullable();
 
-			$table->json('keywords')->nullable();
+			$table->json('keyword')->nullable();
+		});
+
+		Schema::create('consulations_organizations', function(Blueprint $table) {
+			$table->integer('consulation_id');
+			$table->integer('organization_id');
+
+			$table->foreign('consulation_id')->references('id')->on('consultations');
+			$table->foreign('organization_id')->references('id')->on('organizations');
 		});
 	}
 
