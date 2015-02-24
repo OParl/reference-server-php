@@ -31,10 +31,10 @@ class CreateMeetingsTable extends Migration {
 			$table->foreign('organization_id')->references('id')->on('organizations');
 
 			$table->integer('chair_person_id')->nullable();
-			$table->foreign('chair_person_id')->references('id')->on('users');
+			$table->foreign('chair_person_id')->references('id')->on('people');
 
 			$table->integer('scribe_id')->nullable();
-			$table->foreign('scribe_id')->references('id')->on('users');
+			$table->foreign('scribe_id')->references('id')->on('people');
 
 			$table->integer('results_protocol_id')->nullable();
 			$table->foreign('results_protocol_id')->references('id')->on('files');
@@ -51,7 +51,7 @@ class CreateMeetingsTable extends Migration {
 			$table->integer('participant_id');
 
 			$table->foreign('meeting_id')->references('id')->on('meetings');
-			$table->foreign('participant_id')->references('id')->on('users');
+			$table->foreign('participant_id')->references('id')->on('people');
 		});
 
 		// pivot table for invitation documents

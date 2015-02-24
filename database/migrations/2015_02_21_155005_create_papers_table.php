@@ -59,7 +59,7 @@ class CreatePapersTable extends Migration {
 			$table->integer('auxiliary_id');
 
 			$table->foreign('paper_id')->references('id')->on('papers');
-			$table->foreign('auxiliary_id')->references('id')->on('users');
+			$table->foreign('auxiliary_id')->references('id')->on('files');
 		});
 
 		Schema::create('papers_originaters', function(Blueprint $table) {
@@ -70,7 +70,7 @@ class CreatePapersTable extends Migration {
 			// $table->string('originator');
 
 			$table->foreign('paper_id')->references('id')->on('papers');
-			$table->foreign('originator_id')->references('id')->on('persons');
+			$table->foreign('originator_id')->references('id')->on('people');
 		});
 	}
 

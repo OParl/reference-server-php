@@ -26,7 +26,7 @@ class CreateAgendaitemsTable extends Migration {
 			$table->boolean('public')->nullable();
 
 			$table->integer('consulation_id')->nullable();
-			$table->foreign('consulation_id')->references('id')->on('consulations');
+			$table->foreign('consulation_id')->references('id')->on('consultations');
 			
 			$table->string('result')->nullable();
 
@@ -43,7 +43,7 @@ class CreateAgendaitemsTable extends Migration {
 			$table->integer('order'); // used to denote the order of agenda items
 
 			$table->foreign('agendaitem_id')->references('id')->on('agendaitems');
-			$table->foreign('auxiliary_id')->references('id')->on('users');
+			$table->foreign('auxiliary_id')->references('id')->on('files');
 		});
 	}
 

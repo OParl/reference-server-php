@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
-
 use OParl\Location;
 
 class LocationTableSeeder extends Seeder
@@ -16,26 +13,24 @@ class LocationTableSeeder extends Seeder
 
   public function generateData()
   {
-    $faker = Faker\Factory::create('de_DE');
-
     $data = [];
     
     for ($i = 0; $i < 400; $i++)
     {
       $loc = [];
 
-      $loc['description'] = $faker->text($faker->numberBetween(100, 250));
+      $loc['description'] = static::$faker->text(static::$faker->numberBetween(100, 250));
 
       if ($i % 2 == 0)
       {
         // generate address
-        $loc['address'] = $faker->address;
+        $loc['address'] = static::$faker->address;
       } else
       {
         // generate geo coordinate
 
-        $lat = $faker->latitude;
-        $lon = $faker->longitude;
+        $lat = static::$faker->latitude;
+        $lon = static::$faker->longitude;
 
         $wkt = sprintf("POINT(%f, %f)", $lat, $lon);
 

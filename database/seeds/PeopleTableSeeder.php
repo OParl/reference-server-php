@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
-
 use OParl\Person;
 
 class PeopleTableSeeder extends Seeder
@@ -15,27 +12,25 @@ class PeopleTableSeeder extends Seeder
 
   protected function generateData()
   {
-    $faker = Faker\Factory::create('de_DE');
-
     $data = [];
     for ($i = 0; $i < 100; $i++)
     {
-      $gender = ($faker->boolean(50)) ? 'female' : 'male';
+      $gender = (static::$faker->boolean(50)) ? 'female' : 'male';
 
       $person = [
-        'given_name'      => $faker->firstName($gender), 
-        'family_name'     => $faker->lastName,
-        'title'           => $faker->title($gender),
+        'given_name'      => static::$faker->firstName($gender), 
+        'family_name'     => static::$faker->lastName,
+        'title'           => static::$faker->title($gender),
         'form_of_address' => ($gender === 'female') ? 'Frau' : 'Herr',
         'gender'          => $gender,
         
-        'street_address'  => $faker->streetAddress,
-        'postal_code'     => $faker->postcode,
+        'street_address'  => static::$faker->streetAddress,
+        'postal_code'     => static::$faker->postcode,
 
-        'phone'           => $faker->phoneNumber,
-        'email'           => $faker->email,
+        'phone'           => static::$faker->phoneNumber,
+        'email'           => static::$faker->email,
 
-        'created_at'      => $faker->dateTimeThisMonth('now')
+        'created_at'      => static::$faker->dateTimeThisMonth('now')
       ];
 
       $person['name'] = sprintf('%s %s %s %s', $person['form_of_address'], 

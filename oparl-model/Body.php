@@ -10,4 +10,5 @@ class Body extends Model {
     $this->hasOne('OParl\System');
   }
 
+  
 }

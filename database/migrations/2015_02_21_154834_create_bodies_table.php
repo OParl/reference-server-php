@@ -32,7 +32,7 @@ class CreateBodiesTable extends Migration {
 			$table->string('contact_email')->nullable();
 			$table->string('contact_name')->nullable();
 
-			$table->integer('system_id')->nullable();
+			$table->string('system_id')->nullable();
 			$table->foreign('system_id')->references('id')->on('systems');
 
 			$table->json('keyword')->nullable();
