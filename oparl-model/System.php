@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 
 class System extends Model {
+  protected $primaryKey = 'pk';
 
 	public function oparlVersionAttribute()
   {
@@ -22,7 +23,7 @@ class System extends Model {
 
   public function body()
   {
-    return $this->belongsToMany('Oparl\Body', 'systems_bodies', 'system_id', 'body_id');
+    return $this->hasMany('OParl\Body');
   }
 
   // TODO: fix urls

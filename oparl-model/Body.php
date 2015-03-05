@@ -7,7 +7,7 @@ class Body extends Model {
 	//
   public function system()
   {
-    $this->hasOne('OParl\System');
+    return $this->belongsTo('OParl\System', 'pk');
   }
 
   

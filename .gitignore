@@ -2,3 +2,5 @@
 /node_modules
 .env
 storage/database.sqlite
+.idea
+composer.lock

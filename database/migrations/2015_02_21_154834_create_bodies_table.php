@@ -25,7 +25,7 @@ class CreateBodiesTable extends Migration {
 			
 			$table->date('license_valid_since')->nullable();
 			
-			$table->string('rgs');
+			$table->string('rgs')->nullable();
 			
 			$table->json('equivalent_body')->nullable();
 

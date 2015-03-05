@@ -33,6 +33,8 @@ class PeopleTableSeeder extends Seeder
         'created_at'      => static::$faker->dateTimeThisMonth('now')
       ];
 
+      if ($person['title'] === $person['form_of_address']) $person['title'] = '';
+
       $person['name'] = sprintf('%s %s %s %s', $person['form_of_address'], 
                                                $person['title'], 
                                                $person['given_name'], 

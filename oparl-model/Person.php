@@ -23,6 +23,6 @@ class Person extends Model {
 
   public function body()
   {
-    $this->hasOne('OParl\Body');
+    return $this->belongsTo('OParl\Body');
   }
 }

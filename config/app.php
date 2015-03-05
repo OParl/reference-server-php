@@ -108,7 +108,7 @@ return [
 	|
 	*/
 
-	'providers' => [
+	'providers' => array(
 
 		/*
 		 * Laravel Framework Service Providers...
@@ -145,7 +145,7 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 
-	],
+  ),
 
 	/*
 	|--------------------------------------------------------------------------
