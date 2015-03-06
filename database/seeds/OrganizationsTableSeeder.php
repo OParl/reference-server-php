@@ -18,10 +18,18 @@ class OrganizationsTableSeeder extends Seeder {
         $organization->body()->associate($body);
         $organization->save();
       }
+
+      // make some organizations be sub-organizations
+      foreach ($body->organizations as $organization)
+      {
+        $parent = $body->organizations[static::$faker->numberBetween(0, count($body->organizations) - 1)];
+        if (static::$faker->boolean(90) && $parent !== $organization && $parent->subOrganizationOf !== $organization)
+        {
+          $organization->suborganizationOf()->associate($parent);
+          $organization->save();
+        }
+      }
     }
-
-
-    // + add a few random members from every body? or do that in special seeder for memberships?
   }
 
   /** 

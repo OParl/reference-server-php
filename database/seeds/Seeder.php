@@ -17,6 +17,7 @@ class Seeder extends IlluminateSeeder
       static::$faker->seed(1727273948272); // have the faker always use the same seed for convenience
 
       static::$faker->addProvider(new OParl\Fakers\OrganizationsFaker(static::$faker));
+      static::$faker->addProvider(new OParl\Fakers\MembershipsFaker(static::$faker));
     }
   }
 
