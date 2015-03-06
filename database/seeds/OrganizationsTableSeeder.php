@@ -6,7 +6,7 @@ use OParl\Person;
 class OrganizationsTableSeeder extends Seeder {
   public function run()
   {
-    for (OParl\Body::all() as $body)
+    foreach (OParl\Body::all() as $body)
     {
       $organizations = $this->organizationsData(static::$faker->numberBetween(5, 10));
       
@@ -24,7 +24,7 @@ class OrganizationsTableSeeder extends Seeder {
     $data = [];
     for ($i = 0; $i < $numberOfOrganizations; $i++)
     {
-      $name = static::$faker->company;
+      $name = static::$faker->oparlOrganizationName;
 
       $organization = [
         'name'       => $name,

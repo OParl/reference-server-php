@@ -20,7 +20,8 @@
 		],
 		"psr-4": {
 			"App\\": "app/",
-			"OParl\\": "oparl-model/"
+			"OParl\\": "oparl-model/",
+            "OParl\\Fakers\\": "database/fakers/"
 		}
 	},
 	"autoload-dev": {

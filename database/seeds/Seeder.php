@@ -4,6 +4,9 @@ use Illuminate\Database\Seeder as IlluminateSeeder;
 
 class Seeder extends IlluminateSeeder
 {
+  /**
+   * @var $faker Faker\Generator
+   */
   protected static $faker = null;
 
   public function __construct()
@@ -11,6 +14,9 @@ class Seeder extends IlluminateSeeder
     if (is_null(static::$faker))
     {
       static::$faker = Faker\Factory::create('de_DE');
+      static::$faker->seed(1727273948272); // have the faker always use the same seed for convenience
+
+      static::$faker->addProvider(new OParl\Fakers\OrganizationsFaker(static::$faker));
     }
   }
 
@@ -24,6 +30,6 @@ class Seeder extends IlluminateSeeder
         explode(' ', $name))
       );
 
-      return = static::$faker->lexify($shortNameLetters.' ???');
+      return static::$faker->lexify($shortNameLetters.' ???');
   }
 }
