@@ -8,11 +8,19 @@ class OrganizationsTableSeeder extends Seeder {
   {
     foreach (OParl\Body::all() as $body)
     {
-      $organizations = $this->organizationsData(static::$faker->numberBetween(5, 10));
+      // create a few organizations in every body
+      $organizationsData = $this->organizationsData(static::$faker->numberBetween(5, 10));
       
+      foreach ($organizationsData as $organizationData)
+      {
+        $organization = Organization::create($organizationData);
+
+        $organization->body()->associate($body);
+        $organization->save();
+      }
     }
 
-    // create a few organizations in every body
+
     // + add a few random members from every body? or do that in special seeder for memberships?
   }
 
@@ -22,17 +30,24 @@ class OrganizationsTableSeeder extends Seeder {
   protected function organizationsData($numberOfOrganizations = 10)
   {
     $data = [];
+
     for ($i = 0; $i < $numberOfOrganizations; $i++)
     {
-      $name = static::$faker->oparlOrganizationName;
+      try
+      {
+        $name = static::$faker->unique()->oparlOrganizationName;
 
-      $organization = [
-        'name'       => $name,
-        'short_name' => $this->suffixedShortName($name),
-        'website'    => static::$faker->url
-      ];
+        $organization = [
+            'name'       => $name,
+            'short_name' => $this->suffixedShortName($name),
+            'website'    => static::$faker->url
+        ];
 
-      $data[] = $organization;
+        $data[] = $organization;
+      } catch (\OverflowException $e)
+      {
+        break;
+      }
     }
 
     return $data;

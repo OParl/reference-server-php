@@ -10,5 +10,8 @@ class Body extends Model {
     return $this->belongsTo('OParl\System', 'pk');
   }
 
-  
+  public function organizations()
+  {
+    return $this->hasMany('OParl\Organization');
+  }
 }
