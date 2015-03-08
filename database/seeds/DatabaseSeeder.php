@@ -17,10 +17,11 @@ class DatabaseSeeder extends Seeder {
 		$this->call('UserTableSeeder');
 
 		$this->call('SystemsTableSeeder');
-		$this->call('LocationTableSeeder');
+		$this->call('LocationsTableSeeder');
 		$this->call('PeopleTableSeeder');
 		$this->call('BodiesTableSeeder');
 		$this->call('OrganizationsTableSeeder');
     $this->call('MembershipsTableSeeder');
+    $this->call('LegislativeTermsSeeder');
 	}
 }

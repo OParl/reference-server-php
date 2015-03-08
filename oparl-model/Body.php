@@ -3,7 +3,9 @@
 use Illuminate\Database\Eloquent\Model;
 
 class Body extends Model {
-  protected $casts = ['equivalent_body'];
+  protected $casts = [
+    'equivalent_body' => 'array'
+  ];
 
   /**
    * The system this body belongs to
@@ -34,5 +36,10 @@ class Body extends Model {
   public function people()
   {
     return $this->hasMany('OParl\Person');
+  }
+
+  public function legislativeTerms()
+  {
+    return $this->hasMany('OParl\LegislativeTerm');
   }
 }

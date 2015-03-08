@@ -2,7 +2,7 @@
 
 use OParl\Location;
 
-class LocationTableSeeder extends Seeder
+class LocationsTableSeeder extends Seeder
 {
   public function run()
   {
@@ -15,7 +15,7 @@ class LocationTableSeeder extends Seeder
   {
     $data = [];
     
-    for ($i = 0; $i < 400; $i++)
+    for ($i = 0; $i < 200; $i++)
     {
       $loc = [];
 

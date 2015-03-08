@@ -18,7 +18,7 @@ class CreatePeopleTable extends Migration {
 			$table->timestamps();
 
 			$table->integer('body_id')->nullable();
-			$table->foreign('body_id')->references('id')->on('body');
+			$table->foreign('body_id')->references('id')->on('bodies');
 
 			$table->string('name');
 			
@@ -30,7 +30,7 @@ class CreatePeopleTable extends Migration {
 			$table->string('gender')->nullable();
 
 			$table->string('phone')->nullable();
-			$table->string('email')->nullable();
+			$table->string('email')->unique()->nullable();
 
 			$table->string('street_address')->nullable();
 			$table->string('postal_code')->nullable();
@@ -40,6 +40,10 @@ class CreatePeopleTable extends Migration {
 			$table->string('status')->nullable();
 
 			$table->json('keyword')->nullable();
+
+      // add necessary fields for laravel auth capabilities
+      $table->string('password', 60)->nullable();
+      $table->rememberToken();
 		});
 	}
 

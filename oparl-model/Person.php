@@ -1,8 +1,15 @@
 <?php namespace OParl;
 
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class Person extends Model {
+class Person extends Model implements AuthenticatableContract, CanResetPasswordContract {
+
+  use Authenticatable;
+  use CanResetPassword;
 
   protected $fillable = [
     'created_at',
@@ -18,8 +25,12 @@ class Person extends Model {
     'email',
 
     'street_address',
-    'postal_code'
+    'postal_code',
+
+    'password'
   ];
+
+  protected $hidden = ['password', 'remember_token'];
 
   public function body()
   {
