@@ -9,18 +9,18 @@ class LegislativeTermsSeeder extends Seeder
   {
     foreach (Body::all() as $body)
     {
+      $startYear = date('Y') - 12;
+
       for ($i = 0; $i < 3; $i++)
       {
-        $termDates = static::$faker->oparlLegislativeTerm(date('Y') + ($i * 4), 4);
+        $termDates = static::$faker->oparlLegislativeTerm($startYear + ($i * 4), 4);
 
-        $term = LegislativeTerm::create([
+        LegislativeTerm::create([
           'name' => static::$faker->word,
           'start_date' => $termDates['start'],
-          'end_date'   => $termDates['end']
+          'end_date'   => $termDates['end'],
+          'body_id'    => $body->getKey()
         ]);
-
-        $term->body()->associate($body);
-        $term->save();
       }
     }
   }

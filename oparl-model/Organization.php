@@ -4,12 +4,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organization extends Model
 {
-  protected $touches = ['memberships', 'body', 'suborganizationOf'];
+  protected $touches = ['body', 'suborganizationOf'];
 
+  /*
   public function memberships()
   {
-    return $this->hasManyThrough('OParl\Person', 'OParl\Membership', 'organization_id', 'id');
+    return $this->hasManyThrough('OParl\Person', 'OParl\Membership', 'person_id', 'id');
   }
+  */
 
   public function body()
   {

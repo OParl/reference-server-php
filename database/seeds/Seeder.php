@@ -18,6 +18,7 @@ class Seeder extends IlluminateSeeder
 
       static::$faker->addProvider(new OParl\Fakers\OrganizationsFaker(static::$faker));
       static::$faker->addProvider(new OParl\Fakers\MembershipsFaker(static::$faker));
+      static::$faker->addProvider(new OParl\Fakers\LegislativeTermsFaker(static::$faker));
     }
   }
 

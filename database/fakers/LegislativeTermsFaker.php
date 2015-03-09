@@ -11,7 +11,7 @@ class LegislativeTermsFaker extends Base
       $startYear = date('Y');
 
     return [
-      'start' => Carbon::createFromDate($startYear),
+      'start' => Carbon::createFromDate($startYear, 1, 1),
       'end' => Carbon::createFromDate($startYear + $numYears, 12, 31)
     ];
   }

@@ -12,7 +12,7 @@ class CreateLegislativetermsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('legislativeterms', function(Blueprint $table)
+		Schema::create('legislative_terms', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->timestamps();

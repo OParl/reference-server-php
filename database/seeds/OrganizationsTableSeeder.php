@@ -23,7 +23,7 @@ class OrganizationsTableSeeder extends Seeder {
       foreach ($body->organizations as $organization)
       {
         $parent = $body->organizations[static::$faker->numberBetween(0, count($body->organizations) - 1)];
-        if (static::$faker->boolean(90) && $parent !== $organization && $parent->subOrganizationOf !== $organization)
+        if (static::$faker->boolean(25) && $parent !== $organization && $parent->subOrganizationOf !== $organization)
         {
           $organization->suborganizationOf()->associate($parent);
           $organization->save();
@@ -32,7 +32,9 @@ class OrganizationsTableSeeder extends Seeder {
     }
   }
 
-  /** 
+  /**
+   * This will always return unique organization names.
+   *
    * returns basic organization data array w/o set body or members
    **/
   protected function organizationsData($numberOfOrganizations = 10)
