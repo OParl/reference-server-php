@@ -15,7 +15,7 @@ class PeopleTableSeeder extends Seeder
     $data = [];
     for ($i = 0; $i < 100; $i++)
     {
-      $gender = (static::$faker->boolean(50)) ? 'female' : 'male';
+      $gender = (static::$faker->boolean(70)) ? 'female' : 'male';
 
       $person = [
         'given_name'      => static::$faker->firstName($gender), 

@@ -1,8 +1,6 @@
 <?php
 
 use OParl\Body;
-use OParl\Person;
-use OParl\Organization;
 use OParl\Membership;
 
 class MembershipsTableSeeder extends Seeder {
@@ -21,6 +19,7 @@ class MembershipsTableSeeder extends Seeder {
           'role' => static::$faker->oparlMembershipRole,
           'voting_right' => static::$faker->boolean(),
         ]);
+
         $membership->person()->associate($person);
         $membership->organization()->associate($organization);
 

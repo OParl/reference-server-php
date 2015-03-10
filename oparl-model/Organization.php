@@ -6,12 +6,10 @@ class Organization extends Model
 {
   protected $touches = ['body', 'suborganizationOf'];
 
-  /*
-  public function memberships()
+  public function people()
   {
     return $this->hasManyThrough('OParl\Person', 'OParl\Membership', 'person_id', 'id');
   }
-  */
 
   public function body()
   {

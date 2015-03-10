@@ -33,14 +33,14 @@ class BodiesTableSeeder extends Seeder {
     for ($i = 0; $i < 3; $i++)
     {
       $body = [
-        'name'    => static::$faker->company,
+        'name'      => static::$faker->oparlBodyName,
+        'short_name' => static::$faker->oparlBodyShortName,
+
         'website' => static::$faker->url,
 
         'contact_email' => static::$faker->email,
         'contact_name'  => static::$faker->name,
       ];
-
-      $body['short_name'] = $this->suffixedShortName($body['name']);
 
       $data[] = $body;
     }

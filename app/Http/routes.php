@@ -11,12 +11,23 @@
 |
 */
 
+Route::get('/', function() { return Redirect::to('api/v1/'); });
+
+/*
 Route::get('/', 'HomeController@showIndex');
 Route::get('/home', function() { return Redirect::to('/'); });
+*/
 
-//Route::get('api/', 'APIController@showIndex');
+// api
+Route::group(['prefix' => 'api/v1'], function() {
+  Route::controllers([
+    '/' => 'API\APIController'
+  ]);
+});
 
+/*
 Route::controllers([
 	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+	'password' => 'Auth\PasswordController'
 ]);
+*/
