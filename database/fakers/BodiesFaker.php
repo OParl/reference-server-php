@@ -5,9 +5,9 @@ use Faker\Provider\Base;
 class BodiesFaker extends Base
 {
   protected $prefixes = [
-    "Bezirk ",
-    "Gemeinde ",
-    "Stadt ",
+    "Bezirk",
+    "Gemeinde",
+    "Stadt",
     "Kommune"
   ];
 
@@ -22,6 +22,6 @@ class BodiesFaker extends Base
   public function oparlBodyShortName()
   {
     $words = explode(' ', static::$lastName);
-    return $this->generator->lexify(sprintf('%s ???', $words[0], $words[1][0]));
+    return $this->generator->numerify(sprintf('### %s', ucwords($words[1])));
   }
 }

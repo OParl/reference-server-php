@@ -7,12 +7,15 @@ use OParl\Person;
 class BodiesTableSeeder extends Seeder {
   public function run()
   {
+    Body::truncate();
+
     $data = $this->generateData();
 
     $system = System::find(1);
     foreach ($data as $body) {
       $bodyInstance = Body::create($body);
       $bodyInstance->system()->associate($system);
+      $bodyInstance->save();
     }
 
     // assign each person a body
