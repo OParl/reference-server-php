@@ -25,6 +25,15 @@ Route::group(['prefix' => 'api/v1'], function() {
   ]);
 });
 
+Route::get('/pdftest', function() {
+  $pdf = new mPDF();
+  $pdf->writeHTML('<h1>Hello World.</h1>');
+
+  $output = $pdf->Output('', 'S');
+
+  return Response::make($output, 200, ['Content-type' => 'application/pdf']);
+});
+
 /*
 Route::controllers([
 	'auth' => 'Auth\AuthController',

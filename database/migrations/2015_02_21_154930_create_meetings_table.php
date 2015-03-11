@@ -46,7 +46,7 @@ class CreateMeetingsTable extends Migration {
 		});
 
 		// pivot table for persons in meetings
-		Schema::create('meetings_persons', function(Blueprint $table) {
+		Schema::create('meetings_participants', function(Blueprint $table) {
 			$table->integer('meeting_id');
 			$table->integer('participant_id');
 

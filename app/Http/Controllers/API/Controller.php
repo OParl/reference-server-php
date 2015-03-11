@@ -52,7 +52,7 @@ class Controller extends BaseController
         $data = gzcompress($data);
       }
 
-      $view = \View::make('api.api', ['content' => $data]);
+      $view = \View::make('api.base', ['content' => $data]);
 
       return Response::make($view, $this->statusCode, $headers);
     }

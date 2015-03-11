@@ -3,7 +3,7 @@
 use OParl\Body;
 use OParl\LegislativeTerm;
 
-class LegislativeTermsSeeder extends Seeder
+class LegislativeTermsTableSeeder extends Seeder
 {
   function run()
   {

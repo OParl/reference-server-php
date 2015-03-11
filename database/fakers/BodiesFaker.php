@@ -15,7 +15,12 @@ class BodiesFaker extends Base
 
   public function oparlBodyName()
   {
-    static::$lastName = sprintf("%s %s", $this->prefixes[$this->generator->numberBetween(0, count($this->prefixes) - 1)], $this->generator->city);
+    static::$lastName = sprintf(
+      "%s %s",
+      $this->prefixes[$this->generator->numberBetween(0, count($this->prefixes) - 1)],
+      $this->generator->city
+    );
+
     return static::$lastName;
   }
 

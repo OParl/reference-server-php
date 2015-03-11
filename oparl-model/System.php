@@ -23,7 +23,7 @@ class System extends Model {
     return $this->hasMany('OParl\Body');
   }
 
-  // TODO: fix urls
+  // TODO: fix urls (maybe add these in the transformer)
   public function getNewObjectsAttribute()
   {
     return $this->website . 'new_objects/';
