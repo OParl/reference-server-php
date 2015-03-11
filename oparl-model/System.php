@@ -5,20 +5,17 @@ use Illuminate\Database\Eloquent\Model;
 class System extends Model {
   protected $primaryKey = 'pk';
 
-	public function oparlVersionAttribute()
+  protected $hidden = ['pk', 'created_at', 'updated_at'];
+  protected $appends = ['oparl_version', 'new_objects', 'removed_objects', 'website'];
+
+	public function getOparlVersionAttribute()
   {
     return 'http://oparl.org/specs/1.0/';
   }
 
-  public function websiteAttribute()
+  public function getWebsiteAttribute()
   {
-    if ($this->attributes['website'][strlen($this->attributes['website']) - 1] !== '/')
-    {
-      $this->attributes['website'] .= '/';
-      $this->save();
-    }
-
-    return $this->attributes['website'];
+    return \URL::to('/api/v1/')."/";
   }
 
   public function body()
@@ -27,27 +24,27 @@ class System extends Model {
   }
 
   // TODO: fix urls
-  public function newObjectsAttribute()
+  public function getNewObjectsAttribute()
   {
     return $this->website . 'new_objects/';
   }
 
-  public function updatedObjectsAttribute()
+  public function getUpdatedObjectsAttribute()
   {
     return $this->website . 'updated_objects/';
   }
 
-  public function removedObjectsAttribute()
+  public function getRemovedObjectsAttribute()
   {
     return $this->website . 'removed_objects/';
   }
 
-  public function vendorAttribute()
+  public function getVendorAttribute()
   {
     return 'http://oparl.org/';
   }
 
-  public function productAttribute()
+  public function getProductAttribute()
   {
     return 'http://oparl.org/implementations/php-reference-server';
   }

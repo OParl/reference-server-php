@@ -6,16 +6,16 @@ class PeopleTableSeeder extends Seeder
 {
   public function run()
   {
-    $data = $this->generateData();
+    $data = $this->generateData(400);
     foreach ($data as $person) Person::create($person);
   }
 
-  protected function generateData()
+  protected function generateData($numPeople = 100)
   {
     $data = [];
-    for ($i = 0; $i < 100; $i++)
+    for ($i = 0; $i < $numPeople; $i++)
     {
-      $gender = (static::$faker->boolean(70)) ? 'female' : 'male';
+      $gender = (static::$faker->boolean(50)) ? 'female' : 'male';
 
       $person = [
         'given_name'      => static::$faker->firstName($gender), 

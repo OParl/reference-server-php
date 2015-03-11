@@ -21,6 +21,7 @@ class MembershipsTableSeeder extends Seeder {
         ]);
 
         $membership->person()->associate($person);
+
         $membership->organization()->associate($organization);
 
         $membership->save();
