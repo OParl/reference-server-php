@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
+    Storage::delete(Storage::files('files/'));
+
 		Model::unguard();
 
 		$this->call('UserTableSeeder');
@@ -23,7 +25,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('OrganizationsTableSeeder');
     $this->call('MembershipsTableSeeder');
     $this->call('LegislativeTermsTableSeeder');
-    $this->call('MeetingsTableSeeder');
+    #$this->call('MeetingsTableSeeder'); // TODO: this one screws up like hell.
 
     Model::reguard();
 	}

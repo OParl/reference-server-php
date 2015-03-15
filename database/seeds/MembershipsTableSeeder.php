@@ -9,8 +9,9 @@ class MembershipsTableSeeder extends Seeder {
     foreach (Body::all() as $body)
     {
       $organizations = $body->organizations;
-      $organizationCount = $body->organizations->count() - 1;
+      $peopleOffset = 0;
 
+      // FIXME: this leads to mostly empty organizations...
       foreach ($body->people as $person)
       {
         $organization = $organizations[static::$faker->numberBetween(0, $organizationCount)];

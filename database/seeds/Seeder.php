@@ -1,7 +1,11 @@
 <?php
 
 use Illuminate\Database\Seeder as IlluminateSeeder;
+use \Illuminate\Support\Collection;
 
+/**
+ * Class Seeder
+ */
 class Seeder extends IlluminateSeeder
 {
   /**
@@ -9,6 +13,14 @@ class Seeder extends IlluminateSeeder
    */
   protected static $faker = null;
 
+  /**
+   * @var array
+   */
+  private $collectionItemStack = [];
+
+  /**
+   *
+   */
   public function __construct()
   {
     if (is_null(static::$faker))
@@ -24,6 +36,10 @@ class Seeder extends IlluminateSeeder
     }
   }
 
+  /**
+   * @param string $name
+   * @return string
+   */
   protected function suffixedShortName($name)
   {
       $shortNameLetters = implode(' ', 
@@ -35,5 +51,60 @@ class Seeder extends IlluminateSeeder
       );
 
       return static::$faker->lexify($shortNameLetters.' ???');
+  }
+
+  /**
+   * @param \Illuminate\Support\Collection $collection
+   * @param bool $unique
+   * @return mixed
+   */
+  protected function getRandomItemFromCollection(Collection $collection, $unique = false, $resetUnique = false)
+  {
+    $max = $collection->count() - 1;
+
+    if (!$unique)
+    {
+      return static::$faker->unique()->randomElement($collection);
+    } else
+    {
+      $hash = md5($collection);
+      if (!array_key_exists($hash, $this->collectionItemStack) || $resetUnique)
+        $this->collectionItemStack[$hash] = [];
+
+      do
+      {
+        $index = static::$faker->numberBetween(0, $max);
+      } while (in_array($index, $this->collectionItemStack[$hash]));
+
+      $this->collectionItemStack[$hash][] = $index;
+
+      return $collection->get($index);
+    }
+  }
+
+  /**
+   * @param \Illuminate\Support\Collection $collection
+   * @param int $minItems
+   * @param int $maxItems
+   * @return array
+   */
+  protected function getRandomArrayFromCollection(Collection $collection, $minItems = 1, $maxItems = 10)
+  {
+    if ($collection->isEmpty()) return [];
+
+    if ($maxItems > $collection->count() - 1)
+      $maxItems = $collection->count() - 1;
+
+    if ($minItems > $maxItems)
+      $minItems = $maxItems;
+
+    /*
+    $items = [];
+    foreach (range($minItems, static::$faker->numberBetween($minItems, $maxItems)) as $item)
+      $items[] = $this->getRandomItemFromCollection($collection);
+
+    */
+
+    return static::$faker->unique()->randomElements($collection, $maxItems);
   }
 }

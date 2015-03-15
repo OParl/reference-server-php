@@ -45,20 +45,21 @@ class DocumentsFaker extends Base {
   {
     $this->generateSkeleton($body);
 
-    $this->pdf->writeHTML("<h1>Einladung zur Besprechung - {$meeting->start_date}</h1>");
+    $html = "<h1>Einladung zur Besprechung - {$meeting->start_date}</h1>";
+
     foreach (range(1, $this->generator->numberBetween(1, 3)) as $paragraphNum)
     {
-      $this->pdf->writeHTML("<p>{$this->generator->paragraph}</p>");
+      $html .= "<p>{$this->generator->paragraph}</p>";
     }
 
-    $list = "<ul>";
+    $html .= "<ul>";
     foreach (range(1, $this->generator->numberBetween(1, 7)) as $listItem)
     {
-      $list .= "<li>{$this->generator->sentence}</li>";
+      $html .= "<li>{$this->generator->sentence}</li>";
     }
-    $list .= "</ul>";
+    $html .= "</ul>";
 
-    $this->pdf->writeHTML($list);
+    $this->pdf->writeHTML($html);
 
     $pdfData = $this->finishPDF();
 

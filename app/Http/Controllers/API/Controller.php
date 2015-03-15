@@ -1,23 +1,39 @@
 <?php namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller as BaseController;
-use Illuminate\Support\Facades\Input;
-use \Response;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
+use Illuminate\Support\Facades\View;
+
+/**
+ * Class Controller
+ * @package App\Http\Controllers\API
+ */
 class Controller extends BaseController
 {
+  /**
+   * @var Illuminate\Http\Request
+   */
   protected $request;
+  /**
+   * @var Illuminate\Http\Response
+   */
+  protected $response;
 
+  /**
+   * @var int HTTP Status Code
+   */
   protected $statusCode = 200;
 
   /**
    * @param Request $request
    */
-  public function __construct(Request $request)
+  public function __construct(Request $request, Response $response)
   {
     $this->request = $request;
+    $this->response = $response;
   }
 
   /**
@@ -43,6 +59,7 @@ class Controller extends BaseController
     } else
     {
       $data = json_encode($data, JSON_PRETTY_PRINT);
+      $data = str_replace('\/', '/', $data);
 
       // gzip?!
       if (array_has($this->request->getAcceptableContentTypes(), 'gzip')
@@ -52,9 +69,9 @@ class Controller extends BaseController
         $data = gzcompress($data);
       }
 
-      $view = \View::make('api.base', ['content' => $data]);
+      $view = View::make('api.base', ['content' => $data]);
 
-      return Response::make($view, $this->statusCode, $headers);
+      return $this->response->create($view, $this->statusCode, $headers);
     }
   }
 }

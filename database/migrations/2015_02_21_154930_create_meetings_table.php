@@ -42,7 +42,7 @@ class CreateMeetingsTable extends Migration {
 			$table->integer('verbatim_protocol_id')->nullable();
 			$table->foreign('verbatim_protocol_id')->references('id')->on('files');
 
-			$table->json('keywords');
+			$table->json('keyword')->nullable();
 		});
 
 		// pivot table for persons in meetings

@@ -6,7 +6,7 @@ class Organization extends Model
 {
   protected $touches = ['body', 'suborganizationOf'];
 
-  public function people()
+  public function members()
   {
     return $this->hasManyThrough('OParl\Person', 'OParl\Membership', 'person_id', 'id');
   }
