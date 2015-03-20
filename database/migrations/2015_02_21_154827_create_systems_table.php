@@ -14,10 +14,7 @@ class CreateSystemsTable extends Migration {
 	{
 		Schema::create('systems', function(Blueprint $table)
 		{
-			// relational tables without a primary key are...well...difficult...sometimes
-			$table->increments('pk');
-
-			$table->string('id');
+  		$table->string('id')->unique();
 			$table->timestamps();
 
 			$table->string('contact_name')->nullable();

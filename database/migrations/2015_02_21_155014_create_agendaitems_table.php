@@ -19,18 +19,18 @@ class CreateAgendaitemsTable extends Migration {
 
 			$table->string('number')->nullable();
 
-			$table->integer('meeting_id')->nullable();
+			$table->integer('meeting_id')->unsigned()->nullable();
 			$table->foreign('meeting_id')->references('id')->on('meetings');
 
 			$table->string('name');
 			$table->boolean('public')->nullable();
 
-			$table->integer('consulation_id')->nullable();
+			$table->integer('consulation_id')->unsigned()->nullable();
 			$table->foreign('consulation_id')->references('id')->on('consultations');
 			
 			$table->string('result')->nullable();
 
-			$table->integer('resolution_id')->nullable();
+			$table->integer('resolution_id')->unsigned()->nullable();
 			$table->foreign('resolution_id')->references('id')->on('files');
 
 			$table->json('keywords');
@@ -38,9 +38,10 @@ class CreateAgendaitemsTable extends Migration {
 
 		// pivot table for auxiliary files
 		Schema::create('agendaitems_auxiliary_files', function(Blueprint $table) {
-			$table->integer('agendaitem_id');
-			$table->integer('auxiliary_id');
-			$table->integer('order'); // used to denote the order of agenda items
+			$table->integer('agendaitem_id')->unsigned();
+			$table->integer('auxiliary_id')->unsigned();
+
+      $table->integer('order'); // used to denote the order of agenda items
 
 			$table->foreign('agendaitem_id')->references('id')->on('agendaitems');
 			$table->foreign('auxiliary_id')->references('id')->on('files');

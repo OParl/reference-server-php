@@ -17,7 +17,7 @@ class CreatePeopleTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 
-			$table->integer('body_id')->nullable();
+			$table->integer('body_id')->unsigned()->nullable();
 			$table->foreign('body_id')->references('id')->on('bodies');
 
 			$table->string('name');

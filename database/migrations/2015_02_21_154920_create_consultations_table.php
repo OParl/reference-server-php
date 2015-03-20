@@ -17,10 +17,10 @@ class CreateConsultationsTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 
-			$table->integer('paper_id')->nullable();
+			$table->integer('paper_id')->unsigned()->nullable();
 			$table->foreign('paper_id')->references('id')->on('papers');
 			
-			$table->integer('agenda_item_id')->nullable();
+			$table->integer('agenda_item_id')->unsigned()->nullable();
 			$table->foreign('agenda_item_id')->references('id')->on('agendaitems');
 
 			$table->boolean('authoritative')->nullable();
@@ -29,9 +29,9 @@ class CreateConsultationsTable extends Migration {
 			$table->json('keyword')->nullable();
 		});
 
-		Schema::create('consulations_organizations', function(Blueprint $table) {
-			$table->integer('consulation_id');
-			$table->integer('organization_id');
+		Schema::create('consultations_organizations', function(Blueprint $table) {
+			$table->integer('consulation_id')->unsigned();
+			$table->integer('organization_id')->unsigned();
 
 			$table->foreign('consulation_id')->references('id')->on('consultations');
 			$table->foreign('organization_id')->references('id')->on('organizations');
@@ -45,6 +45,7 @@ class CreateConsultationsTable extends Migration {
 	 */
 	public function down()
 	{
+    Schema::drop('consultations_organizations');
 		Schema::drop('consultations');
 	}
 

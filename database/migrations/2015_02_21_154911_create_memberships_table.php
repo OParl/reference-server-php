@@ -17,11 +17,11 @@ class CreateMembershipsTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 
-			$table->integer('person_id')->nullable();
+			$table->integer('person_id')->unsigned()->nullable();
 			$table->foreign('person_id')->references('id')->on('people');
 
-			$table->integer('organization_id')->nullable();
-			$table->foreign('organization_id')->references('id')->on('organizations');
+			$table->integer('organization_id')->unsigned()->nullable();
+			$table->foreign('organization_id')->unsigned()->references('id')->on('organizations');
 
 			$table->string('role')->nullable();
 			$table->string('post')->nullable();

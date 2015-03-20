@@ -19,26 +19,26 @@ class CreatePapersTable extends Migration {
 
 			$table->string('name')->nullable();
 
-			$table->integer('body_id')->nullable();
+			$table->integer('body_id')->unsigned()->nullable();
 			$table->foreign('body_id')->references('id')->on('bodies')->onDelete('cascade');
 
 			$table->date('published_date');
 			$table->string('paper_type')->nullable();
 			$table->string('reference')->nullable();
 
-			$table->integer('main_file_id')->nullable();
+			$table->integer('main_file_id')->unsigned()->nullable();
 			$table->foreign('main_file_id')->references('id')->on('files');
 
 			$table->json('keywords');
 
-			$table->integer('under_direction_of_id')->nullable();
+			$table->integer('under_direction_of_id')->unsigned()->nullable();
 			$table->foreign('under_direction_of_id')->references('id')->on('organizations');
 		});
 
 		// pivot table for locations
 		Schema::create('papers_locations', function(Blueprint $table) {
-			$table->integer('paper_id');
-			$table->integer('location_id');
+			$table->integer('paper_id')->unsigned();
+			$table->integer('location_id')->unsigned();
 
 			$table->foreign('paper_id')->references('id')->on('papers');
 			$table->foreign('location_id')->references('id')->on('locations');
@@ -46,8 +46,8 @@ class CreatePapersTable extends Migration {
 
 		// pivot table for related papers
 		Schema::create('papers_related_papers', function(Blueprint $table) {
-			$table->integer('paper_id');
-			$table->integer('related_id');
+			$table->integer('paper_id')->unsigned();
+			$table->integer('related_id')->unsigned();
 
 			$table->foreign('paper_id')->references('id')->on('papers');
 			$table->foreign('related_id')->references('id')->on('papers');
@@ -55,16 +55,16 @@ class CreatePapersTable extends Migration {
 
 		// pivot table for auxiliary files
 		Schema::create('papers_auxiliary_files', function(Blueprint $table) {
-			$table->integer('paper_id');
-			$table->integer('auxiliary_id');
+			$table->integer('paper_id')->unsigned();
+			$table->integer('auxiliary_id')->unsigned();
 
 			$table->foreign('paper_id')->references('id')->on('papers');
 			$table->foreign('auxiliary_id')->references('id')->on('files');
 		});
 
-		Schema::create('papers_originaters', function(Blueprint $table) {
-			$table->integer('paper_id');
-			$table->integer('originator_id');
+		Schema::create('papers_originators', function(Blueprint $table) {
+			$table->integer('paper_id')->unsigned();
+			$table->integer('originator_id')->unsigned();
 
 			// spec 1.0-draft:
 			// $table->string('originator');
@@ -81,8 +81,10 @@ class CreatePapersTable extends Migration {
 	 */
 	public function down()
 	{
+    Schema::drop('papers_locations');
+    Schema::drop('papers_related_papers');
 		Schema::drop('papers_auxiliary_files');
-		Schema::drop('papers_originaters');
+		Schema::drop('papers_originators');
 		
 		Schema::drop('papers');
 	}

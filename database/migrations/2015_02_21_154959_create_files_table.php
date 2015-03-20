@@ -34,7 +34,7 @@ class CreateFilesTable extends Migration {
 
 			// meetings_files, papers_files contain references to meetings and papers
 
-			$table->integer('master_file_id')->nullable();
+			$table->integer('master_file_id')->unsigned()->nullable();
 			$table->foreign('master_file_id')->references('id')->on('files');
 
 			$table->string('license')->nullable();
@@ -45,8 +45,8 @@ class CreateFilesTable extends Migration {
 
 		// pivot table for derivative files
 		Schema::create('files_derivatives', function(Blueprint $table) {
-			$table->integer('file_id');
-			$table->integer('derivative_id');
+			$table->integer('file_id')->unsigned();
+			$table->integer('derivative_id')->unsigned();
 
 			$table->foreign('file_id')->references('id')->on('files');
 			$table->foreign('derivative_id')->references('id')->on('files');
