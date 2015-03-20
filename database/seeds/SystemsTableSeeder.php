@@ -8,7 +8,7 @@ class SystemsTableSeeder extends Seeder {
     System::truncate();
 
     System::create([
-      'id' => static::$faker->word,
+      'id' => 'Testsystem',
     ]);
   }
 }

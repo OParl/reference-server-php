@@ -88,23 +88,9 @@ class Seeder extends IlluminateSeeder
    * @param int $maxItems
    * @return array
    */
-  protected function getRandomArrayFromCollection(Collection $collection, $minItems = 1, $maxItems = 10)
+  protected function getRandomArrayFromCollection(Collection $collection, $nbItems = 10)
   {
-    if ($collection->isEmpty()) return [];
-
-    if ($maxItems > $collection->count() - 1)
-      $maxItems = $collection->count() - 1;
-
-    if ($minItems > $maxItems)
-      $minItems = $maxItems;
-
-    /*
-    $items = [];
-    foreach (range($minItems, static::$faker->numberBetween($minItems, $maxItems)) as $item)
-      $items[] = $this->getRandomItemFromCollection($collection);
-
-    */
-
-    return static::$faker->unique()->randomElements($collection, $maxItems);
+    if ($collection->count() <= $nbItems) return $collection;
+    return $collection->random($nbItems);
   }
 }

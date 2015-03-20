@@ -30,12 +30,10 @@ class MeetingsTableSeeder extends Seeder {
           ]);
 
           $meeting->organization()->associate($organization);
-          $meeting->chair()->associate($this->getRandomItemFromCollection($organization->members));
-          $meeting->scribe()->associate($this->getRandomItemFromCollection($organization->members));
+          $meeting->chair()->associate($organization->members->random());
+          $meeting->scribe()->associate($organization->members->random());
 
-          $meeting->participants()->saveMany($this->getRandomArrayFromCollection($organization->members));
-
-          dd($meeting->toArray());
+          $meeting->participants()->saveMany($this->getRandomArrayFromCollection($organization->members)->all());
 
           $invitationFileName = static::$faker->oparlMeetingInvitation($body, $meeting);
           $invitationFile = File::create([

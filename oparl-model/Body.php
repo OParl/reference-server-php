@@ -14,7 +14,7 @@ class Body extends Model {
    */
   public function system()
   {
-    return $this->belongsTo('OParl\System', 'system_id', 'pk');
+    return $this->belongsTo('OParl\System');
   }
 
   /**

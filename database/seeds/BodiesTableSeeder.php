@@ -11,10 +11,11 @@ class BodiesTableSeeder extends Seeder {
 
     $data = $this->generateData();
 
-    $system = System::find(1);
+
     foreach ($data as $body) {
+      $body['system_id'] = System::all()[0]->id;
+
       $bodyInstance = Body::create($body);
-      $bodyInstance->system()->associate($system);
       $bodyInstance->save();
     }
 

@@ -9,12 +9,10 @@ class MembershipsTableSeeder extends Seeder {
     foreach (Body::all() as $body)
     {
       $organizations = $body->organizations;
-      $peopleOffset = 0;
 
-      // FIXME: this leads to mostly empty organizations...
       foreach ($body->people as $person)
       {
-        $organization = $organizations[static::$faker->numberBetween(0, $organizationCount)];
+        $organization = $organizations->random();
 
         $membership = Membership::create([
           'role' => static::$faker->oparlMembershipRole,

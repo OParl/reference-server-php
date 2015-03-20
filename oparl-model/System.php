@@ -3,40 +3,20 @@
 use Illuminate\Database\Eloquent\Model;
 
 class System extends Model {
-  protected $primaryKey = 'pk';
+  protected $primaryKey = null;
+  public $incrementing  = false;
 
-  protected $hidden = ['pk', 'created_at', 'updated_at'];
-  protected $appends = ['oparl_version', 'new_objects', 'removed_objects', 'website'];
+  protected $hidden  = ['created_at', 'updated_at'];
+  protected $appends = ['oparl_version', 'vendor', 'product'];
 
 	public function getOparlVersionAttribute()
   {
     return 'http://oparl.org/specs/1.0/';
   }
 
-  public function getWebsiteAttribute()
-  {
-    return \URL::to('/api/v1/')."/";
-  }
-
   public function body()
   {
     return $this->hasMany('OParl\Body');
-  }
-
-  // TODO: fix urls (maybe add these in the transformer)
-  public function getNewObjectsAttribute()
-  {
-    return $this->website . 'new_objects/';
-  }
-
-  public function getUpdatedObjectsAttribute()
-  {
-    return $this->website . 'updated_objects/';
-  }
-
-  public function getRemovedObjectsAttribute()
-  {
-    return $this->website . 'removed_objects/';
   }
 
   public function getVendorAttribute()
