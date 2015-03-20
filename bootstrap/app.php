@@ -11,6 +11,8 @@
 |
 */
 
+setlocale(LC_TIME, 'de_DE');
+
 $app = new Illuminate\Foundation\Application(
 	realpath(__DIR__.'/../')
 );

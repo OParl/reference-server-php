@@ -12,6 +12,8 @@ class Meeting extends Model {
     'locality'
   ];
 
+  protected $dates = ['start', 'end'];
+
   public function organization()
   {
     return $this->belongsTo('OParl\Organization', 'organization_id');

@@ -35,7 +35,7 @@ class MeetingsTableSeeder extends Seeder {
 
           $meeting->participants()->saveMany($this->getRandomArrayFromCollection($organization->members)->all());
 
-          $invitationFileName = static::$faker->oparlMeetingInvitation($body, $meeting);
+          $invitationFileName = static::$faker->oparlMeetingInvitation($meeting);
           $invitationFile = File::create([
             'file_name'     => $invitationFileName,
             'file_modified' => Carbon::createFromTimestampUTC(Storage::lastModified($invitationFileName)),

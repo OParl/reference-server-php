@@ -27,7 +27,12 @@ Route::group(['prefix' => 'api/v1'], function() {
 
 Route::get('/pdftest', function() {
   $pdf = new mPDF();
-  $pdf->writeHTML('<h1>Hello World.</h1>');
+
+
+  $meeting = OParl\Meeting::find(14);
+
+  $view = View::make('documents.meeting_invitation', ['meeting' => $meeting]);
+  $pdf->WriteHTML($view);
 
   $output = $pdf->Output('', 'S');
 

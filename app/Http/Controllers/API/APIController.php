@@ -6,7 +6,7 @@ class APIController extends Controller
 {
   public function getIndex()
   {
-    $data = System::find(1)->toArray();
+    $data = System::all()[0]->toArray();
     return $this->respond($data);
   }
 }
