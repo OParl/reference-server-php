@@ -52,6 +52,8 @@ class APIController extends Controller
 
   private function getViableRoutes()
   {
+    if (!$this->routes) return [];
+
     $currentRoute = explode('.', \Route::currentRouteName());
     $currentRouteEndpoint = array_pop($currentRoute);
 
@@ -91,7 +93,10 @@ class APIController extends Controller
     $data = json_encode($data, JSON_PRETTY_PRINT);
     $data = str_replace('\/', '/', $data);
 
-    $module = strtolower(explode('_', snake_case(class_basename(get_called_class())))[0]);
+    // FIXME: This is not how this should be...
+    $module = explode('_', snake_case(class_basename(get_called_class())));
+    array_pop($module);
+    $module = implode('', $module);
 
     // gzip?!
     if (array_has($this->request->getAcceptableContentTypes(), 'gzip')

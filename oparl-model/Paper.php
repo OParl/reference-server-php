@@ -1,4 +1,4 @@
-<?php namespace Paper;
+<?php namespace OParl;
 
 use Illuminate\Database\Eloquent\Model;
 
