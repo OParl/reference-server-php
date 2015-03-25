@@ -30,10 +30,10 @@ class CreateConsultationsTable extends Migration {
 		});
 
 		Schema::create('consultations_organizations', function(Blueprint $table) {
-			$table->integer('consulation_id')->unsigned();
+			$table->integer('consultation_id')->unsigned();
 			$table->integer('organization_id')->unsigned();
 
-			$table->foreign('consulation_id')->references('id')->on('consultations');
+			$table->foreign('consultation_id')->references('id')->on('consultations');
 			$table->foreign('organization_id')->references('id')->on('organizations');
 		});
 	}
