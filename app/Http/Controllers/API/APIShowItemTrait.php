@@ -10,7 +10,7 @@ trait APIShowItemTrait
       return $this->respondWithItem($item);
     } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e)
     {
-      return $this->respondWithNotFound("The requested item from `{$this->model}` does not exist.");
+      return $this->respondWithNotFound("The requested item from `{$this->getModelName()}` does not exist.");
     }
   }
 }

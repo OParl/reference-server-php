@@ -1,6 +1,5 @@
 <?php namespace App\Handlers\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use Oparl\Consultation;
 
 class ConsultationTransformer extends TransformerAbstract

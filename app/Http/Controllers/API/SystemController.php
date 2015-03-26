@@ -3,6 +3,7 @@
 use OParl\System;
 
 class SystemController extends APIController {
+  protected $model = 'OParl\System';
 
 	/**
 	 * Display a listing of the resource.

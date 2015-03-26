@@ -1,6 +1,5 @@
 <?php namespace App\Handlers\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use Oparl\Organization;
 
 class OrganizationTransformer extends TransformerAbstract
@@ -23,10 +22,10 @@ class OrganizationTransformer extends TransformerAbstract
                                : null,
       'classification'    => $organization->classification,
       'keyword'           => $organization->keyword,
-      'startDate'         => ($organization->start_date) ? $organization->start_date->toRfc2822String() : null,
-      'endDate'           => ($organization->end_date) ? $organization->end_date->toRfc2822String() : null,
-      'created'           => $organization->created_at->toRfc2822String(),
-      'modified'          => $organization->updated_at->toRfc2822String()
+      'startDate'         => $this->formatDate($organization->start_date),
+      'endDate'           => $this->formatDate($organization->end_date),
+      'created'           => $this->formatDate($organization->created_at),
+      'modified'          => $this->formatDate($organization->updated_at)
     ];
   }
 

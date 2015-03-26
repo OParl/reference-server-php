@@ -1,7 +1,6 @@
 <?php namespace App\Handlers\Transformers;
 
 use Illuminate\Support\Collection;
-use League\Fractal\TransformerAbstract;
 use Oparl\Body;
 
 class BodyTransformer extends TransformerAbstract
@@ -22,7 +21,7 @@ class BodyTransformer extends TransformerAbstract
       'name'              => $body->name,
       'website'           => $body->website,
       'license'           => $body->license,
-      'licenseValidSince' => ($body->license_valid_since) ? $body->license_valid_since->toRfc2822String() : null,
+      'licenseValidSince' => ($body->license_valid_since) ? $this->formatDate($body->license_valid_since) : null,
       'organization'      => route_where('api.v1.organization.index', ['body' => $body->id]),
       'meeting'           => route_where('api.v1.meeting.index', ['body' => $body->id]),
       'paper'             => route_where('api.v1.paper.index',    ['body' => $body->id]),
@@ -30,8 +29,8 @@ class BodyTransformer extends TransformerAbstract
       'legislativeTerm'   => route_where('api.v1.legislativeTerm.index', ['body' => $body->id]),
       'classification'    => $body->classification,
       'keyword'           => $body->keyword,
-      'created'           => $body->created_at->toRfc2822String(),
-      'modified'          => $body->updated_at->toRfc2822String()
+      'created'           => $this->formatDate($body->created_at),
+      'modified'          => $this->formatDate($body->updated_at)
     ];
   }
 

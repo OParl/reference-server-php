@@ -61,6 +61,11 @@ class APIController extends Controller
       throw new \LogicException("API controllers require a valid \$model property.");
   }
 
+  protected function getModelName()
+  {
+    return class_basename($this->model);
+  }
+
   /**
    * @return array
    **/
@@ -106,7 +111,6 @@ class APIController extends Controller
     }
 
     $data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    $module = class_basename($this->model);
 
     // gzip?!
     if (array_has($this->request->getAcceptableContentTypes(), 'gzip')
@@ -121,7 +125,7 @@ class APIController extends Controller
     $viewData = [
       'url'          => $this->request->url(),
       'content'      => $data,
-      'module'       => $module,
+      'module'       => $this->getModelName(),
       'isError'      => false,
       'viableRoutes' => $this->getViableRoutes()
     ];
@@ -142,7 +146,7 @@ class APIController extends Controller
     $this->statusCode = 200;
     return $this->respond([
       'info' => [
-        'message' => 'No content was provided for this request.',
+        'message' => "The requested result set for {$this->getModelName()} is empty.",
         'status' => $this->statusCode
       ]
     ]);

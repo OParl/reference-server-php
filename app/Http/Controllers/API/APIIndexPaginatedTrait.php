@@ -31,7 +31,7 @@ trait APIIndexPaginatedTrait
         return $this->respondWithPaginated($query->paginate(15));
       } else
       {
-        return $this->respondWithNotAllowed("The requested query method is not allowed on `{$this->model}`.");
+        return $this->respondWithNotAllowed("The requested query method is not allowed on `{$this->getModelName()}`.");
       }
     }
 
