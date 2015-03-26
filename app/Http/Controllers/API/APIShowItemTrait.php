@@ -4,11 +4,6 @@ trait APIShowItemTrait
 {
   public function show($id)
   {
-    if (!property_exists($this, 'model'))
-    {
-      throw new RuntimeException('This trait requires a model property to be set.');
-    }
-
     try
     {
       $item = call_user_func([$this->model, 'findOrFail'], $id);

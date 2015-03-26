@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => env('APPLICATION_URL', 'http://oparl.dev'),
 
 	/*
 	|--------------------------------------------------------------------------

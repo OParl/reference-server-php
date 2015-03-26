@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>meanderingsoul.com API - {{ $module }}</title>
+        <title>{{ config('app.url') }} API - {{ $module }}</title>
         <style>
             body, div
             {
@@ -35,7 +35,7 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css" />
     </head>
     <body>
-        <h1>{{ url('/') }}/api/{{ $module  }}</h1>
+        <h1>[{{ $module }}]&nbsp;{{ $url  }}</h1>
 
         <div>
             @if ($isError)

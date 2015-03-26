@@ -36,7 +36,15 @@ class APIController extends Controller
    */
   protected $statusCode = 200;
 
+  /**
+   * @var Factory
+   **/
   protected $viewFactory;
+
+  /**
+   * @var Illuminate\Database\Eloquent\Model
+   **/
+  protected $model;
 
   /**
    * @param Request $request
@@ -48,8 +56,14 @@ class APIController extends Controller
     $this->response = $response;
     $this->viewFactory = $viewFactory;
     $this->routes = $router->getRoutes();
+
+    if (!is_string($this->model) || !class_exists($this->model))
+      throw new \LogicException("API controllers require a valid \$model property.");
   }
 
+  /**
+   * @return array
+   **/
   private function getViableRoutes()
   {
     if (!$this->routes) return [];
@@ -85,18 +99,14 @@ class APIController extends Controller
     if ($this->request->wantsJson()
     ||  $this->request->input('format') === 'json')
     {
-      $headers['Content-type'] = 'application/json';
+      $headers['Content-type'] = 'application/json; charset=UTF-8';
+      $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
       return $this->response->create($data, $this->statusCode, $headers);
     }
 
-    $data = json_encode($data, JSON_PRETTY_PRINT);
-    $data = str_replace('\/', '/', $data);
-
-    // FIXME: This is not how this should be...
-    $module = explode('_', snake_case(class_basename(get_called_class())));
-    array_pop($module);
-    $module = implode('', $module);
+    $data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $module = class_basename($this->model);
 
     // gzip?!
     if (array_has($this->request->getAcceptableContentTypes(), 'gzip')
@@ -106,7 +116,10 @@ class APIController extends Controller
       $data = gzcompress($data);
     }
 
+    $headers['Content-type'] = 'text/html; charset=UTF-8';
+
     $viewData = [
+      'url'          => $this->request->url(),
       'content'      => $data,
       'module'       => $module,
       'isError'      => false,
@@ -123,6 +136,24 @@ class APIController extends Controller
     return $this->response->create($view, $this->statusCode, $headers);
   }
 
+  private function respondEmpty()
+  {
+    // Technically, this is a tie between '200 OK' and '204 No Content'
+    $this->statusCode = 200;
+    return $this->respond([
+      'info' => [
+        'message' => 'No content was provided for this request.',
+        'status' => $this->statusCode
+      ]
+    ]);
+  }
+
+  /**
+   * @param string $message
+   * @param int $code
+   * @param array $headers
+   * @return Illuminate\Http\Response
+   **/
   private function respondWithError($message, $code = 400, $headers = [])
   {
     $this->statusCode = $code;
@@ -132,30 +163,53 @@ class APIController extends Controller
     return $this->respond($data, $headers);
   }
 
+  /**
+   * @param string $message
+   * @param array $headers
+   * @return Illuminate\Http\Response
+   **/
+  protected function respondWithForbidden($message, $headers = [])
+  {
+    return $this->respondWithError($message, 403, $headers);
+  }
+
+  /**
+   * @param string $message
+   * @param array $headers
+   * @return Illuminate\Http\Response
+   **/
   protected function respondWithNotFound($message, $headers = [])
   {
     return $this->respondWithError($message, 404, $headers);
   }
 
   /**
-   * @param Collection $collection
-   * @return mixed
-   */
-  protected function respondWithCollection(Collection $collection)
+   * @param string $message
+   * @param array $headers
+   * @return Illuminate\Http\Response
+   **/
+  protected function respondWithNotAllowed($message, $headers = [])
   {
-    $dataArray = $this->dispatch(new SerializeCollectionCommand($collection, $this->request));
-    return $this->respond($dataArray);
+    return $this->respondWithError($message, 405, $headers);
   }
 
+  /**
+   * @param LengthAwarePaginator $paginator
+   * @return Illuminate\Http\Response
+   **/
   protected function respondWithPaginated(LengthAwarePaginator $paginator)
   {
+    if ($paginator->count() == 0)
+      return $this->respondEmpty();
+
     $dataArray = $this->dispatch(new SerializePaginatedCommand($paginator, $this->request));
+
     return $this->respond($dataArray);
   }
 
   /**
    * @param Model $item
-   * @return mixed
+   * @return Illuminate\Http\Response
    */
   protected function respondWithItem(Model $item)
   {

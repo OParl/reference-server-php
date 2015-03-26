@@ -3,7 +3,7 @@
 use League\Fractal\TransformerAbstract;
 use Oparl\Meeting;
 
-class BodyTransformer extends TransformerAbstract
+class MeetingTransformer extends TransformerAbstract
 {
   public function transform(Meeting $meeting)
   {

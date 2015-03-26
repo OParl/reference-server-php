@@ -11,6 +11,10 @@
 |
 */
 
+// include the app helpers
+require 'helpers.php';
+
+// set the time locale for better date formatting
 setlocale(LC_TIME, 'de_DE');
 
 $app = new Illuminate\Foundation\Application(

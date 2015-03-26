@@ -7,6 +7,8 @@ class Body extends Model {
     'equivalent_body' => 'array'
   ];
 
+  protected $dates = ['license_valid_since'];
+
   /**
    * The system this body belongs to
    *
@@ -14,7 +16,7 @@ class Body extends Model {
    */
   public function system()
   {
-    return $this->belongsTo('OParl\System');
+    return $this->belongsTo('OParl\System', 'system_id', 'id');
   }
 
   /**

@@ -14,9 +14,9 @@ class System extends Model {
     return 'http://oparl.org/specs/1.0/';
   }
 
-  public function body()
+  public function bodies()
   {
-    return $this->hasMany('OParl\Body');
+    return $this->hasMany('OParl\Body', 'system_id', 'id');
   }
 
   public function getVendorAttribute()
