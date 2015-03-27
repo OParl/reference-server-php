@@ -7,7 +7,15 @@ use Carbon\Carbon;
 
 abstract class TransformerAbstract extends LeagueTransformer
 {
-  protected function collectionRouteList(Collection $collection, $routeName, $key = 'id')
+  /**
+   * Get a route list (object list) from a Collection
+   *
+   * @param string $routeName
+   * @param Collection $collection
+   * @param string $key
+   * @return array
+   **/
+  protected function collectionRouteList($routeName, Collection $collection, $key = 'id')
   {
     $keys = $collection->lists($key);
 
