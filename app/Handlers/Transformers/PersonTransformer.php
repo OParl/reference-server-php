@@ -19,13 +19,14 @@ class PersonTransformer extends TransformerAbstract
       'title'         => explode(' ', $person->title),
       'formOfAddress' => $person->form_of_address,
       'gender'        => $person->gender,
-      'email'         => $person->email,
-      'phone'         => $person->phone,
+      'email'         => $this->formatEmail($person->email),
+      'phone'         => $this->formatPhoneNumber($person->phone),
       'streetAddress' => $person->street_address,
       'postalCode'    => $person->postal_code,
       'locality'      => $person->locality,
       'status'        => $person->status,
       'membership'    => route_where('api.v1.membership.index', ['person' => $person->id]),
+      'keyword'       => $person->keyword,
       'created'       => $this->formatDate($person->created_at),
       'modified'      => $this->formatDate($person->updated_at)
     ];

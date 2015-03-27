@@ -8,7 +8,7 @@ class LegislativeTermTransformer extends TransformerAbstract
   {
     return [
       'id' => route('api.v1.legislativeterm.show', $legislativeTerm->id),
-      
+
     ];
   }
 }
