@@ -12,6 +12,11 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
+    if (config('database.default') === 'mysql')
+    {
+      \DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+    }
+
     Storage::delete(Storage::files('files/'));
 
 		Model::unguard();
@@ -29,5 +34,10 @@ class DatabaseSeeder extends Seeder {
     $this->call('ConsultationsTableSeeder');
 
     Model::reguard();
+
+    if (config('database.default') === 'mysql')
+    {
+      \DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+    }
 	}
 }
