@@ -1,11 +1,21 @@
 <?php namespace App\Handlers\Transformers;
 
+use Illuminate\Support\Collection;
 use League\Fractal\TransformerAbstract as LeagueTransformer;
 
 use Carbon\Carbon;
 
 abstract class TransformerAbstract extends LeagueTransformer
 {
+  protected function collectionRouteList(Collection $collection, $routeName, $key = 'id')
+  {
+    $keys = $collection->lists($key);
+
+    return array_map(function ($key) use ($routeName) {
+      return route($routeName, $key);
+    }, $keys);
+  }
+
   protected function formatDate(Carbon $date = null)
   {
     if (is_null($date)) return null;
