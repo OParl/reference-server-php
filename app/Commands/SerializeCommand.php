@@ -5,7 +5,7 @@ use Illuminate\Support\Collection;
 use League\Fractal\Manager;
 
 use League\Fractal\Serializer\DataArraySerializer;
-use League\Fractal\Serializer\JsonApiSerializer;
+use App\Handlers\Commands\APISerializer;
 
 abstract class SerializeCommand extends Command implements SelfHandling {
   /**
@@ -21,7 +21,7 @@ abstract class SerializeCommand extends Command implements SelfHandling {
   public function __construct(\Illuminate\Http\Request $request)
   {
     $this->manager = new Manager;
-    $this->manager->setSerializer(new DataArraySerializer());
+    $this->manager->setSerializer(new APISerializer());
 
     if ($request->has('include'))
       $this->manager->parseIncludes($request->input('include'));
