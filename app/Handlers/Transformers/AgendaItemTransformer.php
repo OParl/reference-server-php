@@ -1,9 +1,8 @@
 <?php namespace App\Handlers\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use Oparl\AgendaItem;
 
-class BodyTransformer extends TransformerAbstract
+class AgendaItemTransformer extends TransformerAbstract
 {
   public function transform(AgendaItem $agendaItem)
   {

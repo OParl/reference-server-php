@@ -39,8 +39,28 @@ class Meeting extends Model {
     return $this->belongsToMany('OParl\Person', 'meetings_participants', 'meeting_id', 'participant_id');
   }
 
-  public function auxiliary_files()
+  public function auxiliaryFiles()
   {
     return $this->belongsToMany('OParl\File', 'meetings_auxiliary_files', 'meeting_id', 'auxiliary_id');
+  }
+
+  public function location()
+  {
+    return $this->hasOne('OParl\Location');
+  }
+
+  public function resultsProtocol()
+  {
+    return $this->hasOne('OParl\File', 'results_protocol_id');
+  }
+
+  public function verbatimProtocol()
+  {
+    return $this->hasOne('OParl\File', 'verbatim_protocol_id');
+  }
+
+  public function agendaItems()
+  {
+    return $this->hasMany('OParl\AgendaItem');
   }
 }
