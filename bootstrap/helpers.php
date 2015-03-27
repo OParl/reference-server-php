@@ -1,24 +1,20 @@
 <?php
 
-if (!function_exists('route_where'))
+if (!function_exists('encode_where'))
 {
-  function route_where($name, $where = [], $absolute = true, $route = null)
+  function encode_where(array $where)
   {
     $parameters = [];
     foreach ($where as $key => $value)
       $parameters[] = sprintf('%s:%s', $key, $value);
 
-
-    $url = route($name, [], $absolute, $route);
-    $url = sprintf('%s?where=%s', $url, implode(',', $parameters));
-
-    return $url;
+    return implode(',', $parameters);
   }
 }
 
 if (!function_exists('decode_where'))
 {
-  function decode_where($where)
+  function decode_where(array $where)
   {
     $where = explode(',', $where);
     $clauses = [];
@@ -29,6 +25,19 @@ if (!function_exists('decode_where'))
     }
 
     return $clauses;
+  }
+}
+
+if (!function_exists('route_where'))
+{
+  function route_where($name, $where = [], $absolute = true, $route = null)
+  {
+    $where = encode_where($where);
+
+    $url = route($name, [], $absolute, $route);
+    $url = sprintf('%s?where=%s', $url, $where);
+
+    return $url;
   }
 }
 
