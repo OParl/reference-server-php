@@ -62,6 +62,6 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
 
-        {{ env('PIWIK_CODE') }}
+        {!! env('PIWIK_CODE') !!}
     </body>
 </html>
