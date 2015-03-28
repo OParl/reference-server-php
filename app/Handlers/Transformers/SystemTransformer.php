@@ -15,7 +15,7 @@ class SystemTransformer extends TransformerAbstract
       'oparlVersion' => $system->oparlVersion,
       'vendor'       => $system->vendor,
       'product'      => $system->product,
-      'contactEmail' => 'email@address',
+      'contactEmail' => $this->formatEmail('email@address.com'),
       'contactName'  => 'Contact Name',
       'body'         => route('api.v1.body.index'),
 
