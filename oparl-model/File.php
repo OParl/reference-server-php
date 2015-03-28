@@ -3,13 +3,15 @@
 use Illuminate\Database\Eloquent\Model;
 
 class File extends Model {
-	public function accessURLAttribute()
+  protected $dates = ['date', 'file_modified'];
+
+  public function masterFile()
   {
-    return "";
+    return $this->hasOne('OParl\File', 'master_file_id', 'id');
   }
 
-  public function downloadURLAttribute()
+  public function derivatives()
   {
-    return "";
+    return $this->belongsToMany('OParl\File', 'files_derivatives', 'file_id', 'derivative_id');
   }
 }

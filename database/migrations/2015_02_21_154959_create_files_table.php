@@ -30,7 +30,7 @@ class CreateFilesTable extends Migration {
 			$table->string('sha1_checksum')->nullable();
 			$table->text('text')->nullable();
 			
-			// access url, download url automatically from model
+			// access url, download url automatically from transformer
 
 			// meetings_files, papers_files contain references to meetings and papers
 
