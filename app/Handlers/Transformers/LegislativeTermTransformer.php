@@ -4,11 +4,22 @@ use OParl\LegislativeTerm;
 
 class LegislativeTermTransformer extends TransformerAbstract
 {
+  protected $availableIncludes = ['body'];
+
   public function transform(LegislativeTerm $legislativeTerm)
   {
     return [
-      'id' => route('api.v1.legislativeterm.show', $legislativeTerm->id),
-
+      'id'        => route('api.v1.legislativeterm.show', $legislativeTerm->id),
+      'type'      => 'http://oparl.org/schema/1.0/LegislativeTerm',
+      'body'      => route('api.v1.body.show', $legislativeTerm->body_id),
+      'name'      => $legislativeTerm->name,
+      'startDate' => $this->formatDate($legislativeTerm->start_date),
+      'endDate'   => $this->formatDate($legislativeTerm->end_date)
     ];
+  }
+
+  public function includeBody(LegislativeTerm $legislativeTerm)
+  {
+    return $this->item($legislativeTerm->body, new BodyTransformer);
   }
 }
