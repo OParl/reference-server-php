@@ -11,10 +11,12 @@
 |
 */
 
+Route::pattern('id', '(\d+)');
+
 Route::get('/', function() { return Redirect::to('api/v1/system'); });
 
 // file access and download
-Route::get('/view/{id}',  ['as' => 'file.access',   'uses' => 'FileController@access']);
+Route::get('/preview/{id}',  ['as' => 'file.access',   'uses' => 'FileController@access']);
 Route::get('/files/{id}', ['as' => 'file.download', 'uses' => 'FileController@download']);
 
 // api

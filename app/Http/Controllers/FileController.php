@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Commands\SerializeItemCommand;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Response;
 use Storage;
 
@@ -10,22 +11,40 @@ class FileController extends Controller
 {
   protected function getFile($id)
   {
-    $file = $this->dispatch(new SerializeItemCommand(File::find($id), app('request')));
+    $file = $this->dispatch(new SerializeItemCommand(File::findOrFail($id), app('request')));
 
-    return [$file, Storage::get('files/'.$file['data']['fileName'])];
+    $file = $file['data'];
+    $file['data'] = Storage::get('files/'.$file['fileName']);
+
+    return $file;
   }
 
   public function access($id)
   {
-    $data = $this->getFile($id);
+    try
+    {
+      $file = $this->getFile($id);
+    } catch(ModelNotFoundException $e)
+    {
+      return Response::make('File not found.', 404, ['Content-type' => 'text/plain']);
+    }
 
-    abort('NYI');
+    return Response::make($file['data'], 200, ['Content-type' => 'application/pdf']);
   }
 
   public function download($id)
   {
-    $data = $this->getFile($id);
+    try
+    {
+      $file = $this->getFile($id);
+    } catch(ModelNotFoundException $e)
+    {
+      return Response::make('File not found.', 404, ['Content-type' => 'text/plain']);
+    }
 
-    abort('NYI');
+    return Response::make($file['data'], 200, [
+      'Content-type' => $file['mimeType'],
+      'Content-disposition' => "attachment; filename={$file['fileName']}"
+    ]);
   }
 }
