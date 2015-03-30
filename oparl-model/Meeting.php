@@ -1,8 +1,6 @@
 <?php namespace OParl;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Meeting extends Model {
+class Meeting extends BaseModel {
 
 	protected $fillable = [
     'start',

@@ -1,8 +1,6 @@
 <?php namespace Oparl;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Membership extends Model {
+class Membership extends BaseModel {
 
 	public function person()
   {

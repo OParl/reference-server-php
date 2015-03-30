@@ -1,12 +1,11 @@
 <?php namespace OParl;
 
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class Person extends Model implements AuthenticatableContract, CanResetPasswordContract {
+class Person extends BaseModel implements AuthenticatableContract, CanResetPasswordContract {
 
   use Authenticatable;
   use CanResetPassword;

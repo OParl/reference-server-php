@@ -1,8 +1,6 @@
 <?php namespace OParl;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Paper extends Model {
+class Paper extends BaseModel {
 
 	public function body()
   {

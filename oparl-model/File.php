@@ -1,8 +1,6 @@
 <?php namespace OParl;
 
-use Illuminate\Database\Eloquent\Model;
-
-class File extends Model {
+class File extends BaseModel {
   protected $dates = ['date', 'file_modified'];
 
   public function masterFile()

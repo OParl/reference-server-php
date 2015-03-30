@@ -1,8 +1,6 @@
 <?php namespace OParl;
 
-use Illuminate\Database\Eloquent\Model;
-
-class AgendaItem extends Model {
+class AgendaItem extends BaseModel {
 
 	//
   public function auxiliaryFiles()

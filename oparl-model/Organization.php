@@ -1,8 +1,6 @@
 <?php namespace Oparl;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Organization extends Model
+class Organization extends BaseModel
 {
   protected $touches = ['body', 'suborganizationOf'];
 
