@@ -18,7 +18,7 @@ class SystemTransformer extends TransformerAbstract
       'contactEmail' => $this->formatEmail('email@address.com'),
       'contactName'  => 'Contact Name',
       'body'         => route('api.v1.body.index'),
-      
+
       'links' => [
         [
           'rel'  => 'feed+atom',

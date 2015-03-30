@@ -39,7 +39,7 @@ class MeetingTransformer extends TransformerAbstract
       'verbatimProtocol' => ($meeting->verbatim_protocol_id)
                               ?route('api.v1.file.show', $meeting->verbatim_protocol_id)
                               : null,
-      'auxiliaryFile'    => $this->collectionRouteList('api.v1.file.show', $meeting->auxiliaryFiles),
+      'auxiliaryFile'    => ($meeting->auxiliaryFiles) ? $this->collectionRouteList('api.v1.file.show', $meeting->auxiliaryFiles) : null,
       'agendaItem'       => route_where('api.v1.agendaitem.index', ['meeting' => $meeting->id]),
       'keyword'          => $meeting->keyword,
       'created'          => $this->formatDate($meeting->created_at),
