@@ -17,7 +17,7 @@ class CreateTransactionsTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
       $table->string('model');
-      $table->enum('action', ['create', 'update', 'delete']);
+      $table->enum('action', ['new', 'updated', 'removed']);
       $table->integer('model_id')->unsigned()->nullable();
 		});
 	}

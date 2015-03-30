@@ -8,17 +8,17 @@ class BaseModel extends Model {
     parent::boot();
 
     static::created(function ($model) {
-      Transaction::create(['model' => get_class($model), 'action' => 'create', 'model_id' => $model->id]);
+      Transaction::create(['model' => get_class($model), 'action' => 'new', 'model_id' => $model->id]);
       return true;
     });
 
     static::updated(function($model) {
-      Transaction::create(['model' => get_class($model), 'action' => 'update', 'model_id' => $model->id]);
+      Transaction::create(['model' => get_class($model), 'action' => 'updated', 'model_id' => $model->id]);
       return true;
     });
 
     static::deleted(function($model) {
-      Transaction::create(['model' => get_class($model), 'action' => 'delete', 'model_id' => $model->id]);
+      Transaction::create(['model' => get_class($model), 'action' => 'removed', 'model_id' => $model->id]);
       return true;
     });
   }

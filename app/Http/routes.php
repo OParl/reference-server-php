@@ -13,7 +13,13 @@
 
 Route::pattern('id', '(\d+)');
 
+Route::pattern('feedType', '(new|updated|removed)');
+Route::pattern('feedFormat', '(rss|atom)');
+
 Route::get('/', function() { return Redirect::to('api/v1/system'); });
+
+// feeds
+Route::get('/feed/{feedType}.{feedFormat}', ['as' => 'feed.show', 'uses' => 'FeedController@show']);
 
 // file access and download
 Route::get('/preview/{id}',  ['as' => 'file.access',   'uses' => 'FileController@access']);

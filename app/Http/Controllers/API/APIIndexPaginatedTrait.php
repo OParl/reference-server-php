@@ -6,6 +6,8 @@ trait APIIndexPaginatedTrait
 {
   public function index()
   {
+    $query = null;
+
     if (Request::input('where'))
     {
       $clauses = decode_where(Request::input('where'));
@@ -27,14 +29,19 @@ trait APIIndexPaginatedTrait
         array_shift($clauses);
         foreach ($clauses as $where => $value)
           $query->{$where}($value);
-
-        return $this->respondWithPaginated($query->paginate(15));
       } else
       {
         return $this->respondWithNotAllowed("The requested query method is not allowed on `{$this->getModelName()}`.");
       }
     }
 
-    return $this->respondWithPaginated(call_user_func([$this->model, 'paginate'], 15));
+    if (!$query) $query = call_user_func([$this->model, 'paginate'], config('oparl.pageElements'));
+
+    if (Request::input('include'))
+    {
+      $query->load(explode(',', Request::input('include')));
+    }
+
+    return $this->respondWithPaginated($query);
   }
 }

@@ -18,23 +18,37 @@ class SystemTransformer extends TransformerAbstract
       'contactEmail' => $this->formatEmail('email@address.com'),
       'contactName'  => 'Contact Name',
       'body'         => route('api.v1.body.index'),
-
-      // TODO: feed links
+      
       'links' => [
         [
-          'rel'  => 'feed',
+          'rel'  => 'feed+atom',
           'type' => 'newObjects',
-          'href' => ''
+          'href' => route('feed.show', ['new', 'atom'])
         ],
         [
-          'rel'  => 'feed',
+          'rel'  => 'feed+atom',
           'type' => 'updatedObjects',
-          'href' => ''
+          'href' => route('feed.show', ['updated', 'atom'])
         ],
         [
-          'rel'  => 'feed',
+          'rel'  => 'feed+atom',
           'type' => 'removedObjects',
-          'href' => ''
+          'href' => route('feed.show', ['removed', 'atom'])
+        ],
+        [
+          'rel'  => 'feed+rss',
+          'type' => 'newObjects',
+          'href' => route('feed.show', ['new', 'rss'])
+        ],
+        [
+          'rel'  => 'feed+rss',
+          'type' => 'updatedObjects',
+          'href' => route('feed.show', ['updated', 'rss'])
+        ],
+        [
+          'rel'  => 'feed+rss',
+          'type' => 'removedObjects',
+          'href' => route('feed.show', ['removed', 'rss'])
         ],
       ]
     ];
