@@ -35,6 +35,7 @@ class MeetingsTableSeeder extends Seeder {
 
           $meeting->participants()->saveMany($this->getRandomArrayFromCollection($organization->members)->all());
 
+          /*
           $invitationFileName = static::$faker->oparlMeetingInvitation($meeting);
           $invitationFile = File::create([
             'file_name'     => $invitationFileName,
@@ -46,6 +47,7 @@ class MeetingsTableSeeder extends Seeder {
           ]);
 
           $meeting->invitations()->save($invitationFile);
+          */
 
           $meeting->save();
         }

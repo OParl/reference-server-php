@@ -1,6 +1,8 @@
 <?php namespace Oparl;
 
-class System extends BaseModel {
+use Illuminate\Database\Eloquent\Model;
+
+class System extends Model {
   protected $primaryKey = null;
   public $incrementing  = false;
 

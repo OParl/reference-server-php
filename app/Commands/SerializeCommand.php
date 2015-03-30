@@ -1,7 +1,6 @@
 <?php namespace App\Commands;
 
 use Illuminate\Contracts\Bus\SelfHandling;
-use Illuminate\Support\Collection;
 use League\Fractal\Manager;
 
 use League\Fractal\Serializer\DataArraySerializer;
