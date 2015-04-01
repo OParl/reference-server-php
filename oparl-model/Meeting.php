@@ -10,7 +10,7 @@ class Meeting extends BaseModel {
     'locality'
   ];
 
-  protected $dates = ['start', 'end'];
+  protected $dates = ['start_date', 'end_date'];
 
   public function organization()
   {

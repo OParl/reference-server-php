@@ -1,5 +1,6 @@
 <?php namespace OParl\Fakers;
 
+use Carbon\Carbon;
 use \mPDF;
 use \View;
 
@@ -9,6 +10,7 @@ use Faker\Provider\Base;
 
 use OParl\Body;
 use OParl\Meeting;
+use OParl\File;
 
 /**
  * Class DocumentsFaker
@@ -34,7 +36,7 @@ class DocumentsFaker extends Base {
     return $filename;
   }
 
-  public function oparlMeetingInvitation(Meeting $meeting)
+  public function oparlMeetingInvitation(Meeting $meeting, Carbon $term_start, Carbon $term_end)
   {
     $pdf = new mPDF();
     $pdf->ignore_invalid_utf8 = true;
@@ -42,6 +44,18 @@ class DocumentsFaker extends Base {
     $view = View::make('documents.meeting_invitation', ['meeting' => $meeting]);
     $pdf->WriteHTML($view);
 
-    return $this->save($pdf);
+    $invitationFileName = $this->save($pdf);
+
+    $invitationFile = File::create([
+      'file_name'     => $invitationFileName,
+      'file_modified' => Carbon::createFromTimestampUTC(Storage::lastModified($invitationFileName)),
+      'size'          => Storage::size($invitationFileName),
+      'file_created'  => static::$faker->dateTimeBetween($term_start, $term_end),
+      'name'          => static::$faker->optional()->word,
+      'text'          => static::$faker->optional()->paragraphs(2),
+      'mime_type'     => 'application/pdf',
+    ]);
+
+    return $invitationFile;
   }
 }

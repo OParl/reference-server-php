@@ -4,6 +4,8 @@ use \Storage;
 
 use Carbon\Carbon;
 
+use Illuminate\Support\Collection;
+
 use OParl\Body;
 use OParl\File;
 use OParl\Meeting;
@@ -24,8 +26,8 @@ class MeetingsTableSeeder extends Seeder {
           $end   = Carbon::instance($start)->addHours(3);
 
           $meeting = Meeting::create([
-            'start'    => $start,
-            'end'      => (static::$faker->boolean(40)) ? $end : null,
+            'start_date'    => $start,
+            'end_date'      => (static::$faker->boolean(40)) ? $end : null,
             'locality' => static::$faker->optional()->address,
           ]);
 
@@ -34,24 +36,33 @@ class MeetingsTableSeeder extends Seeder {
           $meeting->scribe()->associate($organization->members->random());
 
           $meeting->participants()->saveMany($this->getRandomArrayFromCollection($organization->members)->all());
+          $this->getAgendaItems($meeting);
 
-          /*
-          $invitationFileName = static::$faker->oparlMeetingInvitation($meeting);
-          $invitationFile = File::create([
-            'file_name'     => $invitationFileName,
-            'file_modified' => Carbon::createFromTimestampUTC(Storage::lastModified($invitationFileName)),
-            'size'          => Storage::size($invitationFileName),
-            'date'          => static::$faker->dateTimeBetween($termStart, $termEnd),
-            'name'          => static::$faker->optional()->word,
-            'text'          => static::$faker->optional()->paragraphs(2)
-          ]);
+          $invitationFile = static::$faker->oparlMeetingInvitation($meeting, $termStart, $termEnd);
 
           $meeting->invitations()->save($invitationFile);
-          */
 
           $meeting->save();
         }
       }
+    }
+  }
+
+  protected function getAgendaItems(Meeting $meeting)
+  {
+    $numItems = static::$faker->numberBetween(3, 25);
+
+    for ($i = 0; $i < $numItems; $i++)
+    {
+      $agendaItem = null;
+
+      $k = 1;
+      do
+      {
+        $agendaItem = AgendaItem::find($k++);
+      } while ($agendaItem->meeting_id != null);
+
+      $meeting->agendaItems()->save($agendaItem);
     }
   }
 }

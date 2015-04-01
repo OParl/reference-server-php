@@ -8,6 +8,7 @@ class PaperTransformer extends TransformerAbstract
   {
     return [
       'id'            => route('api.v1.paper.show', $paper->id),
+      'type'          => 'http://oparl.org/schema/1.0/Paper',
       'body'          => route('api.v1.body.show', $paper->body_id),
       'name'          => $paper->name,
       'reference'     => $paper->reference,

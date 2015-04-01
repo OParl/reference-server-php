@@ -17,7 +17,7 @@ class CreateAgendaitemsTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 
-			$table->string('number')->nullable();
+			$table->string('consecutive_number')->nullable();
 
 			$table->integer('meeting_id')->unsigned()->nullable();
 			$table->foreign('meeting_id')->references('id')->on('meetings');
@@ -25,8 +25,8 @@ class CreateAgendaitemsTable extends Migration {
 			$table->string('name');
 			$table->boolean('public')->nullable();
 
-			$table->integer('consulation_id')->unsigned()->nullable();
-			$table->foreign('consulation_id')->references('id')->on('consultations');
+			$table->integer('consultation_id')->unsigned()->nullable();
+			$table->foreign('consultation_id')->references('id')->on('consultations');
 			
 			$table->string('result')->nullable();
 

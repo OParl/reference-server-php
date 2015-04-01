@@ -12,7 +12,9 @@ class LocationTransformer extends TransformerAbstract
       'description' => $location->description,
       'address'     => $location->address,
       'geometry'    => $location->geometry,
-      'keyword'     => $location->keyword
+      'keyword'     => $location->keyword,
+      'created'     => $this->formatDate($location->created_at),
+      'modified'    => $this->formatDate($location->updated_at)
     ];
   }
 }

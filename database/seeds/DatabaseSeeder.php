@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder {
 		$this->call('OrganizationsTableSeeder');
     $this->call('MembershipsTableSeeder');
     $this->call('LegislativeTermsTableSeeder');
+    $this->call('AgendaItemsTableSeeder');
     $this->call('MeetingsTableSeeder');
-    $this->call('ConsultationsTableSeeder');
 
     Model::reguard();
 

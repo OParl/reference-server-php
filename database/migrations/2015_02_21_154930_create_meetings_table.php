@@ -17,8 +17,8 @@ class CreateMeetingsTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 
-			$table->date('start');
-			$table->date('end')->nullable();
+			$table->date('start_date');
+			$table->date('end_date')->nullable();
 
 			$table->string('street_address')->nullable();
 			$table->string('postal_code')->nullable();

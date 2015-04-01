@@ -37,10 +37,10 @@ trait APIIndexPaginatedTrait
 
     if (!$query) $query = call_user_func([$this->model, 'paginate'], config('oparl.pageElements'));
 
-    if (Request::input('include'))
+    /*if (Request::input('include'))
     {
       $query->load(explode(',', Request::input('include')));
-    }
+    }*/
 
     return $this->respondWithPaginated($query);
   }

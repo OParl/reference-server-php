@@ -22,8 +22,6 @@ class MeetingTransformer extends TransformerAbstract
     return [
       'id'               => route('api.v1.meeting.show', $meeting->id),
       'type'             => 'http://oparl.org/schema/1.0/Meeting',
-      'start'            => $this->formatDate($meeting->start),
-      'end'              => $this->formatDate($meeting->end),
       'streetAddress'    => $meeting->street_address,
       'postalCode'       => $meeting->postal_code,
       'locality'         => $meeting->locality,
@@ -40,8 +38,10 @@ class MeetingTransformer extends TransformerAbstract
                               ?route('api.v1.file.show', $meeting->verbatim_protocol_id)
                               : null,
       'auxiliaryFile'    => ($meeting->auxiliaryFiles) ? $this->collectionRouteList('api.v1.file.show', $meeting->auxiliaryFiles) : null,
-      'agendaItem'       => route_where('api.v1.agendaitem.index', ['meeting' => $meeting->id]),
+      'agendaItem'       => ($meeting->agendaItems) ? $this->collectionRouteList('api.v1.agendaitem.show', $meeting->agendaItems) : null,
       'keyword'          => $meeting->keyword,
+      'startDate'        => $this->formatDate($meeting->start_date),
+      'endDate'          => $this->formatDate($meeting->end_date),
       'created'          => $this->formatDate($meeting->created_at),
       'updated'          => $this->formatDate($meeting->modified_at)
     ];

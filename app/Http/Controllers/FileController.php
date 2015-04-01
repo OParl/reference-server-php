@@ -29,7 +29,7 @@ class FileController extends Controller
       return Response::make('File not found.', 404, ['Content-type' => 'text/plain']);
     }
 
-    return Response::make($file['data'], 200, ['Content-type' => 'application/pdf']);
+    return Response::make($file['data'], 200, ['Content-type' => $file['mimeType']]);
   }
 
   public function download($id)

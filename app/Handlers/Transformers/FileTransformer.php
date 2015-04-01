@@ -22,8 +22,6 @@ class FileTransformer extends TransformerAbstract
       'name'         => $file->name,
       'mimeType'     => ($file->mime_type) ?: 'application/octet-stream',
       'fileName'     => $this->sanitizeFileName($file->file_name),
-      'date'         => $this->formatDate($file->date), // FIXME: Another date field inconsistency, hooray!
-      'modified'     => $this->formatDate($file->file_modified),
       'size'         => (int)$file->size,
       'sha1Checksum' => $file->sha1_checksum,
       'text'         => $file->text,
@@ -38,7 +36,13 @@ class FileTransformer extends TransformerAbstract
       'derivativeFile' => $this->collectionRouteList('api.v1.file.show', $file->derivatives),
       'license'        => $file->license,
       'fileRole'       => $file->role,
-      'keyword'        => $file->keyword
+      'keyword'        => $file->keyword,
+
+      'fileCreated'  => $this->formatDate($file->file_created),
+      'fileModified' => $this->formatDate($file->file_modified),
+
+      'modified'    => $this->formatDate($file->modified_at),
+      'created'     => $this->formatDate($file->created_at),
     ];
   }
 

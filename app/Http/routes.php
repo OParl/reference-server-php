@@ -41,3 +41,10 @@ Route::group(['prefix' => 'api/v1'], function() {
   Route::resource('file',            'API\FileController',            ['only' => ['index', 'show']]);
 });
 
+Route::any('/api/{entity}', function($entity) {
+  return redirect("/api/v1/{$entity}", 301);
+})->where('entity', '\w+');
+
+Route::any('/api/{entity}/{id}', function($entity, $id) {
+  return redirect("/api/v1/{$entity}/{$id}", 301);
+})->where('entity', '\w+');

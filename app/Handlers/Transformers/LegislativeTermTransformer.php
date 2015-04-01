@@ -14,7 +14,9 @@ class LegislativeTermTransformer extends TransformerAbstract
       'body'      => route('api.v1.body.show', $legislativeTerm->body_id),
       'name'      => $legislativeTerm->name,
       'startDate' => $this->formatDate($legislativeTerm->start_date),
-      'endDate'   => $this->formatDate($legislativeTerm->end_date)
+      'endDate'   => $this->formatDate($legislativeTerm->end_date),
+      'created'   => $this->formatDate($legislativeTerm->created_at),
+      'modified'  => $this->formatDate($legislativeTerm->updated_at)
     ];
   }
 

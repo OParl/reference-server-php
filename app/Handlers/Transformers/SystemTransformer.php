@@ -12,11 +12,11 @@ class SystemTransformer extends TransformerAbstract
       'id'           => route('api.v1.system.index'),
       'name'         => $system->id,
       'type'         => 'http://oparl.org/schema/1.0/System',
-      'oparlVersion' => $system->oparlVersion,
-      'vendor'       => $system->vendor,
-      'product'      => $system->product,
+      'oparlVersion' => 'http://oparl.org/specs/1.0/',
+      'vendor'       => 'http://oparl.org/',
+      'product'      => 'http://oparl.org/implementations/php-reference-server',
       'contactEmail' => $this->formatEmail('email@address.com'),
-      'contactName'  => 'Contact Name',
+      'contactName'  => $system->contact_name,
       'body'         => route('api.v1.body.index'),
 
       'links' => [

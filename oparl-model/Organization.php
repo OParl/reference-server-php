@@ -1,10 +1,12 @@
-<?php namespace Oparl;
+<?php namespace OParl;
 
 class Organization extends BaseModel
 {
   protected $touches = ['body', 'suborganizationOf'];
 
   protected $dates = ['start_date', 'end_date'];
+
+  protected $casts = ['post'];
 
   public function members()
   {

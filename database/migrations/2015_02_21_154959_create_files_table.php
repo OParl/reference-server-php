@@ -24,7 +24,7 @@ class CreateFilesTable extends Migration {
 			
 			$table->string('mime_type')->nullable();
 
-			$table->date('date');
+			$table->date('file_created');
 
 			$table->integer('size');
 			$table->string('sha1_checksum')->nullable();

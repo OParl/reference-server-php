@@ -1,6 +1,7 @@
 <?php namespace OParl;
 
 class AgendaItem extends BaseModel {
+  protected $fillable = ['consecutive_number', 'name', 'public', 'result'];
 
 	//
   public function auxiliaryFiles()

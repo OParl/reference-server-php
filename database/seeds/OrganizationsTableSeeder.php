@@ -50,8 +50,10 @@ class OrganizationsTableSeeder extends Seeder {
         $organization = [
             'name'       => $name,
             'short_name' => $this->suffixedShortName($name),
-            'website'    => static::$faker->url
+            'website'    => static::$faker->url,
         ];
+
+        // TODO: organization.post => membership.role as table
 
         $data[] = $organization;
       } catch (\OverflowException $e)
