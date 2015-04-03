@@ -12,7 +12,7 @@ class CreateAgendaitemsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('agendaitems', function(Blueprint $table)
+		Schema::create('agenda_items', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->timestamps();
@@ -33,17 +33,17 @@ class CreateAgendaitemsTable extends Migration {
 			$table->integer('resolution_id')->unsigned()->nullable();
 			$table->foreign('resolution_id')->references('id')->on('files');
 
-			$table->json('keywords');
+      $table->integer('order'); // used to denote the order of agenda items
+
+			$table->json('keyword')->nullable();
 		});
 
 		// pivot table for auxiliary files
-		Schema::create('agendaitems_auxiliary_files', function(Blueprint $table) {
-			$table->integer('agendaitem_id')->unsigned();
+		Schema::create('agenda_items_auxiliary_files', function(Blueprint $table) {
+			$table->integer('agenda_item_id')->unsigned();
 			$table->integer('auxiliary_id')->unsigned();
 
-      $table->integer('order'); // used to denote the order of agenda items
-
-			$table->foreign('agendaitem_id')->references('id')->on('agendaitems');
+			$table->foreign('agenda_item_id')->references('id')->on('agenda_items');
 			$table->foreign('auxiliary_id')->references('id')->on('files');
 		});
 	}
@@ -55,9 +55,9 @@ class CreateAgendaitemsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('agendaitems_auxiliary_files');
+		Schema::drop('agenda_items_auxiliary_files');
 
-		Schema::drop('agendaitems');
+		Schema::drop('agenda_items');
 	}
 
 }

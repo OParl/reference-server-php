@@ -94,6 +94,6 @@ class MeetingTransformer extends TransformerAbstract
 
   public function includeAgendaItem(Meeting $meeting)
   {
-    return $this->collection($meeting->agendaItems, new AgendaItemTransformer);
+    return $this->collection($meeting->agendaItems()->orderBy('order')->get(), new AgendaItemTransformer);
   }
 }

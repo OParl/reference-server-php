@@ -10,15 +10,11 @@ class AgendaItemsTableSeeder extends Seeder {
     {
       $agendaItem = AgendaItem::create([
         'consecutive_number' => base_convert($i, 10, 32),
-        'name'               => static::$faker->words(static::$faker->numberBetween(3, 8)),
+        'name'               => implode(' ', static::$faker->words(static::$faker->numberBetween(3, 8))),
         'public'             => static::$faker->boolean(70),
-        'result'             => static::$faker->optional(30)->words(static::$faker->numberBetween(6, 21)),
+        'result'             => implode(' ', static::$faker->optional(30)->words(static::$faker->numberBetween(6, 21))),
+        'order'              => $i,
       ]);
-
-      if (!is_null($agendaItem->result))
-      {
-        // TODO: agendaitem resolution file
-      }
     }
   }
 }

@@ -3,8 +3,8 @@
 class Meeting extends BaseModel {
 
 	protected $fillable = [
-    'start',
-    'end',
+    'start_date',
+    'end_date',
     'street_address',
     'postal_code',
     'locality'
@@ -59,6 +59,6 @@ class Meeting extends BaseModel {
 
   public function agendaItems()
   {
-    return $this->hasMany('OParl\AgendaItem');
+    return $this->hasMany('OParl\AgendaItem', 'meeting_id', 'id');
   }
 }

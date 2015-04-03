@@ -3,12 +3,11 @@
 class AgendaItem extends BaseModel {
   protected $fillable = ['consecutive_number', 'name', 'public', 'result'];
 
-	//
   public function auxiliaryFiles()
   {
     return $this->belongsToMany('OParl\File',
-                         'agendaitems_auxiliary_files',
-                         'agendaitem_id',
+                         'agenda_items_auxiliary_files',
+                         'agenda_item_id',
                          'auxiliary_id');
   }
 

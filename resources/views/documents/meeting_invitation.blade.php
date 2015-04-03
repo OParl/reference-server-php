@@ -33,7 +33,7 @@
 
         <p class="p2">
              Hiermit lade ich Sie zu einem Treffen des <strong>{{ $meeting->organization->name }}</strong>
-             am <strong>{{ $meeting->start->format('l, d F Y') }}</strong> ein.
+             am <strong>{{ $meeting->start_date->format('l, d F Y') }}</strong> ein.
         </p>
 
         <hr />
@@ -41,7 +41,7 @@
         <table>
             <tr>
                 <td><strong>Sitzungstermin:</strong></td>
-                <td>{{ $meeting->start->format('l, d F Y \u\m H:i') }}</td>
+                <td>{{ $meeting->start_date->format('l, d F Y \u\m H:i') }}</td>
             </tr>
             @if ($meeting->locality)
             <tr>
@@ -61,14 +61,16 @@
 
         <h3>Tagesordnung:</h3>
 
-        <ul>
-            <li>TODO</li>
-        </ul>
+        <ol>
+            @foreach ($meeting->agendaItems->sortBy('order') as $agendaItem)
+                <li>[{{$agendaItem->consecutive_number}}] {{ $agendaItem->name }}</li>
+            @endforeach
+        </ol>
 
         <p class="p2">
             Mit freundlichen Grüßen,<br />
             <br />
-            {{ $meetings->chair->name }}
+            {{ $meeting->chair->name }}
         </p>
     </body>
 </html>

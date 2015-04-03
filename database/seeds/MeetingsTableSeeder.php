@@ -4,13 +4,13 @@ use \Storage;
 
 use Carbon\Carbon;
 
-use Illuminate\Support\Collection;
-
 use OParl\Body;
-use OParl\File;
 use OParl\Meeting;
+use OParl\AgendaItem;
 
 class MeetingsTableSeeder extends Seeder {
+  protected $lastAgendaItemID = 1;
+
   public function run()
   {
     foreach (Body::all() as $body)
@@ -38,8 +38,8 @@ class MeetingsTableSeeder extends Seeder {
           $meeting->participants()->saveMany($this->getRandomArrayFromCollection($organization->members)->all());
           $this->getAgendaItems($meeting);
 
+          // FIXME: invitations are not working
           $invitationFile = static::$faker->oparlMeetingInvitation($meeting, $termStart, $termEnd);
-
           $meeting->invitations()->save($invitationFile);
 
           $meeting->save();
@@ -54,14 +54,7 @@ class MeetingsTableSeeder extends Seeder {
 
     for ($i = 0; $i < $numItems; $i++)
     {
-      $agendaItem = null;
-
-      $k = 1;
-      do
-      {
-        $agendaItem = AgendaItem::find($k++);
-      } while ($agendaItem->meeting_id != null);
-
+      $agendaItem = AgendaItem::find($this->lastAgendaItemID++);
       $meeting->agendaItems()->save($agendaItem);
     }
   }

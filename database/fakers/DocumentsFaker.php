@@ -36,26 +36,35 @@ class DocumentsFaker extends Base {
     return $filename;
   }
 
-  public function oparlMeetingInvitation(Meeting $meeting, Carbon $term_start, Carbon $term_end)
+  protected function makeDocument($view, $viewData, $fileCreated)
   {
     $pdf = new mPDF();
     $pdf->ignore_invalid_utf8 = true;
 
-    $view = View::make('documents.meeting_invitation', ['meeting' => $meeting]);
+    $view = View::make($view, $viewData);
     $pdf->WriteHTML($view);
 
-    $invitationFileName = $this->save($pdf);
+    $fileName = $this->save($pdf);
 
-    $invitationFile = File::create([
-      'file_name'     => $invitationFileName,
-      'file_modified' => Carbon::createFromTimestampUTC(Storage::lastModified($invitationFileName)),
-      'size'          => Storage::size($invitationFileName),
-      'file_created'  => static::$faker->dateTimeBetween($term_start, $term_end),
-      'name'          => static::$faker->optional()->word,
-      'text'          => static::$faker->optional()->paragraphs(2),
+    $file = File::create([
+      'file_name'     => $fileName,
+      'file_modified' => Carbon::createFromTimestampUTC(Storage::lastModified($fileName)),
+      'size'          => Storage::size($fileName),
+      'file_created'  => $fileCreated,
+      'name'          => $this->generator->optional()->word,
+      'text'          => $this->generator->optional()->paragraphs(2),
       'mime_type'     => 'application/pdf',
     ]);
 
-    return $invitationFile;
+    return $file;
+  }
+
+  public function oparlMeetingInvitation(Meeting $meeting, Carbon $term_start, Carbon $term_end)
+  {
+    return $this->makeDocument(
+      'documents.meeting_invitation',
+      compact('meeting'),
+      $this->generator->dateTimeBetween($term_start, $term_end)
+    );
   }
 }
