@@ -67,4 +67,13 @@ class DocumentsFaker extends Base {
       $this->generator->dateTimeBetween($term_start, $term_end)
     );
   }
+
+  public function oparlPaper($name)
+  {
+    return $this->makeDocument(
+      'documents.paper',
+      compact('name'),
+      Carbon::now()
+    );
+  }
 }

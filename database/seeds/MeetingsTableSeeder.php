@@ -38,7 +38,6 @@ class MeetingsTableSeeder extends Seeder {
           $meeting->participants()->saveMany($this->getRandomArrayFromCollection($organization->members)->all());
           $this->getAgendaItems($meeting);
 
-          // FIXME: invitations are not working
           $invitationFile = static::$faker->oparlMeetingInvitation($meeting, $termStart, $termEnd);
           $meeting->invitations()->save($invitationFile);
 
@@ -46,6 +45,9 @@ class MeetingsTableSeeder extends Seeder {
         }
       }
     }
+
+    // remove excess agenda items
+    \DB::statement('DELETE FROM agenda_items WHERE meeting_id = null');
   }
 
   protected function getAgendaItems(Meeting $meeting)

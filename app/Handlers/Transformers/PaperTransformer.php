@@ -23,8 +23,8 @@ class PaperTransformer extends TransformerAbstract
 
       'underDirectionOf' => route('api.v1.organization.show', $paper->under_direction_of_id),
 
-      'publishedDate' => $this->formatDate('published_date'),
-      'modified'      => $this->formatDate('modified_at'),
+      'publishedDate' => $this->formatDate($paper->published_date),
+      'modifiedDate'  => $this->formatDate($paper->modified_at),
     ];
   }
 }

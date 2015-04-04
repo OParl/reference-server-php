@@ -29,7 +29,7 @@ class CreatePapersTable extends Migration {
 			$table->integer('main_file_id')->unsigned()->nullable();
 			$table->foreign('main_file_id')->references('id')->on('files');
 
-			$table->json('keywords');
+			$table->json('keyword')->nullable();
 
 			$table->integer('under_direction_of_id')->unsigned()->nullable();
 			$table->foreign('under_direction_of_id')->references('id')->on('organizations');

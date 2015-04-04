@@ -1,7 +1,7 @@
 <?php namespace OParl;
 
 class File extends BaseModel {
-  protected $dates = ['date', 'file_modified'];
+  protected $dates = ['file_created', 'file_modified'];
 
   public function masterFile()
   {

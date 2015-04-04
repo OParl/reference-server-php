@@ -32,9 +32,7 @@ class DatabaseSeeder extends Seeder {
     $this->call('LegislativeTermsTableSeeder');
     $this->call('AgendaItemsTableSeeder');
     $this->call('MeetingsTableSeeder');
-
-    // remove excess agenda items
-    \DB::statement('DELETE FROM agenda_items WHERE meeting_id = null');
+    $this->call('PapersTableSeeder');
 
     Model::reguard();
 

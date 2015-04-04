@@ -1,6 +1,7 @@
 <?php namespace OParl;
 
 class Paper extends BaseModel {
+  protected $dates = ['published_date'];
 
 	public function body()
   {
@@ -19,6 +20,6 @@ class Paper extends BaseModel {
 
   public function consultations()
   {
-    return $this->belongsToMany('OParl\Consultation', 'papers_consultations', 'paper_id', 'consultation_id');
+    return $this->hasMany('OParl\Consultation');
   }
 }
