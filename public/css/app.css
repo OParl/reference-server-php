@@ -6231,3 +6231,13 @@ label,
 .checkbox label {
   font-weight: 300;
 }
+.error-message {
+  padding: .6em;
+  margin: 0 auto;
+  max-width: 80%;
+  border: 2px solid red;
+  font-weight: bold;
+  text-align: center;
+}
+
+/*# sourceMappingURL=app.css.map */

@@ -1,20 +1,21 @@
 <?php namespace App\Http\Controllers\API;
 
-use App\Commands\SerializeCollectionCommand;
 use App\Commands\SerializePaginatedCommand;
 use App\Commands\SerializeItemCommand;
 use App\Http\Controllers\Controller;
+use App\Services\XMLFormatter;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-use Illuminate\Support\Collection;
 use Illuminate\View\Factory;
 
 use Illuminate\Routing\Router;
 
 use Illuminate\Pagination\LengthAwarePaginator;
+
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class APIController
@@ -47,6 +48,11 @@ class APIController extends Controller
   protected $model;
 
   /**
+   * @var string output format
+   **/
+  protected $format = 'html';
+
+  /**
    * @param Request $request
    */
   public function __construct(Request $request, Response $response,
@@ -59,39 +65,33 @@ class APIController extends Controller
 
     if (!is_string($this->model) || !class_exists($this->model))
       throw new \LogicException("API controllers require a valid \$model property.");
+
+
+
+    $this->format = $this->determineOutputFormat();
   }
 
-  protected function getModelName()
+  private function determineOutputFormat()
   {
-    return class_basename($this->model);
+    if ($this->request->wantsJson()
+      ||  $this->request->input('format') === 'json')
+      return 'json';
+
+    if ($this->request->input('format') === 'yaml')
+      return 'yaml';
+
+    if ($this->request->input('format') === 'xml')
+      return 'xml';
+
+    return 'html';
   }
 
   /**
-   * @return array
+   * @return string
    **/
-  private function getViableRoutes()
+  protected function getModelName()
   {
-    if (!$this->routes) return [];
-
-    $currentRoute = explode('.', \Route::currentRouteName());
-    $currentRouteEndpoint = array_pop($currentRoute);
-
-    $routeNameBase = implode('.', $currentRoute).'.';
-
-    $viableRoutes = [
-      'index',
-      'store',
-      'update',
-      'destroy'
-    ];
-
-    unset($viableRoutes[$currentRouteEndpoint]);
-
-    array_walk($viableRoutes, function (&$val, $key) use ($routeNameBase) {
-      $val = [$val, $this->routes->getByName($routeNameBase.$val)];
-    });
-
-    return $viableRoutes;
+    return class_basename($this->model);
   }
 
   /**
@@ -101,11 +101,43 @@ class APIController extends Controller
    */
   private function respond($data, array $headers = [])
   {
-    if ($this->request->wantsJson()
-    ||  $this->request->input('format') === 'json')
+    // enable CORS
+    $headers['Access-Control-Allow-Origin'] = '*';
+
+    $pagination_code = null;
+    if (array_key_exists('pagination_code', $data))
+    {
+      $pagination_code = $data['pagination_code'];
+      unset($data['pagination_code']);
+    }
+
+    if ($this->format === 'json')
     {
       $headers['Content-type'] = 'application/json; charset=UTF-8';
       $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+      return $this->response->create($data, $this->statusCode, $headers);
+    }
+
+    if ($this->format === 'yaml')
+    {
+      $headers['Content-type'] = 'text/yaml; charset=UTF-8';
+      $data = Yaml::dump($data);
+
+      return $this->response->create($data, $this->statusCode, $headers);
+    }
+
+    if ($this->format === 'xml')
+    {
+      try
+      {
+        $data = XMLFormatter::format($data);
+      } catch (\ErrorException $e)
+      {
+        $data = $this->viewFactory->make('api.xml_error');
+      }
+
+      $headers['Content-type'] = 'text/xml; charset=UTF-8';
 
       return $this->response->create($data, $this->statusCode, $headers);
     }
@@ -123,11 +155,11 @@ class APIController extends Controller
     $headers['Content-type'] = 'text/html; charset=UTF-8';
 
     $viewData = [
-      'url'          => $this->request->url(),
-      'content'      => $data,
-      'module'       => $this->getModelName(),
-      'isError'      => false,
-      'viableRoutes' => $this->getViableRoutes()
+      'url'            => $this->request->url(),
+      'json'           => $data,
+      'module'         => $this->getModelName(),
+      'isError'        => false,
+      'paginationCode' => $pagination_code,
     ];
 
     if ($this->statusCode != 200)
@@ -140,6 +172,9 @@ class APIController extends Controller
     return $this->response->create($view, $this->statusCode, $headers);
   }
 
+  /**
+   * @return Illuminate\Http\Response
+   **/
   private function respondEmpty()
   {
     // Technically, this is a tie between '200 OK' and '204 No Content'
@@ -207,6 +242,9 @@ class APIController extends Controller
       return $this->respondEmpty();
 
     $dataArray = $this->dispatch(new SerializePaginatedCommand($paginator, $this->request));
+
+    if ($this->format === 'html')
+      $dataArray['pagination_code'] = $paginator->render();
 
     return $this->respond($dataArray);
   }
