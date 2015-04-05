@@ -6,4 +6,8 @@
     <div class="panel-body {{ strtolower($module) }} {{ $collectionClass }}" id="oparl-documentation">
         <span>TODO: Spezifikation</span>
     </div>
+
+    <div class="panel-footer">
+        Mehr Informationen gibt es unter <a href="//oparl.org/spezifikation/">http://oparl.org/spezifikation/</a>
+    </div>
 </div>

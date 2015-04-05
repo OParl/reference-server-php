@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{{ config('app.url') }} API - {{ $module }}</title>
+        <title>OParl API - {{ $module }}</title>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/prism.css') }}" />
 
