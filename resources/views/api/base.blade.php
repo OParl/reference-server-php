@@ -3,7 +3,6 @@
     <head>
         <title>{{ config('app.url') }} API - {{ $module }}</title>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
@@ -45,7 +44,8 @@
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
+
+
 
         @include('common.piwik')
     </body>
