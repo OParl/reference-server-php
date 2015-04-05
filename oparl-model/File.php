@@ -21,7 +21,7 @@ class File extends BaseModel {
 
   public function getCleanFileName()
   {
-    $parts = explode(DIRECTORY_SEPARATOR, $this->attributes['filename']);
+    $parts = explode(DIRECTORY_SEPARATOR, $this->attributes['file_name']);
     return $parts[count($parts) - 1];
   }
 }
