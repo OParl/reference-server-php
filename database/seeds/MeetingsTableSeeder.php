@@ -45,9 +45,6 @@ class MeetingsTableSeeder extends Seeder {
         }
       }
     }
-
-    // remove excess agenda items
-    \DB::statement('DELETE FROM agenda_items WHERE meeting_id = null');
   }
 
   protected function getAgendaItems(Meeting $meeting)

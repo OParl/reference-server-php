@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder {
       \DB::statement('SET FOREIGN_KEY_CHECKS = 0');
     }
 
-    Storage::delete(Storage::files('files/'));
+    Storage::delete(Storage::allFiles('files/'));
+    array_map(function ($dir) { Storage::deleteDirectory($dir); }, Storage::allDirectories('files/'));
 
 		Model::unguard();
 
@@ -32,6 +33,10 @@ class DatabaseSeeder extends Seeder {
     $this->call('LegislativeTermsTableSeeder');
     $this->call('AgendaItemsTableSeeder');
     $this->call('MeetingsTableSeeder');
+
+    // remove unused agenda items
+    \DB::statement('DELETE FROM agenda_items WHERE meeting_id = null');
+
     $this->call('PapersTableSeeder');
 
     Model::reguard();

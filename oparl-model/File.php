@@ -12,4 +12,16 @@ class File extends BaseModel {
   {
     return $this->belongsToMany('OParl\File', 'files_derivatives', 'file_id', 'derivative_id');
   }
+
+  public static function generateFilename($extension = 'pdf', $hashed = true)
+  {
+    $filename = sprintf('%s.%s', uniqid('file_'), $extension);
+    return ($hashed) ? hash_filename($filename) : $filename;
+  }
+
+  public function getCleanFileName()
+  {
+    $parts = explode(DIRECTORY_SEPARATOR, $this->attributes['filename']);
+    return $parts[count($parts) - 1];
+  }
 }

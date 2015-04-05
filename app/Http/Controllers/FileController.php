@@ -14,7 +14,7 @@ class FileController extends Controller
     $file = $this->dispatch(new SerializeItemCommand(File::findOrFail($id), app('request')));
 
     $file = $file['data'];
-    $file['data'] = Storage::get('files/'.$file['fileName']);
+    $file['data'] = Storage::get('files/'.hash_filename($file['fileName']));
 
     return $file;
   }

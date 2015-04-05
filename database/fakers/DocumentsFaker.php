@@ -29,8 +29,7 @@ class DocumentsFaker extends Base {
   protected function save(mPDF $pdf)
   {
     $pdfData = $pdf->Output('', 'S');
-    $filename = 'files/'.uniqid('file_').'.pdf';
-
+    $filename = 'files'.DIRECTORY_SEPARATOR.File::generateFilename();
     Storage::put($filename, $pdfData);
 
     return $filename;

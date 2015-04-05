@@ -6,14 +6,6 @@ class FileTransformer extends TransformerAbstract
 {
   protected $availableIncludes = ['masterFile', 'derivativeFile'];
 
-  protected function sanitizeFileName($filename)
-  {
-    if (strpos($filename, 'files/') === 0)
-      $filename = substr($filename, 6);
-
-    return $filename;
-  }
-
   public function transform(File $file)
   {
     return [
@@ -21,7 +13,7 @@ class FileTransformer extends TransformerAbstract
       'type'         => 'http://oparl.org/schema/1.0/File',
       'name'         => $file->name,
       'mimeType'     => ($file->mime_type) ?: 'application/octet-stream',
-      'fileName'     => $this->sanitizeFileName($file->file_name),
+      'fileName'     => $file->getCleanFileName(),
       'size'         => (int)$file->size,
       'sha1Checksum' => $file->sha1_checksum,
       'text'         => $file->text,

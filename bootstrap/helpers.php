@@ -65,3 +65,32 @@ if (!function_exists('array_map_keys'))
     return array_flip(array_map($callback, array_flip($array)));
   }
 }
+
+if (!function_exists('str_hashcode'))
+{
+  function str_hashcode($str)
+  {
+    $code = 0;
+    $len  = mb_strlen($str);
+    for ($i = 0; $i < $len; $i++)
+    {
+      $code += ord($str[$i]) * pow(31, $len - 1 - $i) % 2147483648;
+    }
+
+    return $code;
+  }
+}
+
+if (!function_exists('hash_filename'))
+{
+  function hash_filename($filename)
+  {
+    $hashCode = str_hashcode($filename);
+
+    $fb = sprintf('%02x', $hashCode & 0x000000FF);
+    $sb = sprintf('%02x', ($hashCode << 2) & 0x000000FF);
+
+
+    return str_replace('/', DIRECTORY_SEPARATOR, sprintf('%s/%s/%s', $fb, $sb, $filename));
+  }
+}
