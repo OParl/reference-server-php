@@ -155,11 +155,12 @@ class APIController extends Controller
     $headers['Content-type'] = 'text/html; charset=UTF-8';
 
     $viewData = [
-      'url'            => $this->request->url(),
-      'json'           => $data,
-      'module'         => $this->getModelName(),
-      'isError'        => false,
-      'paginationCode' => $pagination_code,
+      'url'             => $this->request->url(),
+      'json'            => $data,
+      'module'          => $this->getModelName(),
+      'isError'         => false,
+      'paginationCode'  => $pagination_code,
+      'collectionClass' => (!is_null($pagination_code)) ? '' : 'collection',
     ];
 
     if ($this->statusCode != 200)

@@ -3,6 +3,7 @@
     <head>
         <title>{{ config('app.url') }} API - {{ $module }}</title>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/prism.css') }}" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
@@ -13,7 +14,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="page-header">
-                        <h1>OParl API<small>{{ $url }}</small></h1>
+                        <h1>OParl API<small>Demo</small></h1>
                     </div>
                 </div>
             </div>
@@ -44,8 +45,7 @@
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.js"></script>
-
-
+        <script src="{{ asset('js/prism.js') }}"></script>
 
         @include('common.piwik')
     </body>
