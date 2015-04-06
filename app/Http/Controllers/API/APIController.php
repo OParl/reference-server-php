@@ -1,21 +1,14 @@
 <?php namespace App\Http\Controllers\API;
 
+use App\Commands\CreateWebviewAPIResponseCommand;
 use App\Commands\SerializePaginatedCommand;
 use App\Commands\SerializeItemCommand;
 use App\Http\Controllers\Controller;
-use App\Services\XMLFormatter;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-
-use Illuminate\View\Factory;
-
 use Illuminate\Routing\Router;
-
 use Illuminate\Pagination\LengthAwarePaginator;
-
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class APIController
@@ -27,20 +20,11 @@ class APIController extends Controller
    * @var Illuminate\Http\Request
    */
   protected $request;
-  /**
-   * @var Illuminate\Http\Response
-   */
-  protected $response;
 
   /**
    * @var int HTTP Status Code
    */
   protected $statusCode = 200;
-
-  /**
-   * @var Factory
-   **/
-  protected $viewFactory;
 
   /**
    * @var Illuminate\Database\Eloquent\Model
@@ -55,18 +39,13 @@ class APIController extends Controller
   /**
    * @param Request $request
    */
-  public function __construct(Request $request, Response $response,
-                              Factory $viewFactory, Router $router)
+  public function __construct(Request $request, Router $router)
   {
     $this->request = $request;
-    $this->response = $response;
-    $this->viewFactory = $viewFactory;
     $this->routes = $router->getRoutes();
 
     if (!is_string($this->model) || !class_exists($this->model))
       throw new \LogicException("API controllers require a valid \$model property.");
-
-
 
     $this->format = $this->determineOutputFormat();
   }
@@ -74,7 +53,7 @@ class APIController extends Controller
   private function determineOutputFormat()
   {
     if ($this->request->wantsJson()
-      ||  $this->request->input('format') === 'json')
+    ||  $this->request->input('format') === 'json')
       return 'json';
 
     if ($this->request->input('format') === 'yaml')
@@ -111,66 +90,31 @@ class APIController extends Controller
       unset($data['pagination_code']);
     }
 
-    if ($this->format === 'json')
+    $response = null;
+    switch ($this->format)
     {
-      $headers['Content-type'] = 'application/json; charset=UTF-8';
-      $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+      case 'json':
+      case 'yaml':
+      case 'xml':
+        $command = sprintf('App\Commands\Create%sAPIResponseCommand', strtoupper($this->format));
+        $response = $this->dispatch(new $command($data, $this->statusCode, $headers));
+        break;
 
-      return $this->response->create($data, $this->statusCode, $headers);
+      case 'html':
+      default:
+        $response = $this->dispatch(new CreateWebviewAPIResponseCommand(
+          $data,
+          $this->statusCode,
+          $headers,
+          [
+            'modelName'      => $this->getModelName(),
+            'paginationCode' => $pagination_code,
+            'url'            => $this->request->url()
+          ]
+        ));
     }
 
-    if ($this->format === 'yaml')
-    {
-      $headers['Content-type'] = 'text/yaml; charset=UTF-8';
-      $data = Yaml::dump($data);
-
-      return $this->response->create($data, $this->statusCode, $headers);
-    }
-
-    if ($this->format === 'xml')
-    {
-      try
-      {
-        $data = XMLFormatter::format($data);
-      } catch (\ErrorException $e)
-      {
-        $data = $this->viewFactory->make('api.xml_error');
-      }
-
-      $headers['Content-type'] = 'text/xml; charset=UTF-8';
-
-      return $this->response->create($data, $this->statusCode, $headers);
-    }
-
-    $data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-
-    // gzip?!
-    if (array_has($this->request->getAcceptableContentTypes(), 'gzip')
-    ||  array_has($this->request->getAcceptableContentTypes(), 'compress'))
-    {
-      $headers['Content-encoding'] = 'gzip';
-      $data = gzcompress($data);
-    }
-
-    $headers['Content-type'] = 'text/html; charset=UTF-8';
-
-    $viewData = [
-      'url'             => $this->request->url(),
-      'json'            => $data,
-      'module'          => $this->getModelName(),
-      'isError'         => false,
-      'paginationCode'  => $pagination_code,
-      'collectionClass' => (!is_null($pagination_code)) ? '' : 'collection',
-    ];
-
-    if ($this->statusCode != 200)
-    {
-      $viewData['isError'] = true;
-    }
-
-    $view = $this->viewFactory->make('api.base', $viewData);
-
-    return $this->response->create($view, $this->statusCode, $headers);
+    return $response;
   }
 
   /**
