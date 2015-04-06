@@ -74,7 +74,7 @@ if (!function_exists('str_hashcode'))
     $len  = mb_strlen($str);
     for ($i = 0; $i < $len; $i++)
     {
-      $code += (ord($str[$i]) * 31 ** ($len - 1 - $i)) % 2147483647;
+      $code += (ord($str[$i]) * pow(31, $len - 1 - $i)) % 2147483647;
     }
 
     return $code;
