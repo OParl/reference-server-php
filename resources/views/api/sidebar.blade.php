@@ -8,6 +8,6 @@
     </div>
 
     <div class="panel-footer">
-        Mehr Informationen gibt es unter <a href="//oparl.org/spezifikation/">http://oparl.org/spezifikation/</a>
+        Mehr Informationen gibt es unter <a href="//oparl.org/spezifikation/">http://oparl.org/spezifikation/</a>.
     </div>
 </div>
