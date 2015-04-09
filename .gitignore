@@ -5,3 +5,4 @@ storage/database.sqlite
 .idea
 composer.lock
 schema.sql
+public/js
