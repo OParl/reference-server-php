@@ -13,5 +13,7 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.scripts(['prism.js', 'api.js'], 'public/js/api.js');
+    mix.scripts(['../bower_components/angularjs/angular.js', 'client.js'], 'public/js/client.js');
+
     mix.less('app.less');
 });

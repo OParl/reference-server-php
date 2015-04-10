@@ -1,0 +1,21 @@
+{
+  "name": "oparl-server",
+  "version": "0.0.0",
+  "homepage": "https://github.com/OParl/php-server",
+  "authors": [
+    "Stefan Graupner <stefan.graupner@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "resources/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angularjs": "~1.3.15"
+  }
+}

@@ -6,3 +6,4 @@ storage/database.sqlite
 composer.lock
 schema.sql
 public/js
+resources/bower_components
