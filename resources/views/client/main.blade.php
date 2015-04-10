@@ -8,19 +8,34 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand">BodyName</a>
+                <a class="navbar-brand">OParl Demo</a>
             </div>
 
             <div class="collapse navbar-collapse" id="main-navbar">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Übersicht</a></li>
-                    <li><a href="#">Mitglieder</a></li>
-                    <li><a href="#">Ausschüsse</a></li>
-                </ul>
                 <div class="navbar-right">
                     <button type="button" class="btn navbar-btn" ng-click="toggleBodyChange()">Körperschaft wechseln</button>
                 </div>
             </div>
         </div>
     </nav>
+
+    <h1>@{{ body.name }}</h1>
+
+    <div role="tabpanel">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#overview" aria-controls="overview" role="tab" data-toggle="tab">Übersicht</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="overview">
+
+            </div>
+        </div>
+
+    </div>
 </div>
