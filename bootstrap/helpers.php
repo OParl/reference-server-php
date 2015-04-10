@@ -14,7 +14,7 @@ if (!function_exists('encode_where'))
 
 if (!function_exists('decode_where'))
 {
-  function decode_where(array $where)
+  function decode_where($where = '')
   {
     $where = explode(',', $where);
     $clauses = [];
@@ -89,7 +89,6 @@ if (!function_exists('hash_filename'))
 
     $fb = sprintf('%02x', $hashCode & 0x000000FF);
     $sb = sprintf('%02x', ($hashCode << 2) & 0x000000FF);
-
 
     return str_replace('/', DIRECTORY_SEPARATOR, sprintf('%s/%s/%s', $fb, $sb, $filename));
   }

@@ -37,7 +37,9 @@
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",
-			"php artisan optimize"
+			"php artisan optimize",
+            "npm update",
+            "gulp --production"
 		]
 	},
 	"config": {
