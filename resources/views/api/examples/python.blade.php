@@ -1,2 +1,2 @@
-r = requests.get('{{ $url }}')
+r = requests.get("{{ $url }}")
 print(r.json())
