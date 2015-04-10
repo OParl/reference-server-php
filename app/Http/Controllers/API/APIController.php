@@ -83,10 +83,10 @@ class APIController extends Controller
     // enable CORS
     $headers['Access-Control-Allow-Origin'] = '*';
 
-    $pagination_code = null;
+    $paginationCode = null;
     if (array_key_exists('pagination_code', $data))
     {
-      $pagination_code = $data['pagination_code'];
+      $paginationCode = $data['pagination_code'];
       unset($data['pagination_code']);
     }
 
@@ -108,7 +108,7 @@ class APIController extends Controller
           $headers,
           [
             'modelName'      => $this->getModelName(),
-            'paginationCode' => $pagination_code,
+            'paginationCode' => $paginationCode,
             'url'            => $this->request->url()
           ]
         ));
