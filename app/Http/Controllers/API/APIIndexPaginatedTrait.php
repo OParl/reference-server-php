@@ -29,6 +29,8 @@ trait APIIndexPaginatedTrait
         array_shift($clauses);
         foreach ($clauses as $where => $value)
           $query->{$where}($value);
+
+        $query = $query->paginate(config('oparl.pageElements'));
       } else
       {
         return $this->respondWithNotAllowed("The requested query method is not allowed on `{$this->getModelName()}`.");

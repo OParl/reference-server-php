@@ -1,4 +1,4 @@
-<?php namespace Oparl;
+<?php namespace OParl;
 
 class Membership extends BaseModel {
 
