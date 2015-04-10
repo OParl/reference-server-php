@@ -39,6 +39,7 @@
 			"php artisan clear-compiled",
 			"php artisan optimize",
             "npm update",
+            "bower update --allow-root",
             "gulp --production"
 		]
 	},
