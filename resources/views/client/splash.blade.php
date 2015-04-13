@@ -14,11 +14,7 @@
                                     <div class="col-xs-10">
                                         <h5>@{{ body.name }}</h5>
                                         <address>
-                                            @{{ body.contactName }}
-                                            <br />
                                             <small><a href="@{{ body.website }}">@{{ body.website }}</a></small>
-                                            <br />
-                                            <small><a href="@{{ body.contactEmail }}">@{{ body.contactEmail }}</a></small>
                                         </address>
                                     </div>
                                     <div class="col-xs-2">

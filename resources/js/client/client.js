@@ -36,17 +36,28 @@ opc.controller('SplashController', ['$scope', '$rootScope', '$http', function($s
     };
 }]);
 
-opc.controller('MainController', ['$scope', '$http', function($scope, $http) {
-    $scope.toggleBodyChange = function()
-    {
+opc.controller('MainController', ['$scope', function($scope) {
+    $scope.toggleBodyChange = function() {
         $('#main').fadeOut(250);
         $('#splash').delay(250).modal('show');
-    }
+    };
 
-    var bodyUpdateEvent = $scope.$onRootScope('BodyUpdate', function() {
+    $scope.$onRootScope('BodyUpdate', function() {
         $scope.body = currentBody;
 
         $('#main').fadeIn(250);
         $('#splash').delay(250).modal('hide');
     });
+
+    $scope.$on('OrganizationChange', function() {
+        alert('Organization changed!');
+    });
+}]);
+
+opc.controller('OrganizationController', ['$scope', '$http', function($scope, $http) {
+    $scope.selectOrganization = function(id) {
+      $http.get(id).success(function (result) {
+         $scope.$broadcast('OrganizationChange');
+      });
+    };
 }]);
