@@ -62,11 +62,7 @@ trait APIIndexPaginatedTrait
 
     if (Request::has('where'))
     {
-      $parsed = $this->parseWhere(Request::input('where'));
-      if ($parsed instanceof \HttpResponse)
-        return $parsed;
-
-      $query = $parsed;
+      $query = $this->parseWhere(Request::input('where'));
     } else
     {
       $query = call_user_func([$this->model, 'paginate'], config('oparl.pageElements'));
@@ -74,6 +70,9 @@ trait APIIndexPaginatedTrait
 
     if (Request::has('include'))
       $query = $this->parseInclude(Request::input('include'), $query);
+
+    if ($query instanceof \Illuminate\Http\Response)
+      return $query;
 
     return $this->respondWithPaginated($query);
   }

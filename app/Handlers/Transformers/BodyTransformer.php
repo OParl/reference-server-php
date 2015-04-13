@@ -26,11 +26,11 @@ class BodyTransformer extends TransformerAbstract
       'meeting'           => route_where('api.v1.meeting.index',         ['body' => $body->id]),
       'paper'             => route_where('api.v1.paper.index',           ['body' => $body->id]),
       'person'            => route_where('api.v1.person.index',          ['body' => $body->id]),
-      'agendaItem'        => null, // FIXME: Implement
-      'file'              => null,
-      'consultation'      => null,
-      'location'          => null,
-      'membership'        => null,
+      'agendaItem'        => route_where('api.v1.agendaitem.index',      ['body' => $body->id]),
+      'file'              => route_where('api.v1.file.index',            ['body' => $body->id]), // TODO: DISCUSS!
+      'consultation'      => route_where('api.v1.consultation.index',    ['body' => $body->id]),
+      'location'          => route_where('api.v1.location.index',        ['body' => $body->id]), // TODO: DISCUSS!
+      'membership'        => route_where('api.v1.membership.index',      ['body' => $body->id]), // TODO: DISCUSS!
       'legislativeTerm'   => $this->collectionRouteList('api.v1.legislativeterm.show', $body->legislativeTerms),
       'classification'    => $body->classification,
       'keyword'           => $body->keyword,

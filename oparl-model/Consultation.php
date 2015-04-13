@@ -19,4 +19,13 @@ class Consultation extends Model {
     return $this->belongsToMany('OParl\Consultation', 'consultations_organizations', 'consultation_id', 'organization_id');
   }
 
+  public function body()
+  {
+    return $this->belongsTo('OParl\Body', 'body_id');
+  }
+
+  public function getBodyIdAttribute()
+  {
+    return $this->agendaItem->body_id;
+  }
 }

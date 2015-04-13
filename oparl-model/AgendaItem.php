@@ -25,4 +25,14 @@ class AgendaItem extends BaseModel {
   {
     return $this->belongsTo('OParl\Meeting', 'meeting_id');
   }
+
+  public function body()
+  {
+    return $this->belongsTo('OParl\Body', 'body_id');
+  }
+
+  public function getBodyIdAttribute()
+  {
+    return $this->meeting->organization->body_id;
+  }
 }
