@@ -19,7 +19,7 @@ elixir(function(mix) {
         'client/client.js'
     ], 'public/js/client.js');
 
-    mix.styles('prism.css');
+    mix.styles('prism.css', 'public/css/prism.css');
 
     mix.less('api.less');
     mix.less('client.less');
