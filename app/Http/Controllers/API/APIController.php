@@ -62,7 +62,10 @@ class APIController extends Controller
     if ($this->request->input('format') === 'xml')
       return 'xml';
 
-    return 'html';
+    if ($this->request->input('format') === 'html')
+      return 'html';
+
+    return 'json';
   }
 
   /**
