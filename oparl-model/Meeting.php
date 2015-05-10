@@ -1,6 +1,16 @@
 <?php namespace OParl;
 
-class Meeting extends BaseModel {
+use App\Services\APIQueryService\APIQueryable;
+use App\Services\APIQueryService\APIQueryableContract;
+
+class Meeting extends BaseModel implements APIQueryableContract
+{
+  use APIQueryable;
+
+  protected static $queryableRelations = [
+    'self.organization',
+    'papers:self.agenda_item_id=paper_id'
+  ];
 
 	protected $fillable = [
     'start_date',

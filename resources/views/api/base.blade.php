@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="page-header">
-                        <h1><span class="text-oparl">OParl.</span> – API<small>Demo</small></h1>
+                        <h1><span class="text-oparl">OParl</span> – API<small>Demo</small></h1>
                     </div>
                 </div>
             </div>

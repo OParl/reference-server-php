@@ -1,8 +1,19 @@
 <?php namespace Oparl;
 
+use App\Services\APIQueryService\APIQueryable;
+use App\Services\APIQueryService\APIQueryableContract;
 use Illuminate\Database\Eloquent\Model;
 
-class Body extends Model {
+class Body extends Model implements APIQueryableContract {
+  use APIQueryable;
+
+  protected static $queryableRelations = [
+    'self.system',
+    'organization:self.organizations',
+    'person:self.people',
+    'legislativeterm:self.legislativeTerms',
+  ];
+
   protected $casts = [
     'equivalent_body' => 'array'
   ];

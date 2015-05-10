@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand"><span class="text-oparl">OParl.</span> - Client Demo</a>
+                <a class="navbar-brand"><span class="text-oparl">OParl</span> - Client Demo</a>
             </div>
 
             <div class="collapse navbar-collapse" id="main-navbar">
