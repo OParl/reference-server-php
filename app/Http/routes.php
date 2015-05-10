@@ -27,7 +27,7 @@ Route::get('/preview/{id}',  ['as' => 'file.access',   'uses' => 'FileController
 Route::get('/files/{id}', ['as' => 'file.download', 'uses' => 'FileController@download']);
 
 // api
-Route::group(['prefix' => 'api/v1'], function() {
+Route::group(['prefix' => 'api/v1', 'middleware' => ['api.format']], function() {
   Route::resource('system',          'API\SystemController',          ['only' => 'index']);
   Route::resource('body',            'API\BodyController',            ['only' => ['index', 'show']]);
   Route::resource('legislativeterm', 'API\LegislativeTermController', ['only' => ['index', 'show']]);

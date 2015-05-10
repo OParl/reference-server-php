@@ -47,25 +47,7 @@ class APIController extends Controller
     if (!is_string($this->model) || !class_exists($this->model))
       throw new \LogicException("API controllers require a valid \$model property.");
 
-    $this->format = $this->determineOutputFormat();
-  }
-
-  private function determineOutputFormat()
-  {
-    if ($this->request->wantsJson()
-    ||  $this->request->input('format') === 'json')
-      return 'json';
-
-    if ($this->request->input('format') === 'yaml')
-      return 'yaml';
-
-    if ($this->request->input('format') === 'xml')
-      return 'xml';
-
-    if ($this->request->input('format') === 'html')
-      return 'html';
-
-    return 'json';
+    $this->format = config('api.format');
   }
 
   /**
