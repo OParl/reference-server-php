@@ -17,7 +17,7 @@ class SystemTransformer extends TransformerAbstract
       'product'      => 'http://oparl.org/implementations/php-reference-server',
       'contactEmail' => $this->formatEmail('email@address.com'),
       'contactName'  => $system->contact_name,
-      'body'         => $this->collectionRouteList('api.v1.body.index', $system->bodies),
+      'body'         => $this->collectionRouteList('api.v1.body.show', $system->bodies),
 
       'links' => [
         [
