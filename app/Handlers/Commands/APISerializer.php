@@ -6,15 +6,16 @@ class APISerializer extends DataArraySerializer
 {
   public function item($resourceKey, array $data)
   {
-    foreach ($data as $key => $value)
-    {
-      if (is_null($value)
-      || (is_array($value) && count($value) == 0)) unset($data[$key]);
-    }
-
-    $data = $this->applyFormatParameterToUrls($data);
+    $data = $this->reformatData($data);
 
     return parent::item($resourceKey, $data);
+  }
+
+  public function collection($resourceKey, array $data)
+  {
+    $data = $this->reformatData($data);
+
+    return parent::collection($resourceKey, $data);
   }
 
   protected function applyFormatParameterToUrls(array $data)
@@ -23,13 +24,31 @@ class APISerializer extends DataArraySerializer
       if (is_array($value))
         return $this->applyFormatParameterToUrls($value);
 
-      $pattern = sprintf('/%s[[:print:]]+/', preg_quote(url('api/v1/'), '/'));
+      $pattern = sprintf('/%s.+/', preg_quote(url('api/v1/'), '/'));
+
       if (is_string($value) && preg_match($pattern, $value))
       {
-        $value .= '?format='.config('api.format');
+        $value .= (strpos($value, '?') > 0) ? '&' : '?';
+        $value .= 'format='.config('api.format');
       }
 
       return $value;
     }, $data);
+  }
+
+  /**
+   * @param array $data
+   * @return array
+   **/
+  protected function reformatData(array $data)
+  {
+    foreach ($data as $key => $value) {
+      if (is_null($value)
+        || (is_array($value) && count($value) == 0)
+      ) unset($data[$key]);
+    }
+
+    $data = $this->applyFormatParameterToUrls($data);
+    return $data;
   }
 }
