@@ -10,7 +10,7 @@ class BodyTransformer extends TransformerAbstract
   public function transform(Body $body)
   {
     return [
-      'id'                => (int) $body->id,
+      'id'                => route('api.v1.body.show', $body->id),
       'type'              => 'http://oparl.org/schema/1.0/Body',
       'system'            => route('api.v1.system.index'),
       'contactEmail'      => $this->formatEmail($body->contact_email),
