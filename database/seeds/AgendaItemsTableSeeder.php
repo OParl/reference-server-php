@@ -6,7 +6,7 @@ class AgendaItemsTableSeeder extends Seeder {
   public function run()
   {
     // create a ridiculous amount of agenda items
-    foreach (range(1, 10000) as $i)
+    foreach (range(1, 75000) as $i)
     {
       $agendaItem = AgendaItem::create([
         'consecutive_number' => base_convert($i, 10, 32),

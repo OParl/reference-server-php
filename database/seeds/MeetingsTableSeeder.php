@@ -20,7 +20,7 @@ class MeetingsTableSeeder extends Seeder {
 
       foreach ($body->organizations as $organization)
       {
-        foreach (range(1, static::$faker->numberBetween(15, 35)) as $meetingNumber)
+        foreach (range(1, static::$faker->numberBetween(150, 350)) as $meetingNumber)
         {
           $start = Carbon::instance(static::$faker->dateTimeBetween($termStart, $termEnd));
           $end   = Carbon::instance($start)->addHours(3);
@@ -49,7 +49,7 @@ class MeetingsTableSeeder extends Seeder {
 
   protected function getAgendaItems(Meeting $meeting)
   {
-    $numItems = static::$faker->numberBetween(3, 25);
+    $numItems = static::$faker->numberBetween(10, 45);
 
     for ($i = 0; $i < $numItems; $i++)
     {
