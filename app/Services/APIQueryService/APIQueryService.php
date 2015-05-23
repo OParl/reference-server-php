@@ -26,8 +26,10 @@ class APIQueryService
 
   public function run()
   {
-    $this->parseWhere();
-    $this->parseInclude();
+    if (array_has($this->parameters, 'where') && !is_null($this->parameters['where']))     $this->parseWhere();
+    if (array_has($this->parameters, 'include') && !is_null($this->parameters['include'])) $this->parseInclude();
+
+    $this->paginate();
 
     return $this->query;
   }
@@ -51,67 +53,7 @@ class APIQueryService
 
   protected function parseWhere()
   {
-    if (!array_has($this->parameters, 'where') || is_null($this->parameters['include']))
-    {
-      // There's nothing to do, just paginate the model query and we're done
-      $this->paginate();
-      return;
-    }
 
-    if (!is_a($this->model, 'App\Services\APIQueryService\APIQueryableContract'))
-      throw new APIQueryException("Model is not queryable.");
-
-    $clauses = decode_where($this->parameters['where']);
-
-    $modelCallable = $this->model;
-
-    $fields    = $modelCallable::getQueryableFields();
-    $relations = $modelCallable::getQueryableRelations();
-
-    foreach ($clauses as $key => $value)
-    {
-      if (array_has($relations, $key))
-      {
-        // TODO: handle relation
-
-        // case a) relation is method in model
-        // case b) relation is of type APIRelationPath
-      }
-
-      if (array_has($fields, $key))
-      {
-        // TODO: handle field
-
-      }
-    }
-
-    // TODO: the long where
-    /*
-    $query = null;
-
-    $clauses = decode_where($where);
-
-    $clauses = array_filter_keys($clauses, function($clause) {
-      return class_method_exists($this->model, $clause)
-          || class_method_exists($this->model, str_plural($clause));
-    });
-
-    $clauses = array_map_keys(function ($val) {
-      return sprintf('where%sId', ucwords($val));
-    }, $clauses);
-
-    if (count($clauses) > 0) {
-      $firstKey = array_keys($clauses)[0];
-
-      $query = call_user_func([$this->model, $firstKey], $clauses[$firstKey]);
-      array_shift($clauses);
-      foreach ($clauses as $where => $value)
-        $query->{$where}($value);
-
-      $query = $query->paginate(config('oparl.pageElements'));
-    }
-     *
-     */
   }
 
   protected function paginate()
@@ -128,7 +70,7 @@ class APIQueryService
   protected function getPaginationConfig()
   {
     // check for limit parameter to adjust number of items per page
-    if (array_has($this->parameters, 'limit') && is_int($this->parameters['limit']))
+    if (array_has($this->parameters, 'limit') && is_numeric($this->parameters['limit']))
     {
       return intval($this->parameters['limit']);
     } else
@@ -139,11 +81,6 @@ class APIQueryService
 
   protected function parseInclude()
   {
-    if (!array_has($this->parameters, 'include') || is_null($this->parameters['include']))
-    {
-      return;
-    }
-
     $eagerLoadingKeys = explode(',', $this->parameters['include']);
 
     foreach ($eagerLoadingKeys as $eagerLoadingKey)

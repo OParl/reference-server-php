@@ -10,7 +10,7 @@ trait APIIndexPaginatedTrait
   {
     try
     {
-      $parameters = \Input::only(['where', 'include']);
+      $parameters = \Input::only(['limit', 'where', 'include']);
       $query = APIQueryService::create($this->model, $parameters);
     } catch (APIQueryException $e)
     {
