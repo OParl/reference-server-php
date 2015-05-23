@@ -53,7 +53,8 @@ class APIQueryService
   {
     if (!array_has($this->parameters, 'where') || is_null($this->parameters['include']))
     {
-      $this->query = call_user_func([$this->model, 'paginate'], config('oparl.pageElements'));
+      // There's nothing to do, just paginate the model query and we're done
+      $this->paginate();
       return;
     }
 
@@ -111,6 +112,29 @@ class APIQueryService
     }
      *
      */
+  }
+
+  protected function paginate()
+  {
+    if (is_null($this->query))
+    {
+      $this->query = call_user_func([$this->model, 'paginate'], $this->getPaginationConfig());
+    } else
+    {
+      $this->query->paginate($this->getPaginationConfig());
+    }
+  }
+
+  protected function getPaginationConfig()
+  {
+    // check for limit parameter to adjust number of items per page
+    if (array_has($this->parameters, 'limit') && is_int($this->parameters['limit']))
+    {
+      return intval($this->parameters['limit']);
+    } else
+    {
+      return config('oparl.pageElements');
+    }
   }
 
   protected function parseInclude()
