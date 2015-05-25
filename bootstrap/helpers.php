@@ -20,8 +20,15 @@ if (!function_exists('decode_where'))
     $clauses = [];
     foreach ($where as $clause)
     {
-      list($key, $value) = explode(':', $clause);
-      $clauses[$key] = $value;
+      $colon = strpos($clause, ':');
+
+      if ($colon > 0)
+      {
+        $key = substr($clause, 0, $colon);
+        $value = substr($clause, $colon + 1);
+
+        $clauses[$key] = $value;
+      }
     }
 
     return $clauses;

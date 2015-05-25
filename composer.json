@@ -12,7 +12,8 @@
         "doctrine/dbal": "2.5.*",
 		"predis/predis": "~1.0",
 		"fguillot/picofeed": "0.1.*",
-		"symfony/yaml": "~2.6"
+		"symfony/yaml": "~2.6",
+		"phpdocumentor/reflection-docblock": "^2.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
