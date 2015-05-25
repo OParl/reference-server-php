@@ -34,6 +34,24 @@ trait APIIndexPaginatedTrait
    * for instance require joins on the database or other information that is
    * not accessible to the `APIQueryService`.
    *
+   * Controllers implementing custom resolvers have to follow the below
+   * naming scheme for resolver methods:
+   *
+   * <code>
+   *   protected function query<Field>(APIQueryService $query, ValueExpression $valueExpression);
+   * </code>
+   *
+   * with `Field` being the camel case version of the field for the queried
+   * constraint.
+   *
+   * If a resolver method can not be called succesfully, the request will fail
+   * into a `405 Method Not Allowed` explaining that the requested query method
+   * is not allowed.
+   *
+   * NOTE: Although, `ValueExpression` delivers a lot of flexibility in terms of
+   * evaluating input expressions, it is always possible to get the raw input expression with
+   * `$valueExpression->getRaw()`.
+   *
    * @param $query APIQueryService
    **/
   protected function resolveQuery(APIQueryService $query)
