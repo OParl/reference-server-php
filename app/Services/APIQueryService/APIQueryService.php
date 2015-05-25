@@ -105,36 +105,19 @@ class APIQueryService
     }
 
     if (count($unresolved) > 0)
-    {
       $this->parameters['unresolved'] = $unresolved;
-    }
   }
 
   protected function parseDate($field, ValueExpression $valueExpression)
   {
-    $date = $valueExpression->getValue();
-
-    try
-    {
-      /**
-       * URL decoding leads to + being transformed into a white space.
-       * This + however is important as it denotes the timezone of
-       * the input string in ISO 8601.
-       *
-       * If thus, a whitespace is in a date string, it is assumed
-       * that this is an URL decoding error and it will be replaced to a +.
-       */
-      $date = str_replace(' ', '+', $date, $count);
-      $date = Carbon::createFromFormat(Carbon::ISO8601, $date);
-    } catch (\Exception $e)
-    {
-      throw new APIQueryException("Date {$date} is malformed, needs to be ISO 8601");
-    }
-
     // check if we already have a snake case field name
     if (strpos($field, '_') <= 0) $field = snake_case($field);
 
-    $this->query->where($field, $valueExpression->getExpression(), $date->toDateTimeString());
+    $this->query->where(
+      $field,
+      $valueExpression->getExpression(),
+      $valueExpression->getValue()->toDateTimeString()
+    );
   }
 
   protected function parseRelation($field, ValueExpression $valueExpression)
