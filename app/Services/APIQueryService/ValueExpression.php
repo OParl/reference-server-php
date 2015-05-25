@@ -1,9 +1,31 @@
 <?php namespace App\Services\APIQueryService;
 
-class ValueExpression 
+/**
+ * Parse URL-compatible expressions
+ *
+ * @package App\Services\APIQueryService
+ **/
+class ValueExpression
 {
+  /**
+   * The raw expression
+   *
+   * @var string
+   **/
   protected $raw = '';
+
+  /**
+   * The expression's value
+   *
+   * @var string
+   **/
   protected $value = '';
+
+  /**
+   * The parsed expression
+   *
+   * @var string
+   **/
   protected $expression = '';
 
   protected static $validExpressions = [
@@ -46,6 +68,8 @@ class ValueExpression
   }
 
   /**
+   * Get the expression's value
+   *
    * @return string
    */
   public function getValue()
@@ -54,6 +78,8 @@ class ValueExpression
   }
 
   /**
+   * Get the parsed expression
+   *
    * @return string
    */
   public function getExpression()
@@ -61,6 +87,11 @@ class ValueExpression
     return $this->expression;
   }
 
+  /**
+   * Get the raw expression
+   *
+   * @return string
+   */
   public function getRaw()
   {
     return $this->raw;
