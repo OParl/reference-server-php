@@ -26,6 +26,14 @@ trait APIIndexPaginatedTrait
   }
 
   /**
+   * Resolve unfinished queries
+   *
+   * If the `APIQueryService` is unable to resolve all conditions on a query
+   * the query remains unresolved. This gives entity controllers the
+   * opportunity to implement resolvers for custom conditions that may
+   * for instance require joins on the database or other information that is
+   * not accessible to the `APIQueryService`.
+   *
    * @param $query APIQueryService
    **/
   protected function resolveQuery(APIQueryService $query)
@@ -35,9 +43,11 @@ trait APIIndexPaginatedTrait
     foreach ($toResolve as $field => $valueExpression) {
       $method = sprintf("query%s", ucfirst(camel_case($field)));
 
-      if (method_exists($this, $method)) {
+      if (method_exists($this, $method))
+      {
         $this->{$method}($query, $valueExpression);
-      } else {
+      } else
+      {
         throw new APIQueryException("Query method {$method} not found.");
       }
 
