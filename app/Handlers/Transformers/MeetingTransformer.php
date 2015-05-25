@@ -25,7 +25,9 @@ class MeetingTransformer extends TransformerAbstract
       'streetAddress'    => $meeting->street_address,
       'postalCode'       => $meeting->postal_code,
       'locality'         => $meeting->locality,
-      'location'         => route('api.v1.location.show', $meeting->location_id),
+      'location'         => ($meeting->location_id)
+                              ? route('api.v1.location.show', $meeting->location_id)
+                              : null,
       'organization'     => route('api.v1.organization.show', $meeting->organization_id),
       'chairPerson'      => route('api.v1.person.show', $meeting->chair_person_id),
       'scribe'           => route('api.v1.person.show', $meeting->scribe_id),
@@ -35,7 +37,7 @@ class MeetingTransformer extends TransformerAbstract
                               ? route('api.v1.file.show', $meeting->results_protocol_id)
                               : null,
       'verbatimProtocol' => ($meeting->verbatim_protocol_id)
-                              ?route('api.v1.file.show', $meeting->verbatim_protocol_id)
+                              ? route('api.v1.file.show', $meeting->verbatim_protocol_id)
                               : null,
       'auxiliaryFile'    => ($meeting->auxiliaryFiles) ? $this->collectionRouteList('api.v1.file.show', $meeting->auxiliaryFiles) : null,
       'agendaItem'       => ($meeting->agendaItems) ? $this->collectionRouteList('api.v1.agendaitem.show', $meeting->agendaItems) : null,
