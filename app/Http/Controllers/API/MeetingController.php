@@ -13,7 +13,7 @@ class MeetingController extends APIController {
   {
     $query->whereRaw(
       \DB::raw("organization_id = (select id from organizations where body_id {$valueExpression->getExpression()} ?)"),
-      [intval($valueExpression->getValue())]
+      [$valueExpression->getValue()]
     );
   }
 }
