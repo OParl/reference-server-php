@@ -35,6 +35,11 @@ class APIQueryService
     $this->query = $model::query();
   }
 
+  function __call($name, array $arguments)
+  {
+    return call_user_func_array([$this->query, $name], $arguments);
+  }
+
   public function run()
   {
     if (array_has($this->parameters, 'where')
@@ -134,7 +139,7 @@ class APIQueryService
 
   protected function parseRelation($field, ValueExpression $valueExpression)
   {
-
+    // TODO: parse relations
   }
 
   /**

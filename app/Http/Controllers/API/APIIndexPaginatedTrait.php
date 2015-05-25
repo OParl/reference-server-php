@@ -8,24 +8,31 @@ trait APIIndexPaginatedTrait
 {
   public function index()
   {
-    \DB::enableQueryLog();
-
     try
     {
       $parameters = \Input::only(['limit', 'where', 'include']);
       $query = APIQueryService::create($this->model, $parameters);
 
-      $paginated = $query->getQuery();
-
       if ($query->isUnresolved())
       {
-        // TODO: handle unresolved query
+        $toResolve = $query->getUnresolvedParameters();
+        foreach ($toResolve as $field => $valueExpression)
+        {
+          $method = sprintf("query%s", ucfirst(camel_case($field)));
 
-        // $toResolve = $query->getUnresolvedParameters();
-        // $paginated = $query->paginate();
+          if (method_exists($this, $method))
+          {
+            $this->{$method}($query, $valueExpression);
+          } else
+          {
+            return $this->respondWithNotFound("The requested query could not be resolved on `{$this->getModelName()}`");
+          }
 
-        return $this->respondWithNotFound("The requested query could not be resolved on `{$this->getModelName()}`");
+          $query->paginate();
+        }
       }
+
+      $paginated = $query->getQuery();
     } catch (APIQueryException $e)
     {
       return $this->respondWithNotAllowed("The requested query method is not allowed on `{$this->getModelName()}`.");
