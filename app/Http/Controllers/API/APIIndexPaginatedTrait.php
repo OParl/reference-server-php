@@ -14,23 +14,7 @@ trait APIIndexPaginatedTrait
       $query = APIQueryService::create($this->model, $parameters);
 
       if ($query->isUnresolved())
-      {
-        $toResolve = $query->getUnresolvedParameters();
-        foreach ($toResolve as $field => $valueExpression)
-        {
-          $method = sprintf("query%s", ucfirst(camel_case($field)));
-
-          if (method_exists($this, $method))
-          {
-            $this->{$method}($query, $valueExpression);
-          } else
-          {
-            return $this->respondWithNotFound("The requested query could not be resolved on `{$this->getModelName()}`");
-          }
-
-          $query->paginate();
-        }
-      }
+        $this->resolveQuery($query);
 
       $paginated = $query->getQuery();
     } catch (APIQueryException $e)
@@ -39,5 +23,25 @@ trait APIIndexPaginatedTrait
     }
 
     return $this->respondWithPaginated($paginated);
+  }
+
+  /**
+   * @param $query APIQueryService
+   **/
+  protected function resolveQuery(APIQueryService $query)
+  {
+    $toResolve = $query->getUnresolvedParameters();
+
+    foreach ($toResolve as $field => $valueExpression) {
+      $method = sprintf("query%s", ucfirst(camel_case($field)));
+
+      if (method_exists($this, $method)) {
+        $this->{$method}($query, $valueExpression);
+      } else {
+        throw new APIQueryException("Query method {$method} not found.");
+      }
+
+      $query->paginate();
+    }
   }
 }
