@@ -2,6 +2,7 @@
 
 class ValueExpression 
 {
+  protected $raw = '';
   protected $value = '';
   protected $expression = '';
 
@@ -15,6 +16,8 @@ class ValueExpression
 
   public function __construct($valueExpression)
   {
+    $this->raw = $valueExpression;
+
     $this->parseExpression($valueExpression);
   }
 
@@ -56,5 +59,10 @@ class ValueExpression
   public function getExpression()
   {
     return $this->expression;
+  }
+
+  public function getRaw()
+  {
+    return $this->raw;
   }
 }
