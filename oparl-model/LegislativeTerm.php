@@ -2,11 +2,12 @@
 
 class LegislativeTerm extends BaseModel {
 
-  public function getDates() {
-    return ['created_at', 'updated_at', 'start_date', 'end_date'];
-  }
+  protected $dates = ['start_date', 'end_date'];
 
-	public function body()
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   **/
+  public function body()
   {
     return $this->belongsTo('OParl\Body');
   }

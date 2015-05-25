@@ -2,11 +2,17 @@
 
 class Membership extends BaseModel {
 
-	public function person()
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   **/
+  public function person()
   {
     return $this->belongsTo('OParl\Person');
   }
 
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   **/
   public function organization()
   {
     return $this->belongsTo('OParl\Organization');

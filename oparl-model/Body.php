@@ -51,6 +51,9 @@ class Body extends Model implements APIQueryableContract {
     return $this->hasMany('OParl\Person');
   }
 
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   **/
   public function legislativeTerms()
   {
     return $this->hasMany('OParl\LegislativeTerm');

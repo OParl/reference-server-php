@@ -31,6 +31,9 @@ class Person extends BaseModel implements AuthenticatableContract, CanResetPassw
 
   protected $hidden = ['password', 'remember_token'];
 
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   **/
   public function body()
   {
     return $this->belongsTo('OParl\Body');
