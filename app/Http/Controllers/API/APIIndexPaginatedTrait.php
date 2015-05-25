@@ -2,15 +2,15 @@
 
 use App\Exceptions\APIQueryException;
 use App\Services\APIQueryService\APIQueryService;
-use \Input;
+use Illuminate\Http\Request;
 
 trait APIIndexPaginatedTrait
 {
-  public function index()
+  public function index(Request $request)
   {
     try
     {
-      $parameters = \Input::only(['limit', 'where', 'include']);
+      $parameters = $request->only(['limit', 'where', 'include']);
       $query = APIQueryService::create($this->model, $parameters);
 
       if ($query->isUnresolved())
