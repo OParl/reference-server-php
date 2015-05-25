@@ -19,6 +19,8 @@ class APIModelInformation
     $this->instance = new $this->model();
 
     $this->acquire();
+
+    $this->instance = null;
   }
 
   /**
