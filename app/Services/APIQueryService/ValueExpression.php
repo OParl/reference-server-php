@@ -55,7 +55,7 @@ class ValueExpression
         if (substr($valueExpression, 0, strlen($expression)) === $expression)
         {
           $this->expression = $expression;
-          $this->value = substr($valueExpression, strlen($expression));
+          $this->value = $this->transformValue(substr($valueExpression, strlen($expression)));
 
           return;
         }
@@ -64,7 +64,7 @@ class ValueExpression
 
     // default to "equal to"
     $this->expression = '=';
-    $this->value      = $valueExpression;
+    $this->value      = $this->transformValue($valueExpression);
   }
 
   /**
@@ -95,5 +95,12 @@ class ValueExpression
   public function getRaw()
   {
     return $this->raw;
+  }
+
+  protected function transformValue($value)
+  {
+    if (preg_match('/\d+/', $value)) $value = intval($value);
+
+    return $value;
   }
 }
