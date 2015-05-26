@@ -17,10 +17,7 @@ class CreateWebviewAPIResponseCommand extends CreateAPIResponseCommand
       'collectionClass' => (!is_null($this->additionalData['paginationCode'])) ? '' : 'collection',
     ];
 
-    if ($this->statusCode != 200)
-    {
-      $viewData['isError'] = true;
-    }
+    if ($this->statusCode != 200) $viewData['isError'] = true;
 
     $view = \View::make('api.base', $viewData);
     return \Response::make($view, $this->statusCode, $this->headers);
