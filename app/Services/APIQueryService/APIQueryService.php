@@ -1,7 +1,6 @@
 <?php namespace App\Services\APIQueryService;
 
 use App\Exceptions\APIQueryException;
-use Carbon\Carbon;
 
 class APIQueryService
 {
@@ -25,6 +24,15 @@ class APIQueryService
    **/
   protected $query = null;
 
+  /**
+   * Setup a new query service
+   *
+   * Store the request information, load a model information object
+   * and initiate the query builder.
+   *
+   * @param string $model
+   * @param array $parameters
+   */
   public function __construct($model, array $parameters)
   {
     $this->model = $model;
@@ -35,11 +43,31 @@ class APIQueryService
     $this->query = $model::query();
   }
 
+  /**
+   * Forward any unknown method calls to the query builder
+   *
+   * This effectively renders the query service to a proxy
+   * to it's query builder, allowing for simpler query
+   * manipulation in custom resolvers.
+   *
+   * @param string $name
+   * @param array $arguments
+   * @return mixed
+   **/
   function __call($name, array $arguments)
   {
     return call_user_func_array([$this->query, $name], $arguments);
   }
 
+  /**
+   * Generate the query object
+   *
+   * This performs all operations to generate the query object
+   * including automatic pagination if the object can be
+   * resolved by the query service.
+   *
+   * @return APIQueryService
+   **/
   public function run()
   {
     if (array_has($this->parameters, 'where')
@@ -54,35 +82,76 @@ class APIQueryService
       $this->parseInclude();
     }
 
-
-    if (!$this->isUnresolved())
-    {
-      $this->paginate();
-    }
+    if (!$this->isUnresolved()) $this->paginate();
 
     return $this;
   }
 
+  /**
+   * Get the processed query
+   *
+   * If the query is resolved, this will be a LengthAwarePaginator,
+   * else it will be the current state of the Query\Builder instance
+   * allowing for changes to the query.
+   *
+   * NOTE: It is recommended not to use this method to alter the
+   * query in custom requests but instead directly access the query
+   * object via magic methods.
+   *
+   * @see APIQueryService:__call()
+   * @return \Illuminate\Database\Query\Builder|\Illuminate\Pagination\LengthAwarePaginator
+   **/
   public function getQuery()
   {
     return $this->query;
   }
 
+  /**
+   * Check if the query is unresolved
+   *
+   * @return bool
+   **/
   public function isUnresolved()
   {
     return isset($this->parameters['unresolved']);
   }
 
+  /**
+   * Get the unresolved query parameters
+   *
+   * @return array An associative array of unresolved fields and their `ValueExpression`'s
+   **/
   public function getUnresolvedParameters()
   {
     return $this->parameters['unresolved'];
   }
 
+  /**
+   * Easily create a new query service instance
+   *
+   * @param string $model
+   * @param array $parameters
+   * @return APIQueryService
+   **/
   public static function create($model, array $parameters)
   {
     return (new APIQueryService($model, $parameters))->run();
   }
 
+  /**
+   * Parse the request's where constraints
+   *
+   * This parses the request's where constraints and adds
+   * them to the query if they are resolvable with the information
+   * obtainable by `APIModelInformation`.
+   *
+   * In case a condition can not be met, it's parsed `ValueExpression`
+   * is added to an array of unresolved constraints thus rendering
+   * the whole query unresolved. Controllers then have the opportunity
+   * to add custom query resolvers to make the query pass.
+   *
+   * @see APIIndexPaginatedTrait:resolveQuery
+   */
   protected function parseWhere()
   {
     $conditions = decode_where($this->parameters['where']);
@@ -108,6 +177,12 @@ class APIQueryService
       $this->parameters['unresolved'] = $unresolved;
   }
 
+  /**
+   * Add a date constraint to the query object
+   *
+   * @param $field
+   * @param ValueExpression $valueExpression
+   **/
   protected function parseDate($field, ValueExpression $valueExpression)
   {
     // check if we already have a snake case field name
@@ -120,6 +195,12 @@ class APIQueryService
     );
   }
 
+  /**
+   * Add a relation constraint to the query object
+   *
+   * @param string $field
+   * @param ValueExpression $valueExpression
+   **/
   protected function parseRelation($field, ValueExpression $valueExpression)
   {
     // TODO: parse relations
@@ -128,7 +209,7 @@ class APIQueryService
   /**
    * Execute the query and paginate the results according to request or config
    *
-   * @throws \Exception Rethrows any exception that happens on pagination (query execution)
+   * @throws \App\Exceptions\APIQueryException Rethrows any exception that happens on pagination (query execution)
    **/
   public function paginate()
   {
@@ -137,22 +218,42 @@ class APIQueryService
       $this->query = $this->query->paginate($this->getPaginationConfig());
     } catch (\Exception $e)
     {
-      throw $e;
+      throw new APIQueryException($e);
     }
   }
 
+  /**
+   * Get number of items per page
+   *
+   * Check for a numeric limit parameter in the request,
+   * if present use the absolute value of that parameter.
+   *
+   * Else, or if that parameter is 0, revert to the default
+   * number of items per page stored in `oparl.itemsPerPage`
+   *
+   * @return int
+   * @see config/oparl.php
+   **/
   protected function getPaginationConfig()
   {
-    // check for limit parameter to adjust number of items per page
+    $limit = 0;
+
     if (array_has($this->parameters, 'limit') && is_numeric($this->parameters['limit']))
     {
-      return intval($this->parameters['limit']);
-    } else
-    {
-      return config('oparl.pageElements');
+      $limit = intval($this->parameters['limit']);
+      $limit = abs($limit);
     }
+
+    return ($limit > 0) ? $limit : config('oparl.itemsPerPage');
   }
 
+  /**
+   * Speed up response generation with eager loading
+   *
+   * This method checks for includes that will be performed by
+   * the output transformer and eagerly loads the models
+   * in question beforehand.
+   */
   protected function parseInclude()
   {
     $eagerLoadingKeys = explode(',', $this->parameters['include']);
