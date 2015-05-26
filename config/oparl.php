@@ -3,5 +3,5 @@
   'feedElements' => 500,
 
   // the number of elements per page on collection
-  'pageElements' => 25,
+  'itemsPerPage' => 25,
 ];
