@@ -25,8 +25,11 @@ class APISerializer extends DataArraySerializer
         return $this->applyFormatParameterToUrls($value);
 
       $pattern = sprintf('/%s.+/', preg_quote(url('api/v1/'), '/'));
+      $format = config('api.format');
 
-      if (is_string($value) && preg_match($pattern, $value))
+      if (is_string($value)
+      &&  preg_match($pattern, $value)
+      &&  $format !== 'json_accept')
       {
         $value .= (strpos($value, '?') > 0) ? '&' : '?';
         $value .= 'format='.config('api.format');

@@ -4,8 +4,10 @@ class APIOutputFormat
 {
   private function determineOutputFormat($request)
   {
-    if ($request->wantsJson()
-      ||  $request->input('format') === 'json')
+    if ($request->wantsJson())
+      return 'json_accept';
+
+    if ($request->input('format') === 'json')
       return 'json';
 
     if ($request->input('format') === 'yaml')
@@ -17,7 +19,7 @@ class APIOutputFormat
     if ($request->input('format') === 'html')
       return 'html';
 
-    return 'json';
+    return 'json_accept';
   }
 
   public function handle($request, \Closure $next)

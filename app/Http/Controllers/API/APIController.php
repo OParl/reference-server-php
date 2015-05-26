@@ -48,6 +48,10 @@ class APIController extends Controller
       throw new \LogicException("API controllers require a valid \$model property.");
 
     $this->format = config('api.format');
+
+    // remove "underscore specifer part" from format
+    if (strpos($this->format, '_') > 0)
+      $this->format = substr($this->format, 0, strpos($this->format, '_'));
   }
 
   /**
