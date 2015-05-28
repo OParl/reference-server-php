@@ -39,14 +39,6 @@ class AgendaItem extends BaseModel {
   }
 
   /**
-   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-   **/
-  public function body()
-  {
-    return $this->belongsTo('OParl\Body', 'body_id');
-  }
-
-  /**
    * @return int
    **/
   public function getBodyIdAttribute()
