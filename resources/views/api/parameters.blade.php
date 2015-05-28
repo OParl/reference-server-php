@@ -8,7 +8,7 @@
         <dl class="dl-horizontal">
             <dt>format</dt>
             <dd>
-                <div><strong>Datentyp:&nbsp;</strong><samp>integer</samp></div>
+                <div><strong>Datentyp:&nbsp;</strong><samp>string</samp></div>
 
                 <p>
                     Der <code>format</code>-Parameter gibt das Ausgabeformat an.
