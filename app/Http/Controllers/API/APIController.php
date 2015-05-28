@@ -178,7 +178,10 @@ class APIController extends Controller
     $dataArray = $this->dispatch(new SerializePaginatedCommand($paginator, $this->request));
 
     if ($this->format === 'html')
+    {
+      $paginator->appends(['format' => 'html']);
       $dataArray['pagination_code'] = $paginator->render();
+    }
 
     return $this->respond($dataArray);
   }
