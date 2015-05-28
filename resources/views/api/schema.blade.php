@@ -8,9 +8,9 @@
 @foreach ($schema['properties'] as $name => $property)
     <dt>
         @if (in_array($name, $schema['required']))
-            <span class="text-danger" aria-label="Zwingendes Attribut">{{ $name }}</span>
+            <span class="text-danger" aria-label="Zwingende Eigenschaft">{{ $name }}</span>
         @elseif(isset($schema['oparl:recommended']) && in_array($name, $schema['oparl:recommended']))
-            <span class="text-success" aria-label="Empfohlenes Attribut">{{ $name }}</span>
+            <span class="text-success" aria-label="Empfohlene Eigenschaft">{{ $name }}</span>
         @else
             {{ $name }}
         @endif
@@ -37,7 +37,7 @@
 <div class="well well-sm small hidden-xs">
     <h4 class="text-muted">Legende</h4>
     <ul class="list-unstyled">
-        <li class="text-danger">Zwingendes Attribut</li>
-        <li class="text-success">Empfohlenes Attribut</li>
+        <li class="text-danger">Zwingende Eigenschaft</li>
+        <li class="text-success">Empfohlene Eigenschaft</li>
     </ul>
 </div>
