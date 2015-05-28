@@ -4,7 +4,7 @@
 </p>
 
 <h4>Eigenschaften</h4>
-<dl class="dl-horizontal properties">
+<dl class="properties">
 @foreach ($schema['properties'] as $name => $property)
     <dt>
         @if (in_array($name, $schema['required']))
@@ -15,8 +15,21 @@
             {{ $name }}
         @endif
     </dt>
-    <dd class="type">
-        @include ('api.schema.type_or_type_list')
+    <dd>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="type">
+                    JSON-Datentyp: @include ('api.schema.type_or_type_list')
+                </div>
+                @include('api.schema.format')
+
+                @if (isset($property['description']))
+                    <p class="text-muted small">
+                        {{ $property['description'] }}
+                    </p>
+                @endif
+            </div>
+        </div>
     </dd>
 @endforeach
 </dl>
