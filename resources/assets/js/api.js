@@ -6,3 +6,7 @@ Prism.hooks.add('wrap', function(env) {
         env.content = "<a href=\"" + url + "\">" + env.content + "</a>";
     }
 });
+
+$(document).ready(function () {
+    $('.tab-content a[data-toggle=tab]').each(function (el) { console.log(el); });
+});
