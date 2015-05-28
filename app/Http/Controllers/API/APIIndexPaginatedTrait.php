@@ -11,10 +11,9 @@ trait APIIndexPaginatedTrait
     try
     {
       $parameters = $request->only(['limit', 'where', 'include']);
-      $query = APIQueryService::create($this->model, $parameters);
-
-      if ($query->isUnresolved())
-        $this->resolveQuery($query);
+      $query = APIQueryService::create($this->model, $parameters, function ($unresolved, $service) {
+        return $this->resolveQuery($unresolved, $service);
+      });
 
       $paginated = $query->getQuery();
     } catch (APIQueryException $e)
@@ -52,12 +51,12 @@ trait APIIndexPaginatedTrait
    * evaluating input expressions, it is always possible to get the raw input expression with
    * `$valueExpression->getRaw()`.
    *
-   * @param $query APIQueryService
+   * @param array $toResolve Conditions to resolve
+   * @param APIQueryService $query
+   * @return boolean resolve success
    **/
-  protected function resolveQuery(APIQueryService $query)
+  protected function resolveQuery(array $toResolve, APIQueryService $query)
   {
-    $toResolve = $query->getUnresolvedParameters();
-
     foreach ($toResolve as $field => $valueExpression) {
       $method = sprintf("query%s", ucfirst(camel_case($field)));
 
@@ -68,8 +67,8 @@ trait APIIndexPaginatedTrait
       {
         throw new APIQueryException("Query method {$method} not found.");
       }
-
-      $query->paginate();
     }
+
+    return true;
   }
 }

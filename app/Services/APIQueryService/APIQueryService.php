@@ -62,29 +62,58 @@ class APIQueryService
   /**
    * Generate the query object
    *
-   * This performs all operations to generate the query object
-   * including automatic pagination if the object can be
-   * resolved by the query service.
+   * After preparing the query this will execute it and paginate the results
    *
+   * @param \Closure $queryResolver
    * @return APIQueryService
    **/
-  public function run()
+  public function run(\Closure $queryResolver)
   {
-    if (array_has($this->parameters, 'where')
-    && !is_null($this->parameters['where']))
-    {
-      $this->parseWhere();
-    }
-
-    if (array_has($this->parameters, 'include')
-    && !is_null($this->parameters['include']))
-    {
-      $this->parseInclude();
-    }
-
-    if (!$this->isUnresolved()) $this->paginate();
+    $this->prepare($queryResolver);
+    $this->paginate();
 
     return $this;
+  }
+
+  /**
+   * Prepare the query
+   *
+   * Do everything necessary to prepare the query object for execution
+   * This includes calling a queryResolver closure if the query
+   * remains unresolved.
+   *
+   * The queryResolver closure will be passed two parameters,
+   * firstly the array of unresolved conditions and secondly
+   * the whole query service object.
+   *
+   * <code>
+   *   // an example closure
+   *   function (array $unresolved, APIQueryService $query)
+   *   {
+   *      ...
+   *   }
+   * </code>
+   *
+   * @see getUnresolvedParameters
+   * @param \Closure $queryResolver
+   */
+  public function prepare(\Closure $queryResolver)
+  {
+    // parse where conditions
+    if (array_has($this->parameters, 'where') && !is_null($this->parameters['where']))
+      $this->parseWhere();
+
+    // parse includes for eager loading
+    if (array_has($this->parameters, 'include') && !is_null($this->parameters['include']))
+      $this->parseInclude();
+
+    // resolve query with caller
+    if ($this->isUnresolved())
+    {
+      $result = $queryResolver($this->getUnresolvedParameters(), $this);
+      if (!is_bool($result) && !$result)
+        throw new APIQueryException("Query was not resolved successfully.");
+    }
   }
 
   /**
@@ -131,11 +160,15 @@ class APIQueryService
    *
    * @param string $model
    * @param array $parameters
+   * @param \Closure $queryResolver
+   *
+   * @see prepare
+   *
    * @return APIQueryService
    **/
-  public static function create($model, array $parameters)
+  public static function create($model, array $parameters, \Closure $queryResolver)
   {
-    return (new APIQueryService($model, $parameters))->run();
+    return (new APIQueryService($model, $parameters))->run($queryResolver);
   }
 
   /**
