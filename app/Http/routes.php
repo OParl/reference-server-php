@@ -11,8 +11,9 @@
 |
 */
 
-//Route::resource('/', 'HomeController', ['only' => 'index']);
-Route::get('/', function() { return Redirect::to('api/v1/system'); });
+Route::get('/', function() {
+  return redirect()->route('api.v1.system.index', ['format' => 'html']);
+});
 
 Route::pattern('id', '(\d+)');
 
