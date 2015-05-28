@@ -1,5 +1,10 @@
 @import "client";
 
+.properties {
+  .type span:after { content: ", "; }
+  .type span:last-of-type:after { content: ""; }
+}
+
 /**
  * prism.js Dark theme for JavaScript, CSS and HTML
  * Based on the slides of the talk “/Reg(exp){2}lained/”

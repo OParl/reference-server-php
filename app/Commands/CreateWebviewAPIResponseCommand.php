@@ -9,6 +9,7 @@ class CreateWebviewAPIResponseCommand extends CreateAPIResponseCommand
     $data = json_encode($this->apiData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
     $viewData = [
+      'schema'          => $this->loadSchema($this->additionalData['modelName']),
       'url'             => $this->additionalData['url'],
       'json'            => $data,
       'module'          => $this->additionalData['modelName'],
@@ -21,5 +22,18 @@ class CreateWebviewAPIResponseCommand extends CreateAPIResponseCommand
 
     $view = \View::make('api.base', $viewData);
     return \Response::make($view, $this->statusCode, $this->headers);
+  }
+
+  protected function loadSchema($modelName)
+  {
+    try {
+      $json = file_get_contents(app_path('../resources/assets/schema/'.ucfirst($modelName).'.json'));
+      $schema = json_decode($json, true);
+    } catch (\ErrorException $e)
+    {
+      $schema = null;
+    }
+
+    return $schema;
   }
 }

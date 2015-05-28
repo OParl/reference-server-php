@@ -8,7 +8,7 @@
         <div class="tab-pane active" id="json">
             <div class="row">
                 <div class="col-xs-12">
-                    <pre class="pre-scrollable"><code class="language-javascript">{{ $json }}</code></pre>
+                    <pre><code class="language-javascript">{{ $json }}</code></pre>
                 </div>
             </div>
         </div>
