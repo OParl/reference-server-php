@@ -204,6 +204,7 @@ class APIQueryService
   protected function parseRelation($field, ValueExpression $valueExpression)
   {
     // TODO: parse relations
+    $this->query->has($field, $valueExpression->getValue());
   }
 
   /**
