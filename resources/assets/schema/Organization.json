@@ -1,0 +1,103 @@
+{
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uri"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^http://oparl\\.org/schema/1\\.0/Organization$"
+        },
+        "body": {
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/Body",
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "membership": {
+            "items": {
+                "format": "uri",
+                "type": "string"
+            },
+            "link": "http://oparl.org/schema/1.0/Membership",
+            "backlink": "organization",
+            "type": "array"
+        },
+        "meeting": {
+            "link": "http://oparl.org/schema/1.0/Meeting",
+            "backlink": "organization",
+
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+
+            "type":"array"
+        },
+        "shortName": {
+            "type": "string"
+        },
+        "post": {
+            "items": {
+                "type": "string",
+                "format": "uri"
+            },
+            "type": "array"
+        },
+        "subOrganizationOf": {
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/Organization",
+            "type": "string"
+        },
+        "classification": {
+            "type": "string"
+        },
+        "keyword": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "startDate": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "endDate": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "created": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "modified": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "website": {
+            "type": "string",
+            "format": "uri"
+        }
+    },
+    "required": [
+        "type",
+        "id",
+        "body",
+        "nameLong",
+        "membership"
+    ],
+    "oparl:recommended": [
+        "created",
+        "lastModified"
+    ],
+    "oparl:validate": [
+        {
+            "message": "nameLong and nameShort may not be equal",
+            "section": "5.2.3",
+            "method": "oparlvalidator.schema:nameLong_not_equal_nameShort"
+        }
+    ],
+    "type": "object"
+}

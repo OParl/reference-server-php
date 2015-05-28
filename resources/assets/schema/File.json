@@ -1,0 +1,104 @@
+{
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uri"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^http://oparl\\.org/schema/1\\.0/File$"
+        },
+        "fileName": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "mimeType": {
+            "type": "string"
+        },
+        "date": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "modified": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "size": {
+            "type": "integer"
+        },
+        "sha1Checksum": {
+            "type": "string"
+        },
+        "text": {
+            "type": "string"
+        },
+        "accessUrl": {
+            "type": "string",
+            "format": "uri"
+        },
+        "downloadUrl": {
+            "type": "string",
+            "format": "uri"
+        },
+        "paper": {
+            "type": "array",
+            "link": "http://oparl.org/schema/1.0/Paper",
+            "backlink": "auxiliaryFile",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            }
+        },
+        "meeting": {
+            "type": "array",
+            "link": "http://oparl.org/schema/1.0/Meeting",
+            "backlink": "auxiliaryFile",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            }
+        },
+        "masterFile": {
+            "type": "string",
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/File"
+        },
+        "derivativeFile": {
+            "type": "array",
+            "link": "http://oparl.org/schema/1.0/File",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            }
+        },
+        "license": {
+            "type": "string",
+            "format": "uri"
+        },
+        "FileRole": {
+            "type": "string"
+        },
+        "keyword": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "required": [
+        "fileName",
+        "mimeType",
+        "date",
+        "modified",
+        "size",
+        "accessUrl"
+    ],
+    "oparl:recommended": [
+        "name",
+        "text",
+        "downloadUrl"
+    ],
+    "type": "object"
+}

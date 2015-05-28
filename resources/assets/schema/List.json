@@ -1,0 +1,23 @@
+{
+    "type": "object",
+    "properties": {
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            }
+        },
+        "nextPage": {
+            "type": "string",
+            "format": "uri"
+        },
+        "itemsPerPage": {
+            "type": "integer",
+            "minimum": 0
+        }
+    },
+    "required": [
+        "items"
+    ]
+}

@@ -1,0 +1,62 @@
+{
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uri"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^http://oparl\\.org/schema/1\\.0/Consultation$"
+        },
+        "paper": {
+            "type": "string",
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/Paper",
+            "backlink": "consultation"
+        },
+        "agendaItem": {
+            "type": "string",
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/AgendaItem",
+            "backlink": "consultation"
+        },
+        "organization": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "format": "uri"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uri"
+                    }
+                }
+            ],
+          "items": {
+            "format": "uri",
+            "type": "string"
+          },
+            "type":"array",
+            "link": "http://oparl.org/schema/1.0/Organization"
+        },
+        "authoritative": {
+            "type": "boolean"
+        },
+        "role": {
+            "type": "string"
+        },
+        "keyword": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "id",
+        "type",
+        "paper",
+        "agendaItem",
+        "organization"
+    ],
+    "type": "object"
+}

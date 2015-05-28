@@ -1,0 +1,80 @@
+{
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uri"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^http://oparl\\.org/schema/1\\.0/AgendaItem$"
+        },
+        "meeting": {
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/Meeting",
+            "backlink": "agendaItem",
+            "type": "string"
+        },
+        "number": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "public": {
+            "type": "boolean"
+        },
+        "consultation": {
+            "items": {
+              "type": "string",
+                "format": "uri"
+            },
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/Consultation",
+            "backlink": "agendaItem",
+            "type": ["string", "array"]
+        },
+        "result": {
+            "type": "string"
+        },
+        "resolution": {
+            "type": "string"
+        },
+        "auxiliaryFile": {
+            "type": ["string","array"],
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/File",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            }
+        },
+        "keyword": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "created": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "modified": {
+            "type": "string",
+            "format": "date-time"
+        }
+    },
+    "required": [
+        "type",
+        "id",
+        "name",
+        "meeting",
+        "consultation"
+    ],
+    "oparl:recommended": [
+        "public",
+        "result",
+        "created",
+        "modified"
+    ],
+    "type": "object"
+}

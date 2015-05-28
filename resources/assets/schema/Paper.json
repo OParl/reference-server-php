@@ -1,0 +1,118 @@
+{
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uri"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^http://oparl\\.org/schema/1\\.0/Paper$"
+        },
+        "body": {
+            "type": "string",
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/Body"
+        },
+        "name": {
+            "type": "string"
+        },
+        "reference": {
+            "type": "string"
+        },
+        "publishedDate": {
+            "type": "string",
+            "oneOf": [
+                {"format": "date-time"},
+                {"pattern": "^\\d{4}-((0[1-9])|(1[0-2]))-((0[1-9])|([1-2][0-9])|(3(0|1)))$"}
+            ]
+        },
+        "paperType": {
+            "type": "string",
+            "format": "uri"
+        },
+        "relatedPaper": {
+            "type": "string",
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/Paper"
+        },
+        "mainFile": {
+            "type": "string",
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/File",
+            "backlink": "paper"
+        },
+        "auxiliaryFile": {
+            "type": "array",
+            "format": "uri",
+            "link": "http://oparl.org/schema/1.0/File",
+            "backlink": "paper",
+          "items": {
+            "format": "uri",
+            "type": "string"
+          },
+        },
+        "location": {
+          "items": {
+            "format": "uri",
+            "type": "string"
+          },
+            "type": "array",
+            "link": "http://oparl.org/schema/1.0/Location"
+        },
+        "originator": {
+          "items": {
+            "format": "uri",
+            "type": "string"
+          },
+            "type": "array",
+            "link_many": ["http://oparl.org/schema/1.0/Person", "http://oparl.org/schema/1.0/Organization"]
+        },
+        "consultation": {
+            "type": "array",
+            "link": "http://oparl.org/schema/1.0/Consultation",
+            "backlink": "paper",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            }
+        },
+        "modified": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "keyword": {
+            "type": "string",
+            "format": "uri",
+            "links": "http://oparl.org/schema/1.0/File"
+        },
+        "underDirectionof": {
+            "type": "array",
+          "items": {
+            "format": "uri",
+            "type": "string"
+          },
+            "link": "http://oparl.org/schema/1.0/Organization"
+        }
+    },
+    "required": [
+        "id",
+        "type",
+        "body",
+        "name",
+        "mainDocument"
+    ],
+    "oparl:recommended": [
+        "publishedDate",
+        "paperType",
+        "originator"
+    ],
+    "oparl:optional": [
+        "reference",
+        "relatedPaper",
+        "auxiliaryDocument",
+        "location",
+        "consultation",
+        "keyword"
+    ],
+    "type": "object"
+}
