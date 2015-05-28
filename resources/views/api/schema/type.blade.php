@@ -1,7 +1,5 @@
-<span><samp>
 @if ($type !== "array")
-    {{ $type }}
+    <samp>{{ $type }}</samp>
 @else
-    array of {{ $property['items']['type'] }}
+    <samp>array of {{ $property['items']['type'] }}</samp>
 @endif
-</samp></span>
