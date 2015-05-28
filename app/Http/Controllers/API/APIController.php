@@ -37,16 +37,37 @@ class APIController extends Controller
   protected $format = 'html';
 
   /**
+   * @var array
+   **/
+  protected $only = [];
+
+  /**
    * @param Request $request
    */
   public function __construct(Request $request, Router $router)
   {
-    $this->request = $request;
-    $this->routes = $router->getRoutes();
-
+    // check for valid implementing class
     if (!is_string($this->model) || !class_exists($this->model))
       throw new \LogicException("API controllers require a valid \$model property.");
 
+    $this->request = $request;
+    $this->routes = $router->getRoutes();
+
+    // check for only parameter to limit output
+    if ($request->input('only'))
+    {
+      $only = explode(',', $request->input('only'));
+
+      $validator = \Validator::make(
+        ['only' => $only],
+        ['only' => 'array|in:data,meta']
+      );
+
+      if (!$validator->failed())
+        $this->only = array_flip(array_diff(['data', 'meta'], $only));
+    }
+
+    // set output format
     $this->format = config('api.format');
 
     // remove "underscore specifer part" from format
@@ -78,6 +99,8 @@ class APIController extends Controller
       $paginationCode = $data['pagination_code'];
       unset($data['pagination_code']);
     }
+
+    if (count($this->only) > 0) $data = array_diff_key($data, $this->only);
 
     $response = null;
     switch ($this->format)
