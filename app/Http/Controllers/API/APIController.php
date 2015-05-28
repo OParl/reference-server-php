@@ -63,14 +63,19 @@ class APIController extends Controller
         ['only' => 'array|in:data,meta']
       );
 
-      if (!$validator->failed())
+      if ($validator->failed())
+      {
+        $this->respondWithError("Invalid value for `only`.");
+      } else
+      {
         $this->only = array_flip(array_diff(['data', 'meta'], $only));
+      }
     }
 
     // set output format
     $this->format = config('api.format');
 
-    // remove "underscore specifer part" from format
+    // remove "underscore specifier part" from format
     if (strpos($this->format, '_') > 0)
       $this->format = substr($this->format, 0, strpos($this->format, '_'));
   }
