@@ -23,24 +23,8 @@ class Consultation extends Model {
   /**
    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
    **/
-  public function consultations()
+  public function organizations()
   {
     return $this->belongsToMany('OParl\Consultation', 'consultations_organizations', 'consultation_id', 'organization_id');
-  }
-
-  /**
-   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-   **/
-  public function body()
-  {
-    return $this->belongsTo('OParl\Body', 'body_id');
-  }
-
-  /**
-   * @return mixed
-   **/
-  public function getBodyIdAttribute()
-  {
-    return $this->agendaItem->body_id;
   }
 }

@@ -37,12 +37,4 @@ class AgendaItem extends BaseModel {
   {
     return $this->belongsTo('OParl\Meeting', 'meeting_id');
   }
-
-  /**
-   * @return int
-   **/
-  public function getBodyIdAttribute()
-  {
-    return $this->meeting->organization->body_id;
-  }
 }
