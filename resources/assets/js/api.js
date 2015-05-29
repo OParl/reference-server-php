@@ -11,8 +11,8 @@ $(document).ready(function () {
     $('.tab-content a[data-toggle=tab]').each(function () {
         $(this).on('click', function (event) {
             event.preventDefault();
-            $(this).tab('show');
-            console.log("Should show tab.");
+            $('.main .nav-tabs a[href='+$(this).attr('href')+"]").tab('show');
+            return false;
         })
     });
 });

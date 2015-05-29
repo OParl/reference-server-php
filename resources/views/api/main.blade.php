@@ -1,4 +1,4 @@
-<div>
+<div class="main">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#json" aria-controls="json" data-toggle="tab">JSON</a></li>
         <li><a href="#access" aria-controls="access" data-toggle="tab">Zugriff</a></li>
