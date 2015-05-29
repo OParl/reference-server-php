@@ -17,7 +17,7 @@
     </dt>
     <dd>
         <div class="row">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-1 col-md-11">
                 <div class="type">
                     JSON-Datentyp: @include ('api.schema.type_or_type_list')
                 </div>
