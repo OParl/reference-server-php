@@ -10,6 +10,7 @@
         <h3>Unterstützte Formate</h3>
 
         <ul>
+            <li><a href="{{ $url }}?format=html">html</a></li>
             <li><a href="{{ $url }}?format=json" target="_blank">json</a></li>
             <li><a href="{{ $url }}?format=yaml" target="_blank">yaml</a></li>
             <li><a href="{{ $url }}?format=xml" target="_blank">xml</a></li>
