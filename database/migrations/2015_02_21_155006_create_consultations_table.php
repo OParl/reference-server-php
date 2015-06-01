@@ -21,7 +21,7 @@ class CreateConsultationsTable extends Migration {
 			$table->foreign('paper_id')->references('id')->on('papers');
 			
 			$table->integer('agenda_item_id')->unsigned()->nullable();
-			$table->foreign('agenda_item_id')->references('id')->on('agendaitems');
+			$table->foreign('agenda_item_id')->references('id')->on('agenda_items');
 
 			$table->boolean('authoritative')->nullable();
 			$table->string('role')->nullable();
@@ -36,6 +36,12 @@ class CreateConsultationsTable extends Migration {
 			$table->foreign('consultation_id')->references('id')->on('consultations');
 			$table->foreign('organization_id')->references('id')->on('organizations');
 		});
+
+    // consultation references on agenda items are stored in agenda_items too
+    Schema::table('agenda_items', function (Blueprint $table) {
+      $table->integer('consultation_id')->unsigned()->nullable();
+      $table->foreign('consultation_id')->references('id')->on('consultations');
+    });
 	}
 
 	/**

@@ -72,7 +72,11 @@ class CreateMeetingsTable extends Migration {
 			$table->foreign('auxiliary_id')->references('id')->on('files');
 		});
 
-		// agendaItem references are stored in the agendaitems table
+		// agendaItem references are stored in the agenda_items table
+    Schema::table('agenda_items', function (Blueprint $table) {
+      $table->integer('meeting_id')->unsigned()->nullable();
+      $table->foreign('meeting_id')->references('id')->on('meetings');
+    });
 	}
 
 	/**
