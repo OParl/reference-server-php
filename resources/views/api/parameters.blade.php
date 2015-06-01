@@ -20,15 +20,12 @@
             <dd>
                 <div><strong>Datentyp:&nbsp;</strong><samp>string</samp></div>
                 <div>
-                    <strong>Format:&nbsp;</strong><samp>(feld:wert,?)+</samp>
-                    {{--
-                        TODO: Popover with more information on API query strings
-                        <button></button>
-                    --}}
+                    <strong>Format:&nbsp;</strong><samp>(feld:wert ?)+</samp>
                 </div>
 
                 Der <code>where</code>-Parameter ermöglicht das Filtern der Ausgabe von Listen.
-                Er hat keine Wirkung auf die Ausgabe von einzelnen Entities.
+                Er hat keine Wirkung auf die Ausgabe von einzelnen Entities. Das Format der
+                Suchanfragen orientiert sich an <a href="//www.elastic.co/guide/en/elasticsearch/reference/1.x/query-dsl-query-string-query.html#query-string-syntax">Elastic Search</a>.
             </dd>
             <dt>page</dt>
             <dd>
