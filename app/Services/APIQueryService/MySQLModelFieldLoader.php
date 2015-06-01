@@ -1,6 +1,6 @@
 <?php namespace App\Services\APIQueryService;
 
-class MySQLModelFieldLoader extends ModelFieldLoder
+class MySQLModelFieldLoader extends ModelFieldLoader
 {
   protected $query = "DESCRIBE %s";
 
