@@ -25,7 +25,7 @@
 		],
 		"psr-4": {
 			"App\\": "app/",
-			"OParl\\": "oparl-model/",
+			"OParl\\": "database/model/",
             "OParl\\Fakers\\": "database/fakers/"
 		}
 	},
