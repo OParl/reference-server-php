@@ -1,4 +1,5 @@
 <?php
+// TODO: change the delimiter on where clauses to a blank space
 
 if (!function_exists('encode_where'))
 {
@@ -17,6 +18,7 @@ if (!function_exists('decode_where'))
   function decode_where($where = '')
   {
     $where = explode(',', $where);
+
     $clauses = [];
     foreach ($where as $clause)
     {
