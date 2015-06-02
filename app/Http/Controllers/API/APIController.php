@@ -112,7 +112,7 @@ class APIController extends Controller
     {
       case 'json':
       case 'yaml':
-      case 'xml':
+//      case 'xml':
         $command = sprintf('App\Commands\Create%sAPIResponseCommand', strtoupper($this->format));
         $response = $this->dispatch(new $command($data, $this->statusCode, $headers));
         break;
