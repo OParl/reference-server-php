@@ -6,6 +6,6 @@ class MySQLModelFieldLoader extends ModelFieldLoader
 
   protected function parseResult($result)
   {
-    foreach ($result as $field) $this->addField($field->type, $field->field);
+    foreach ($result as $field) $this->addField($field->Type, $field->Field);
   }
 }
