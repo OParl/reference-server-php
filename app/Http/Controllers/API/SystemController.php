@@ -1,17 +1,11 @@
 <?php namespace App\Http\Controllers\API;
 
-use OParl\System;
+use EFrane\Transfugio\Http\APIController;
+use EFrane\Transfugio\Http\Method\IndexItemTrait;
 
 class SystemController extends APIController {
   protected $model = 'OParl\System';
+  protected $item_id = 'Testsystem';
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		return $this->respondWithItem(System::first());
-	}
+  use IndexItemTrait;
 }

@@ -1,8 +1,9 @@
 <?php namespace App\Handlers\Transformers;
 
 use Oparl\System;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class SystemTransformer extends TransformerAbstract
+class SystemTransformer extends BaseTransformer
 {
   protected $availableIncludes = ['body'];
 

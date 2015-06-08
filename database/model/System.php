@@ -1,9 +1,9 @@
-<?php namespace Oparl;
+<?php namespace OParl;
 
 use Illuminate\Database\Eloquent\Model;
 
 class System extends Model {
-  protected $primaryKey = null;
+  protected $primaryKey = 'id';
   public $incrementing  = false;
 
   protected $hidden  = ['created_at', 'updated_at'];
