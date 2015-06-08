@@ -1,8 +1,10 @@
 <?php namespace App\Http\Controllers\API;
 
+use EFrane\Transfugio\Http\APIController;
+
 class BodyController extends APIController {
 	protected $model = 'OParl\Body';
 
-  use APIIndexPaginatedTrait;
-  use APIShowItemTrait;
+  use \EFrane\Transfugio\Http\Method\IndexPaginatedTrait;
+  use \EFrane\Transfugio\Http\Method\ShowItemTrait;
 }

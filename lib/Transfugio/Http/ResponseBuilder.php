@@ -4,7 +4,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-use EFrane\Transfugio\Transformers\TransformerFactory;
+use EFrane\Transfugio\Transformers\EloquentTransformerWorker;
 
 class ResponseBuilder 
 {
@@ -23,7 +23,7 @@ class ResponseBuilder
 
     $this->prepareEloquentResult($paginated);
 
-    return $this->respond($paginated, $status);
+    return $this->respond(collect($paginated), $status);
   }
 
   public function respondWithModel(\Illuminate\Database\Eloquent\Model $item, $status = 200)
@@ -96,7 +96,8 @@ class ResponseBuilder
   {
     $this->options = array_merge([
       'only' => [],
-      'format' => $format
+      'format' => $format,
+      'includes' => []
     ], $options);
   }
 
@@ -123,10 +124,10 @@ class ResponseBuilder
 
   protected function prepareEloquentResult(&$result)
   {
-    $transformer = ($result instanceof Collection)
-      ? TransformerFactory::makeForCollection($result)
-      : TransformerFactory::makeForModel($result);
-    
-    $result = $transformer->transform($result);
+    $worker = new EloquentTransformerWorker($this->options['includes']);
+
+    $result = ($result instanceof LengthAwarePaginator)
+      ? $worker->transformPaginated($result)
+      : $worker->transformModel($result);
   }
 }

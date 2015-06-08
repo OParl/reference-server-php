@@ -34,7 +34,7 @@ trait ShowItemTrait
       if ($item instanceof Builder)
         $item = $item->first();
 
-      return $this->respondWithItem($item);
+      return $this->respondWithModel($item);
     } catch(ModelNotFoundException $e)
     {
       return $this->respondWithNotFound("The requested item in `{$this->getModelName()}` does not exist.");
@@ -88,6 +88,7 @@ trait ShowItemTrait
     } else if (strpos($this->resolveMethod, 'model:') >= 0)
     {
       $method = [$this->model, substr($this->resolveMethod, strpos($this->resolveMethod, ':') + 1)];
+      return $method;
     } else if (strpos($this->resolveMethod, 'self:') >= 0)
     {
       $method = [$this, substr($this->resolveMethod, strpos($this->resolveMethod, ':') + 1)];

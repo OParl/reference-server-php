@@ -1,8 +1,9 @@
 <?php namespace App\Handlers\Transformers;
 
 use Oparl\Meeting;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class MeetingTransformer extends TransformerAbstract
+class MeetingTransformer extends BaseTransformer
 {
   protected $availableIncludes = [
     'location',

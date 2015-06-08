@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Collection;
 use Oparl\Body;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class BodyTransformer extends TransformerAbstract
+class BodyTransformer extends BaseTransformer
 {
   protected $availableIncludes = ['system', 'organization', 'member', 'meeting', 'paper', 'legislativeTerm'];
 

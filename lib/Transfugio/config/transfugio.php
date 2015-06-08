@@ -13,7 +13,9 @@
     'formatHelpers' => [
       'email' => 'EFrane\Transfugio\Transformers\Formatter\EMailURI',
       'date'  => 'EFrane\Transfugio\Transformers\Formatter\DateISO8601',
-    ]
+    ],
+
+    'recursionLimit' => 2
   ],
 
   'http' => [

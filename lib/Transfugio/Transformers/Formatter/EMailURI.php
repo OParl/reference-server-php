@@ -15,6 +15,6 @@ class EMailURI implements FormatHelper
 
   protected function _do($address)
   {
-    return "mailto:{$address}";
+    return strtolower("mailto:{$address}");
   }
 }
