@@ -13,10 +13,10 @@
             </div>
         </div>
         <div class="tab-pane" id="access">
-            @include ('api.access')
+            @include ('transfugio::api.access')
         </div>
         <div class="tab-pane" id="parameters">
-            @include ('api.parameters')
+            @include ('transfugio::api.parameters')
         </div>
     </div>
 </div>

@@ -6,7 +6,7 @@
     <div class="panel-body {{ strtolower($module) }} {{ $collectionClass }}" id="oparl-documentation">
         {{-- FIXME: The workaround to check for schema information should not be necessary once the complete schema is available. --}}
         @if (!is_null($schema))
-            @include ('api.schema')
+            @include ('transfugio::api.schema')
         @else
             TODO: Spezifikation
         @endif

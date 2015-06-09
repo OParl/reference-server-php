@@ -4,7 +4,7 @@
             Zur Einschränkung der ausgegebenen Daten bietet die OParl API die
             folgende Parametersyntax an:
         </p>
-        <pre><code class="language-bash">@include ('api.examples.http_parameters')</code></pre>
+        <pre><code class="language-bash">@include ('transfugio::api.examples.http_parameters')</code></pre>
         <dl class="dl-horizontal">
             <dt>format</dt>
             <dd>

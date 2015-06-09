@@ -4,6 +4,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+use EFrane\Transfugio\Web\WebView;
 use EFrane\Transfugio\Transformers\EloquentWorker;
 
 class ResponseBuilder 
@@ -44,12 +45,10 @@ class ResponseBuilder
       }
 
       // TODO: add reusable request parameters to output
-
-      // transform to output format
-      $data = $this->responseFormatter->format($data);
     }
 
-    // TODO: the special html stuff
+    // transform to output format
+    $data = $this->responseFormatter->format($data);
 
     return $this->generateResponse($data, $status);
   }

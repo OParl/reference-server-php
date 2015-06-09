@@ -31,14 +31,14 @@
 
         <h3>Javascript (<a href="//jquery.com">jQuery</a>)</h3>
 
-        <pre><code class="language-javascript">@include('api.examples.js')</code></pre>
+        <pre><code class="language-javascript">@include('transfugio::api.examples.js')</code></pre>
 
         <h3>Python (<a href="//python-requests.org">Requests</a>)</h3>
 
-        <pre><code class="language-python">@include('api.examples.python')</code></pre>
+        <pre><code class="language-python">@include('transfugio::api.examples.python')</code></pre>
 
         <h3>PHP (<a href="//guzzle.readthedocs.org/en/latest/">Guzzle</a>)</h3>
 
-        <pre><code class="language-php">@include('api.examples.php')</code></pre>
+        <pre><code class="language-php">@include('transfugio::api.examples.php')</code></pre>
     </div>
 </div>

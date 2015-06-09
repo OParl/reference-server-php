@@ -26,10 +26,10 @@
             @endif
             <div class="row">
                 <div class="col-xs-12 col-md-4">
-                    @include('api.sidebar')
+                    @include('transfugio::api.sidebar')
                 </div>
                 <div class="col-xs-12 col-md-8">
-                    @include('api.main')
+                    @include('transfugio::api.main')
                 </div>
             </div>
             <div class="row">

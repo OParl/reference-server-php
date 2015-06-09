@@ -15,4 +15,9 @@ class TransfugioServiceProvider extends ServiceProvider
       __DIR__.'/config/transfugio.php' => config_path('transfugio.php')
     ]);
   }
+
+  public function boot()
+  {
+    $this->loadViewsFrom(__DIR__.'/resources/views', 'transfugio');
+  }
 }
