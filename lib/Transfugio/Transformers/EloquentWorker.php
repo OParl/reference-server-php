@@ -10,7 +10,7 @@ use League\Fractal\Resource\Collection;
 
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
-class EloquentTransformerWorker implements TransformerWorker
+class EloquentWorker implements TransformerWorker
 {
   protected $manager = null;
 
@@ -36,7 +36,7 @@ class EloquentTransformerWorker implements TransformerWorker
   public function transformModel(Model $model)
   {
     $transformer = TransformerFactory::makeForModel($model);
-    $resource    = new Item($this->item, $transformer);
+    $resource    = new Item($model, $transformer);
 
     return $this->manager->createData($resource)->toArray();
   }

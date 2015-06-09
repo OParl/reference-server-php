@@ -34,7 +34,7 @@ class SanitizedDataArraySerializer extends DataArraySerializer
         &&  $format !== 'json_accept')
       {
         $value .= (strpos($value, '?') > 0) ? '&' : '?';
-        $value .= 'format='.config('api.format');
+        $value .= 'format='.config('transfugio.http.format');
       }
 
       return $value;

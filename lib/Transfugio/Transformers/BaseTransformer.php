@@ -30,7 +30,7 @@ abstract class BaseTransformer extends TransformerAbstract
     }, $keys);
   }
 
-  public function __call($formatHelperMethod, $value)
+  public function __call($formatHelperMethod, array $value)
   {
     if (substr($formatHelperMethod, 0, 6) !== 'format')
       throw new \LogicException("Format helper {$formatHelperMethod} is invalid");
@@ -43,7 +43,10 @@ abstract class BaseTransformer extends TransformerAbstract
       if (!array_key_exists($formatHelperName, $this->loadedFormatters))
         $this->loadedFormatters[$formatHelperName] = new $this->availableFormatters[$formatHelperName];
 
-      return $this->loadedFormatters[$formatHelperName]->format($value);
+      // check for null value
+      if (is_null($value[0])) return null;
+
+      return $this->loadedFormatters[$formatHelperName]->format($value[0]);
     }
   }
 }

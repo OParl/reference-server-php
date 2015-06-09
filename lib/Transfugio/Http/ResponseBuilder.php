@@ -4,7 +4,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-use EFrane\Transfugio\Transformers\EloquentTransformerWorker;
+use EFrane\Transfugio\Transformers\EloquentWorker;
 
 class ResponseBuilder 
 {
@@ -40,8 +40,13 @@ class ResponseBuilder
       // remove unwanted output data
       if (count($this->options['only']) > 0)
       {
-        $data = array_diff_key($data, $this->options['only']);
+        $data = collect(array_diff_key($data->toArray(), $this->options['only']));
       }
+
+      // TODO: add reusable request parameters to output
+
+      // transform to output format
+      $data = $this->responseFormatter->format($data);
     }
 
     // TODO: the special html stuff
@@ -88,6 +93,11 @@ class ResponseBuilder
     return $this->respondWithError($message, $status);
   }
 
+  public function respondWithNotAllowed($message = "Access to the requested resource is not allowed.", $status = 405)
+  {
+    return $this->respondWithError($message, $status);
+  }
+
   /**
    * @param $format
    * @param array $options
@@ -102,14 +112,12 @@ class ResponseBuilder
   }
 
   /**
-   * @param $data
+   * @param string $data
    * @param $status
    * @return mixed
    **/
-  protected function generateResponse(Collection $data, $status)
+  protected function generateResponse($data, $status)
   {
-    $data = $this->responseFormatter->format($data);
-
     $headers = ['Content-type' => $this->responseFormatter->getContentType()];
 
     if (config('transfugio.http.enableCORS'))
@@ -124,7 +132,7 @@ class ResponseBuilder
 
   protected function prepareEloquentResult(&$result)
   {
-    $worker = new EloquentTransformerWorker($this->options['includes']);
+    $worker = new EloquentWorker($this->options['includes']);
 
     $result = ($result instanceof LengthAwarePaginator)
       ? $worker->transformPaginated($result)
