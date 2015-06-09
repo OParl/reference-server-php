@@ -1,8 +1,9 @@
 <?php namespace App\Handlers\Transformers;
 
 use Oparl\Organization;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class OrganizationTransformer extends TransformerAbstract
+class OrganizationTransformer extends BaseTransformer
 {
   protected $availableIncludes = ['body', 'meeting', 'membership'];
 

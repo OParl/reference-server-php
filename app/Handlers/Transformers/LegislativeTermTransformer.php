@@ -1,8 +1,9 @@
 <?php namespace App\Handlers\Transformers;
 
 use OParl\LegislativeTerm;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class LegislativeTermTransformer extends TransformerAbstract
+class LegislativeTermTransformer extends BaseTransformer
 {
   protected $availableIncludes = ['body'];
 
@@ -10,7 +11,7 @@ class LegislativeTermTransformer extends TransformerAbstract
   {
     return [
       'id'        => route('api.v1.legislativeterm.show', $legislativeTerm->id),
-      'type'      => 'http://oparl.org/schema/1.0/LegislativeTerm',
+      'type'      => $this->formatURL('http://oparl.org/schema/1.0/LegislativeTerm'),
       'body'      => route('api.v1.body.show', $legislativeTerm->body_id),
       'name'      => $legislativeTerm->name,
       'startDate' => $this->formatDate($legislativeTerm->start_date),

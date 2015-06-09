@@ -1,8 +1,9 @@
 <?php namespace App\Handlers\Transformers;
 
-use Oparl\Membership;
+use OParl\Membership;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class MembershipTransformer extends TransformerAbstract
+class MembershipTransformer extends BaseTransformer
 {
   public function transform(Membership $membership)
   {

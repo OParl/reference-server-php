@@ -1,18 +1,20 @@
 <?php namespace App\Http\Controllers\API;
 
-use App\Services\APIQueryService\APIQueryService;
-use App\Services\APIQueryService\ValueExpression;
+use EFrane\Transfugio\Http\APIController;
+
+use EFrane\Transfugio\Query\QueryService;
+use EFrane\Transfugio\Query\ValueExpression;
 
 class MeetingController extends APIController {
 	protected $model = 'OParl\Meeting';
 
-  use APIIndexPaginatedTrait;
-  use APIShowItemTrait;
+  use \EFrane\Transfugio\Http\Method\IndexPaginatedTrait;
+  use \EFrane\Transfugio\Http\Method\ShowItemTrait;
 
-  protected function queryBody(APIQueryService &$query, ValueExpression $valueExpression)
+  protected function queryBody(QueryService &$query, ValueExpression $valueExpression)
   {
     $query->whereRaw(
-      \DB::raw("organization_id = (select id from organizations where body_id {$valueExpression->getExpression()} ?)"),
+      \DB::raw("organization_id = (select id from organizations where body_id {$valueExpression->getExpression()} ? limit 1)"),
       [$valueExpression->getValue()]
     );
   }
