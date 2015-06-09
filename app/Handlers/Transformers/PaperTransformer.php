@@ -1,8 +1,9 @@
 <?php namespace App\Handlers\Transformers;
 
 use Oparl\Paper;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class PaperTransformer extends TransformerAbstract
+class PaperTransformer extends BaseTransformer
 {
   public function transform(Paper $paper)
   {

@@ -1,7 +1,9 @@
 <?php namespace App\Http\Controllers\API;
 
-use App\Services\APIQueryService\APIQueryService;
-use App\Services\APIQueryService\ValueExpression;
+use EFrane\Transfugio\Http\APIController;
+
+use EFrane\Transfugio\Query\QueryService;
+use EFrane\Transfugio\Query\ValueExpression;
 
 /**
  * Request agenda items
@@ -11,10 +13,10 @@ use App\Services\APIQueryService\ValueExpression;
 class AgendaItemController extends APIController {
   protected $model = 'OParl\AgendaItem';
 
-  use APIIndexPaginatedTrait;
-  use APIShowItemTrait;
+  use \EFrane\Transfugio\Http\Method\IndexPaginatedTrait;
+  use \EFrane\Transfugio\Http\Method\ShowItemTrait;
 
-  protected function queryBody(APIQueryService &$query, ValueExpression $valueExpression)
+  protected function queryBody(QueryService &$query, ValueExpression $valueExpression)
   {
     $query
       ->join('meetings', 'meetings.id', '=', 'agenda_items.meeting_id')

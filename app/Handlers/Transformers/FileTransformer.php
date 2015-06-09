@@ -1,8 +1,9 @@
 <?php namespace App\Handlers\Transformers;
 
 use Oparl\File;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class FileTransformer extends TransformerAbstract
+class FileTransformer extends BaseTransformer
 {
   protected $availableIncludes = ['masterFile', 'derivativeFile'];
 

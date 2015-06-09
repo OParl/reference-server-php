@@ -2,8 +2,9 @@
 
 use OParl\Person;
 use OParl\Membership;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class PersonTransformer extends TransformerAbstract
+class PersonTransformer extends BaseTransformer
 {
   protected $availableIncludes = ['body', 'membership'];
 

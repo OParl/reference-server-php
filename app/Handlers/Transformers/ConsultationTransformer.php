@@ -1,8 +1,9 @@
 <?php namespace App\Handlers\Transformers;
 
 use Oparl\Consultation;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class ConsultationTransformer extends TransformerAbstract
+class ConsultationTransformer extends BaseTransformer
 {
   protected $availableIncludes = ['paper', 'agendaItem', 'organization'];
 

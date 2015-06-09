@@ -1,8 +1,9 @@
 <?php namespace App\Handlers\Transformers;
 
 use Oparl\Location;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class LocationTransformer extends TransformerAbstract
+class LocationTransformer extends BaseTransformer
 {
   public function transform(Location $location)
   {

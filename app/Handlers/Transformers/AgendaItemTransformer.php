@@ -1,8 +1,9 @@
 <?php namespace App\Handlers\Transformers;
 
 use Oparl\AgendaItem;
+use EFrane\Transfugio\Transformers\BaseTransformer;
 
-class AgendaItemTransformer extends TransformerAbstract
+class AgendaItemTransformer extends BaseTransformer
 {
   protected $availableIncludes = ['meeting', 'consultation'];
 
