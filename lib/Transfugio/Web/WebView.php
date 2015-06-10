@@ -56,15 +56,25 @@ class WebView extends Response
 
   protected function loadSchema()
   {
-    try
-    {
-      $json = file_get_contents(app_path('../resources/assets/schema/'.ucfirst($this->modelName).'.json'));
-      $schema = json_decode($json, true);
-    } catch (\ErrorException $e)
-    {
-      $schema = null;
-    }
+    $type = config('transfugio.web.documentationType');
 
-    return $schema;
+    if ($type === 'JSONSchema')
+    {
+      try
+      {
+        $path = base_path(config('transfugio.web.documentationRoot'));
+
+        $json = file_get_contents(sprintf('%s/%s.json', $path, ucfirst($this->modelName)));
+        $schema = json_decode($json, true);
+      } catch (\ErrorException $e)
+      {
+        $schema = null;
+      }
+
+      return $schema;
+    } else
+    {
+      throw new \LogicException("Unknown documentation type {$type}");
+    }
   }
 }

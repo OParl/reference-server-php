@@ -20,5 +20,10 @@
   'http' => [
     'format' => 'json_accept',
     'enableCORS' => true,
+  ],
+
+  'web' => [
+    'documentationType' => 'JSONSchema',
+    'documentationRoot' => '/resources/assets/schema'
   ]
 ];
