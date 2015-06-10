@@ -4,8 +4,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-use EFrane\Transfugio\Web\WebView;
 use EFrane\Transfugio\Transformers\EloquentWorker;
+use EFrane\Transfugio\Web\WebView;
 
 class ResponseBuilder 
 {
@@ -20,7 +20,7 @@ class ResponseBuilder
 
   public function respondWithPaginated(LengthAwarePaginator $paginated, $status = 200)
   {
-    $this->options['paginatorCode'] = $paginated->render();
+    $this->options['paginationCode'] = $paginated->render();
 
     $this->prepareEloquentResult($paginated);
 
@@ -104,9 +104,10 @@ class ResponseBuilder
   protected function extractOptions($format, array $options)
   {
     $this->options = array_merge([
-      'only' => [],
-      'format' => $format,
-      'includes' => []
+      'only'      => [],
+      'format'    => $format,
+      'includes'  => [],
+      'modelName' => ''
     ], $options);
   }
 
@@ -122,7 +123,21 @@ class ResponseBuilder
     if (config('transfugio.http.enableCORS'))
       $headers['Access-Control-Allow-Origin'] = '*';
 
-    $response = new Response($data, $status);
+    if ($this->options['format'] === 'html')
+    {
+      $response = new WebView($data, $status);
+
+      $response->setModelName($this->options['modelName']);
+      $response->setIsCollection(strlen($this->options['paginationCode']) > 0);
+      $response->setPaginationCode($this->options['paginationCode']);
+      $response->setIsError($status !== 200);
+
+      $response->render();
+    } else
+    {
+      $response = new Response($data, $status);
+    }
+
     foreach ($headers as $name => $value)
       $response->header($name, $value);
 

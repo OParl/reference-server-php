@@ -71,20 +71,14 @@ class APIController extends Controller
     $this->format = config('transfugio.http.format');
   }
 
-  /**
-   * @return string
-   **/
-  protected function getModelName()
-  {
-    return class_basename($this->model);
-  }
-
   public function __call($method, $parameters)
   {
     if (starts_with($method, 'respond'))
     {
       $responseBuilder = new ResponseBuilder($this->format, [
         'only' => $this->only,
+        'modelName' => class_basename($this->model),
+        'includes' => ($this->request->has('includes')) ? $this->request->get('includes') : [],
       ]);
 
       return call_user_func_array([$responseBuilder, $method], $parameters);

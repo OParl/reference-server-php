@@ -11,8 +11,10 @@ class HTMLFormatter implements Formatter
 
   public function format(\Illuminate\Support\Collection $collection)
   {
-    $view = new WebView($collection);
-    return $view->render();
+    return json_encode(
+      $collection->toArray(),
+      JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+    );
   }
 
 }

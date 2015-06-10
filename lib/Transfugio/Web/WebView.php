@@ -1,33 +1,70 @@
 <?php namespace EFrane\Transfugio\Web;
 
-use Illuminate\Support\Collection;
+use Illuminate\Http\Response;
 
-class WebView
+class WebView extends Response
 {
   protected $json = [];
+  protected $modelName = '';
+  protected $paginationCode = '';
+  protected $collectionClass = '';
+  protected $error = false;
 
-  public function __construct(Collection $collection)
+  public function __construct($data, $status)
   {
-    $this->json = json_encode(
-      $collection->toArray(),
-      JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-    );
+    $this->json = $data;
+    parent::__construct('', $status);
+  }
 
+  public function setIsCollection($isCollection = true)
+  {
+    $this->collectionClass = ($isCollection) ? 'collection' : '';
+  }
 
+  /**
+   * @param string $modelName
+   */
+  public function setModelName($modelName)
+  {
+    $this->modelName = $modelName;
+  }
+
+  public function setPaginationCode($paginationCode)
+  {
+    $this->paginationCode = $paginationCode;
+  }
+
+  public function setIsError($isError = true)
+  {
+    $this->error = $isError;
   }
 
   public function render()
   {
     $data = [
-      'schema'          => null,//$this->loadSchema($this->additionalData['modelName']),
-      'url'             => null,//$this->additionalData['url'],
+      'schema'          => $this->loadSchema(),
+      'url'             => app('request')->url(),
       'json'            => $this->json,
-      'module'          => null,//$this->additionalData['modelName'],
-      'isError'         => false,
-      'paginationCode'  => null,//$this->additionalData['paginationCode'],
-      'collectionClass' => null//(!is_null($this->additionalData['paginationCode'])) ? '' : 'collection',
+      'module'          => $this->modelName,
+      'isError'         => $this->error,
+      'paginationCode'  => $this->paginationCode,
+      'collectionClass' => $this->collectionClass,
     ];
 
-    return view('transfugio::api.base', $data);
+    $this->setContent(view('transfugio::api.base', $data));
+  }
+
+  protected function loadSchema()
+  {
+    try
+    {
+      $json = file_get_contents(app_path('../resources/assets/schema/'.ucfirst($this->modelName).'.json'));
+      $schema = json_decode($json, true);
+    } catch (\ErrorException $e)
+    {
+      $schema = null;
+    }
+
+    return $schema;
   }
 }

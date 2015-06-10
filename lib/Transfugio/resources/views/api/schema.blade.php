@@ -19,9 +19,9 @@
         <div class="row">
             <div class="col-md-offset-1 col-md-11">
                 <div class="type">
-                    JSON-Datentyp: @include ('api.schema.type_or_type_list')
+                    JSON-Datentyp: @include ('transfugio::api.schema.type_or_type_list')
                 </div>
-                @include('api.schema.format')
+                @include('transfugio::api.schema.format')
 
                 @if (isset($property['description']))
                     <p class="text-muted small">
