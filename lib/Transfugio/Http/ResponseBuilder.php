@@ -128,8 +128,15 @@ class ResponseBuilder
       $response = new WebView($data, $status);
 
       $response->setModelName($this->options['modelName']);
-      $response->setIsCollection(strlen($this->options['paginationCode']) > 0);
-      $response->setPaginationCode($this->options['paginationCode']);
+
+      $response->setIsCollection(
+        isset($this->options['paginationCode'])
+        && strlen($this->options['paginationCode']) > 0
+      );
+
+      if (isset($this->options['paginationCode']))
+        $response->setPaginationCode($this->options['paginationCode']);
+
       $response->setIsError($status !== 200);
 
       $response->render();
