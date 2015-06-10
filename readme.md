@@ -33,7 +33,7 @@ Es wird empfohlen anstatt SQLite MySQL als Backend zu nutzen. Dazu muss natürli
 
 ### Datenbankmodel und Beispieldaten
 
-Nach der Einrichtung der Datenbankverbindung ist es noch **notwendig** das Datenbankschema zu intialisieren.
+Nach der Einrichtung der Datenbankverbindung ist es noch **notwendig** das Datenbankschema zu initialisieren.
 Dazu ist einfach `php artisan migrate` auszuführen (Im Falle von MySQL oder Postgres innerhalb der Homestead VM!)
 
 Wenn die Beispieldaten generiert werden sollen, kann dies mit `php artisan db:seed` getan werden.
