@@ -71,13 +71,23 @@ class Deploy extends Command {
     }
 	}
 
+  /**
+   * Check if the deployment will run (only if environment is *not* local)
+   *
+   * @return bool
+   **/
   protected function willRun()
   {
     return !$this->getLaravel()->environment('local') || $this->option('force');
   }
 
 	/**
-	 * Get the console command arguments.
+	 * Get the console command options.
+   *
+   * This command accepts two options,
+   *
+   * 1. force,f - Forces production mode (deployment commands will be run).
+   * 2. init - Initializes the tools necessary for deployment.
 	 *
 	 * @return array
 	 */
