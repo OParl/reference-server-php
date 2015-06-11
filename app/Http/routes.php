@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function() {
-  return redirect()->to('/api/v1/system', 301, ['format' => 'html']);
+  return redirect()->route('api.v1.system.index', ['format' => 'html']);
 });
 
 Route::pattern('id', '(\d+)');
