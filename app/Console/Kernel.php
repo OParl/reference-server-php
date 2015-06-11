@@ -14,4 +14,18 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\Inspire',
     'App\Console\Commands\Deploy',
 	];
+
+  protected function schedule(Schedule $schedule)
+  {
+    $schedule
+      ->exec(function () {
+        exec('php artisan down');
+        exec('php artisan migrate:refresh --env=local');
+        exec('php artisan db:seed --env=local');
+        exec('php artisan up');
+      })
+      ->dailyAt('05:00')
+      ->sendOutputTo(storage_path('/logs/db_update.log'))
+      ->emailOutputTo(['stefan.graupner@gmail.com']);
+  }
 }
