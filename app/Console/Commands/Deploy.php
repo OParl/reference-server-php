@@ -4,6 +4,22 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * Deploy Command
+ *
+ * Runs commands and scripts necessary to put the application in a usable state.
+ *
+ * This includes but is not limited to
+ *
+ * - artisan clear-compiled,
+ * - artisan optimize,
+ *
+ * and gulp.
+ *
+ * In the future, more actions like restarting queues may have to be taken care of.
+ *
+ * @package App\Console\Commands
+ **/
 class Deploy extends Command {
 
 	/**
@@ -72,5 +88,4 @@ class Deploy extends Command {
       ['init', null, InputOption::VALUE_NONE, 'Initialize deployment infrastructure.'],
     ];
 	}
-
 }
