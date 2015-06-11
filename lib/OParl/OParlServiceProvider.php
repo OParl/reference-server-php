@@ -12,6 +12,9 @@ class OParlServiceProvider extends ServiceProvider
   public function register()
   {
     $router = app('router');
+
+    $router->pattern('id', '(\d+)');
+
     $router->group(['prefix' => '/api/v1', 'middleware' => ['api.format']], function() use ($router) {
       $router->resource('system',          'OParl\API\Controllers\SystemController',          ['only' => 'index']);
       $router->resource('body',            'OParl\API\Controllers\BodyController',            ['only' => ['index', 'show']]);
@@ -30,6 +33,12 @@ class OParlServiceProvider extends ServiceProvider
     $router->any('/api/{entity}', function($entity) {
       return redirect("/api/v1/{$entity}", 301);
     })->where('entity', '\w+');
+
+    $router->pattern('feedType', '(new|updated|removed)');
+    $router->pattern('feedFormat', '(rss|atom)');
+
+    // feeds
+    $router->get('/feed/{feedType}.{feedFormat}', ['as' => 'feed.show', 'uses' => 'OParl\API\Controllers\FeedController@show']);
   }
 
 }

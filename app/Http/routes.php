@@ -11,17 +11,8 @@
 |
 */
 
-Route::get('/', function() {
-  return redirect()->route('api.v1.system.index', ['format' => 'html']);
-});
-
-Route::pattern('id', '(\d+)');
-
-Route::pattern('feedType', '(new|updated|removed)');
-Route::pattern('feedFormat', '(rss|atom)');
-
-// feeds
-Route::get('/feed/{feedType}.{feedFormat}', ['as' => 'feed.show', 'uses' => 'FeedController@show']);
+// redirect root to html version of api entry point
+Route::get('/', function() { return redirect()->route('api.v1.system.index', ['format' => 'html']); });
 
 // file access and download
 Route::get('/preview/{id}',  ['as' => 'file.access',   'uses' => 'FileController@access']);

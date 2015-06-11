@@ -11,7 +11,7 @@ class LegislativeTermTransformer extends BaseTransformer
   {
     return [
       'id'        => route('api.v1.legislativeterm.show', $legislativeTerm->id),
-      'type'      => $this->formatURL('http://oparl.org/schema/1.0/LegislativeTerm'),
+      'type'      => 'http://oparl.org/schema/1.0/LegislativeTerm',
       'body'      => route('api.v1.body.show', $legislativeTerm->body_id),
       'name'      => $legislativeTerm->name,
       'startDate' => $this->formatDate($legislativeTerm->start_date),
