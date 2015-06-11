@@ -11,7 +11,7 @@ class Deploy extends Command {
 	 *
 	 * @var string
 	 */
-	protected $name = 'deploy:deploy';
+	protected $name = 'deploy';
 
 	/**
 	 * The console command description.
@@ -43,30 +43,35 @@ class Deploy extends Command {
 //    "npm update",
 //    "bower update --allow-root",
 //    "gulp --production"
+    if ($this->willRun())
+    {
+      $this->call('clear-compiled');
+      $this->call('optimize');
 
-
+      #exec('npm install');
+      #exec('bower update --allow-root');
+      exec('gulp --production');
+    } else
+    {
+      $this->info('Use --force to run deploy commands in local mode.');
+    }
 	}
+
+  protected function willRun()
+  {
+    return !$this->getLaravel()->environment('local') || $this->option('force');
+  }
 
 	/**
 	 * Get the console command arguments.
 	 *
 	 * @return array
 	 */
-	protected function getArguments()
-	{
-		return [
-			['force-production', InputArgument::REQUIRED, 'Force production mode.'],
-		];
-	}
-
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
 	protected function getOptions()
 	{
-		return [];
+		return [
+      ['force', 'f', InputOption::VALUE_NONE, 'Force production mode.'],
+    ];
 	}
 
 }
