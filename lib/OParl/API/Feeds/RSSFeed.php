@@ -3,8 +3,18 @@
 use OParl\Model\System;
 use PicoFeed\Syndication\Rss20;
 
+/**
+ * RSSFeed
+ *
+ * Make an RSS 2.0 feed.
+ *
+ * @package OParl\API\Feeds
+ **/
 class RSSFeed extends Feed
 {
+  /**
+   * @inheritdoc
+   **/
   public function make()
   {
     $writer = new Rss20();

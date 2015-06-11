@@ -3,8 +3,18 @@
 use OParl\Model\System;
 use PicoFeed\Syndication\Atom;
 
+/**
+ * AtomFeed
+ *
+ * Make an Atom 1.0 feed.
+ *
+ * @package OParl\API\Feeds
+ **/
 class AtomFeed extends Feed
 {
+  /**
+   * @inheritdoc
+   **/
   public function make()
   {
     $writer = new Atom();
