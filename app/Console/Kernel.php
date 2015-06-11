@@ -14,16 +14,4 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\Inspire',
     'App\Console\Commands\Deploy',
 	];
-
-	/**
-	 * Define the application's command schedule.
-	 *
-	 * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-	 * @return void
-	 */
-	protected function schedule(Schedule $schedule)
-	{
-		
-	}
-
 }
