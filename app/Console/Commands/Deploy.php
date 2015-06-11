@@ -37,19 +37,17 @@ class Deploy extends Command {
 	 */
 	public function fire()
 	{
-		//
-//    "php artisan clear-compiled",
-//    "php artisan optimize",
-//    "npm update",
-//    "bower update --allow-root",
-//    "gulp --production"
     if ($this->willRun())
     {
       $this->call('clear-compiled');
       $this->call('optimize');
 
-      #exec('npm install');
-      #exec('bower update --allow-root');
+      if ($this->option('init'))
+      {
+        exec('npm install');
+        exec('bower update --allow-root');
+      }
+
       exec('gulp --production');
     } else
     {
@@ -71,6 +69,7 @@ class Deploy extends Command {
 	{
 		return [
       ['force', 'f', InputOption::VALUE_NONE, 'Force production mode.'],
+      ['init', null, InputOption::VALUE_NONE, 'Initialize deployment infrastructure.'],
     ];
 	}
 
