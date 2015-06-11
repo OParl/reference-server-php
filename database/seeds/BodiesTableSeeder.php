@@ -1,8 +1,8 @@
 <?php
 
-use OParl\System;
-use OParl\Body;
-use OParl\Person;
+use OParl\Model\System;
+use OParl\Model\Body;
+use OParl\Model\Person;
 
 class BodiesTableSeeder extends Seeder {
   public function run()

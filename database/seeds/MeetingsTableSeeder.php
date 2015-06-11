@@ -4,9 +4,9 @@ use \Storage;
 
 use Carbon\Carbon;
 
-use OParl\Body;
-use OParl\Meeting;
-use OParl\AgendaItem;
+use OParl\Model\Body;
+use OParl\Model\Meeting;
+use OParl\Model\AgendaItem;
 
 class MeetingsTableSeeder extends Seeder {
   protected $lastAgendaItemID = 1;

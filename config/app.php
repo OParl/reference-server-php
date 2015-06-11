@@ -146,6 +146,7 @@ return [
 		'App\Providers\RouteServiceProvider',
 
     'EFrane\Transfugio\TransfugioServiceProvider',
+    'OParl\OParlServiceProvider',
   ),
 
 	/*

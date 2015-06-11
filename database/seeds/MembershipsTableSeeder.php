@@ -1,7 +1,7 @@
 <?php
 
-use OParl\Body;
-use OParl\Membership;
+use OParl\Model\Body;
+use OParl\Model\Membership;
 
 class MembershipsTableSeeder extends Seeder {
   public function run()

@@ -1,6 +1,6 @@
 <?php
 
-use OParl\Person;
+use OParl\Model\Person;
 
 class PeopleTableSeeder extends Seeder
 {

@@ -2,9 +2,9 @@
 
 use Carbon\Carbon;
 
-use OParl\Paper;
-use OParl\Consultation;
-use OParl\AgendaItem;
+use OParl\Model\Paper;
+use OParl\Model\Consultation;
+use OParl\Model\AgendaItem;
 
 /**
  * Class PapersTableSeeder

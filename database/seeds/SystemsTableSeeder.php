@@ -1,6 +1,6 @@
 <?php
 
-use OParl\System;
+use OParl\Model\System;
 
 class SystemsTableSeeder extends Seeder {
   public function run()

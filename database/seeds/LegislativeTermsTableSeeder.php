@@ -1,7 +1,7 @@
 <?php
 
-use OParl\Body;
-use OParl\LegislativeTerm;
+use OParl\Model\Body;
+use OParl\Model\LegislativeTerm;
 
 class LegislativeTermsTableSeeder extends Seeder
 {

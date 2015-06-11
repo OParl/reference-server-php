@@ -5,7 +5,7 @@
   'transformers' => [
     'serializer' => 'EFrane\Transfugio\Transformers\SanitizedDataArraySerializer',
 
-    'namespace' => 'App\Handlers\Transformers',
+    'namespace' => 'OParl\API\Transformers',
     'classPattern' => '[:modelName]Transformer',
 
     'formatHelpers' => [

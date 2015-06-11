@@ -1,6 +1,6 @@
 <?php
 
-use OParl\Location;
+use OParl\Model\Location;
 
 class LocationsTableSeeder extends Seeder
 {

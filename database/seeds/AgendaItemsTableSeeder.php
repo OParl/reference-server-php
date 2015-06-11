@@ -1,6 +1,6 @@
 <?php
 
-use OParl\AgendaItem;
+use OParl\Model\AgendaItem;
 
 class AgendaItemsTableSeeder extends Seeder {
   public function run()

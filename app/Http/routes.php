@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function() {
-  return redirect()->route('api.v1.system.index', ['format' => 'html']);
+  return redirect()->to('/api/v1/system', 301, ['format' => 'html']);
 });
 
 Route::pattern('id', '(\d+)');
@@ -26,27 +26,3 @@ Route::get('/feed/{feedType}.{feedFormat}', ['as' => 'feed.show', 'uses' => 'Fee
 // file access and download
 Route::get('/preview/{id}',  ['as' => 'file.access',   'uses' => 'FileController@access']);
 Route::get('/files/{id}', ['as' => 'file.download', 'uses' => 'FileController@download']);
-
-// api
-Route::group(['prefix' => 'api/v1', 'middleware' => ['api.format']], function() {
-  Route::resource('system',          'API\SystemController',          ['only' => 'index']);
-  Route::resource('body',            'API\BodyController',            ['only' => ['index', 'show']]);
-  Route::resource('legislativeterm', 'API\LegislativeTermController', ['only' => ['index', 'show']]);
-  Route::resource('agendaitem',      'API\AgendaItemController',      ['only' => ['index', 'show']]);
-  Route::resource('person',          'API\PersonController',          ['only' => ['index', 'show']]);
-  Route::resource('meeting',         'API\MeetingController',         ['only' => ['index', 'show']]);
-  Route::resource('organization',    'API\OrganizationController',    ['only' => ['index', 'show']]);
-  Route::resource('membership',      'API\MembershipController',      ['only' => ['index', 'show']]);
-  Route::resource('paper',           'API\PaperController',           ['only' => ['index', 'show']]);
-  Route::resource('consultation',    'API\ConsultationController',    ['only' => ['index', 'show']]);
-  Route::resource('location',        'API\LocationController',        ['only' => ['index', 'show']]);
-  Route::resource('file',            'API\FileController',            ['only' => ['index', 'show']]);
-});
-
-Route::any('/api/{entity}', function($entity) {
-  return redirect("/api/v1/{$entity}", 301);
-})->where('entity', '\w+');
-
-Route::any('/api/{entity}/{id}', function($entity, $id) {
-  return redirect("/api/v1/{$entity}/{$id}", 301);
-})->where('entity', '\w+');

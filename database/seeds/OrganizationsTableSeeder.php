@@ -1,7 +1,6 @@
 <?php
 
-use OParl\Organization;
-use OParl\Person;
+use OParl\Model\Organization;
 
 class OrganizationsTableSeeder extends Seeder {
   public function run()
