@@ -5,8 +5,21 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use OParl\Model\File;
 
+/**
+ * FileController - Preview or download files.
+ *
+ * @package App\Http\Controllers
+ **/
 class FileController extends Controller
 {
+  /**
+   * Get the file object from the database and load the corresponding blob
+   *
+   * @param Filesystem $fs
+   * @param $id
+   * @return array
+   * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+   **/
   protected function getFile(Filesystem $fs, $id)
   {
     $file = File::findOrFail($id)->toArray();
@@ -15,6 +28,13 @@ class FileController extends Controller
     return $file;
   }
 
+  /**
+   * Return a file for live preview (does not work in Safari on OS X!)
+   *
+   * @param Filesystem $fs
+   * @param $id
+   * @return \Symfony\Component\HttpFoundation\Response
+   **/
   public function access(Filesystem $fs, $id)
   {
     try
@@ -28,6 +48,13 @@ class FileController extends Controller
     return response($file['data'], 200, ['Content-type' => $file['mime_type']]);
   }
 
+  /**
+   * Return a file for download (Works regardless of the browser.)
+   *
+   * @param Filesystem $fs
+   * @param $id
+   * @return \Symfony\Component\HttpFoundation\Response
+   **/
   public function download(Filesystem $fs, $id)
   {
     try
