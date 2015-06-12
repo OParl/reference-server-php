@@ -18,7 +18,7 @@ class CreateLegislativetermsTable extends Migration {
 			$table->timestamps();
 
 			$table->integer('body_id')->unsigned();
-			$table->foreign('body_id')->references('id')->on('bodies');
+			$table->foreign('body_id')->references('id')->on('bodies')->onDelete('cascade');
 			$table->string('name');
 
 			$table->date('start_date')->nullable();

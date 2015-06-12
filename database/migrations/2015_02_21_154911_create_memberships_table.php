@@ -18,10 +18,10 @@ class CreateMembershipsTable extends Migration {
 			$table->timestamps();
 
 			$table->integer('person_id')->unsigned()->nullable();
-			$table->foreign('person_id')->references('id')->on('people');
+			$table->foreign('person_id')->references('id')->on('people')->onDelete('cascade');
 
 			$table->integer('organization_id')->unsigned()->nullable();
-			$table->foreign('organization_id')->unsigned()->references('id')->on('organizations');
+			$table->foreign('organization_id')->unsigned()->references('id')->on('organizations')->onDelete('cascade');
 
 			$table->string('role')->nullable();
 			$table->string('post')->nullable();

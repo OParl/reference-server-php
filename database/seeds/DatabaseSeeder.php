@@ -14,15 +14,13 @@ class DatabaseSeeder extends Seeder {
 	{
     if (config('database.default') === 'mysql')
     {
-      \DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+      DB::statement('SET FOREIGN_KEY_CHECKS = 0');
     }
 
     Storage::delete(Storage::allFiles('files/'));
     array_map(function ($dir) { Storage::deleteDirectory($dir); }, Storage::allDirectories('files/'));
 
 		Model::unguard();
-
-		$this->call('UserTableSeeder');
 
 		$this->call('SystemsTableSeeder');
 		$this->call('LocationsTableSeeder');
@@ -35,7 +33,7 @@ class DatabaseSeeder extends Seeder {
     $this->call('MeetingsTableSeeder');
 
     // remove unused agenda items
-    \DB::statement('DELETE FROM agenda_items WHERE meeting_id = null');
+    DB::statement("DELETE FROM agenda_items WHERE meeting_id = null;");
 
     $this->call('PapersTableSeeder');
 
@@ -43,7 +41,7 @@ class DatabaseSeeder extends Seeder {
 
     if (config('database.default') === 'mysql')
     {
-      \DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+      DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 	}
 }
