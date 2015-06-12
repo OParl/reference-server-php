@@ -4,4 +4,11 @@
 
   // the number of elements per page on collection
   'itemsPerPage' => 100,
+
+  'files' => [
+    'enabled' => true,
+
+    'accessRoute'   => 'file.access',
+    'downloadRoute' => 'file.download'
+  ]
 ];

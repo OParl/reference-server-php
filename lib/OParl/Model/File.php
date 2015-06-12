@@ -2,6 +2,7 @@
 
 class File extends BaseModel {
   protected $dates = ['file_created', 'file_modified'];
+  protected $appends = ['sanitized_file_name'];
 
   /**
    * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -25,7 +26,7 @@ class File extends BaseModel {
     return ($hashed) ? hash_filename($filename) : $filename;
   }
 
-  public function getCleanFileName()
+  public function getSanitizedFileNameAttribute()
   {
     return substr($this->attributes['file_name'], strrpos($this->attributes['file_name'], DIRECTORY_SEPARATOR) + 1);
   }

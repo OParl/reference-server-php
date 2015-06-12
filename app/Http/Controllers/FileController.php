@@ -1,50 +1,46 @@
 <?php namespace App\Http\Controllers;
 
-use App\Commands\SerializeItemCommand;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Response;
-use Storage;
 
-use OParl\File;
+use OParl\Model\File;
 
 class FileController extends Controller
 {
-  protected function getFile($id)
+  protected function getFile(Filesystem $fs, $id)
   {
-    $file = $this->dispatch(new SerializeItemCommand(File::findOrFail($id), app('request')));
-
-    $file = $file['data'];
-    $file['data'] = Storage::get('files/'.hash_filename($file['fileName']));
+    $file = File::findOrFail($id)->toArray();
+    $file['data'] = $fs->get($file['file_name']);
 
     return $file;
   }
 
-  public function access($id)
+  public function access(Filesystem $fs, $id)
   {
     try
     {
-      $file = $this->getFile($id);
+      $file = $this->getFile($fs, $id);
     } catch(ModelNotFoundException $e)
     {
-      return Response::make('File not found.', 404, ['Content-type' => 'text/plain']);
+      return response('File not found.', 404, ['Content-type' => 'text/plain']);
     }
 
-    return Response::make($file['data'], 200, ['Content-type' => $file['mimeType']]);
+    return response($file['data'], 200, ['Content-type' => $file['mime_type']]);
   }
 
-  public function download($id)
+  public function download(Filesystem $fs, $id)
   {
     try
     {
-      $file = $this->getFile($id);
+      $file = $this->getFile($fs, $id);
     } catch(ModelNotFoundException $e)
     {
-      return Response::make('File not found.', 404, ['Content-type' => 'text/plain']);
+      return response('File not found.', 404, ['Content-type' => 'text/plain']);
     }
 
-    return Response::make($file['data'], 200, [
-      'Content-type' => $file['mimeType'],
-      'Content-disposition' => "attachment; filename={$file['fileName']}"
+    return response($file['data'], 200, [
+      'Content-type' => $file['mime_type'],
+      'Content-disposition' => "attachment; filename={$file['sanitized_file_name']}"
     ]);
   }
 }

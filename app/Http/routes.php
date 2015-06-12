@@ -15,5 +15,7 @@
 Route::get('/', function() { return redirect()->route('api.v1.system.index', ['format' => 'html']); });
 
 // file access and download
-Route::get('/preview/{id}',  ['as' => 'file.access',   'uses' => 'FileController@access']);
-Route::get('/files/{id}', ['as' => 'file.download', 'uses' => 'FileController@download']);
+Route::get('/files/preview/{id}',  ['as' => 'file.access',   'uses' => 'FileController@access']);
+Route::get('/files/download/{id}', ['as' => 'file.download', 'uses' => 'FileController@download']);
+
+Route::get('/files/', function () { return redirect('/', 302); });
