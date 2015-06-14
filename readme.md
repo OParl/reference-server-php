@@ -7,7 +7,7 @@ Dies ist eine Referenzimplementierung der OParl-API. Eine Livedemo mit **Beispie
 
 ## Mitentwickeln oder selbst hosten
 
-Dieses Programm wird mit Hilfe des [Laravel 5.0](laravel/laravel) Frameworks in PHP 5.4 entwickelt.
+Dieses Programm wird mit Hilfe des [Laravel 5.1](laravel/laravel) Frameworks in PHP 5.4 entwickelt.
 Allgemeine Hinweise zum Aufsetzen einer lokalen Entwicklungsumgebung für Laravelanwendungen findet
 sich in der [Dokumentation](http://laravel.com/docs/5.0/homestead). 
 
