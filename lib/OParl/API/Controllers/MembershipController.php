@@ -4,6 +4,11 @@ use EFrane\Transfugio\Http\APIController;
 use EFrane\Transfugio\Query\QueryService;
 use EFrane\Transfugio\Query\ValueExpression;
 
+/**
+ * Request Organization Memberships
+ *
+ * @package OParl\API\Controllers
+ */
 class MembershipController extends APIController {
 	protected $model = 'OParl\Model\Membership';
 

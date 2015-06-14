@@ -4,6 +4,11 @@ use EFrane\Transfugio\Http\APIController;
 use EFrane\Transfugio\Query\QueryService;
 use EFrane\Transfugio\Query\ValueExpression;
 
+/**
+ * Request Consultations
+ *
+ * @package OParl\API\Controllers
+ **/
 class ConsultationController extends APIController {
 	protected $model = 'OParl\Model\Consultation';
 

@@ -2,6 +2,11 @@
 
 use EFrane\Transfugio\Http\APIController;
 
+/**
+ * Request Organizations
+ *
+ * @package OParl\API\Controllers
+ */
 class OrganizationController extends APIController {
 	protected $model = 'OParl\Model\Organization';
 

@@ -5,6 +5,11 @@ use EFrane\Transfugio\Http\APIController;
 use EFrane\Transfugio\Query\QueryService;
 use EFrane\Transfugio\Query\ValueExpression;
 
+/**
+ * Request Meetings
+ *
+ * @package OParl\API\Controllers
+ */
 class MeetingController extends APIController {
 	protected $model = 'OParl\Model\Meeting';
 

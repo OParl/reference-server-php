@@ -2,6 +2,19 @@
 
 use Illuminate\Routing\Controller;
 
+/**
+ * Generate Feeds
+ *
+ * Feed formats are RSS 2.0 and Atom 1.0
+ *
+ * Provided feeds:
+ *
+ * - new objects
+ * - updated objects
+ * - deleted objects
+ *
+ * @package OParl\API\Controllers
+ **/
 class FeedController extends Controller
 {
   public function show($type, $format)

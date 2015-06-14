@@ -2,6 +2,11 @@
 
 use EFrane\Transfugio\Http\APIController;
 
+/**
+ * Request Legislative Terms
+ * 
+ * @package OParl\API\Controllers
+ */
 class LegislativeTermController extends APIController {
   protected $model = 'OParl\Model\LegislativeTerm';
 
