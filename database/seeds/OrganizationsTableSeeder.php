@@ -5,7 +5,7 @@ use OParl\Model\Organization;
 class OrganizationsTableSeeder extends Seeder {
   public function run()
   {
-    foreach (OParl\Body::all() as $body)
+    foreach (OParl\Model\Body::all() as $body)
     {
       // create a few organizations in every body
       $organizationsData = $this->organizationsData(static::$faker->numberBetween(5, 10));

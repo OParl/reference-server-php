@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Storage;
 
 use Faker\Provider\Base;
 
-use OParl\Body;
-use OParl\Meeting;
-use OParl\File;
+use OParl\Model\Body;
+use OParl\Model\Meeting;
+use OParl\Model\File;
 
 /**
  * Class DocumentsFaker
