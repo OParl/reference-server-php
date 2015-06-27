@@ -90,6 +90,11 @@ class CreateMeetingsTable extends Migration {
 		Schema::drop('meetings_invitations');
 		Schema::drop('meetings_auxiliary_files');
 
+    Schema::table('agenda_items', function (Blueprint $table) {
+      $table->dropForeign('agenda_items_meeting_id_foreign');
+      $table->dropColumn('meeting_id');
+    });
+
 		Schema::drop('meetings');
 	}
 

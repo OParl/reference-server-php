@@ -52,6 +52,12 @@ class CreateConsultationsTable extends Migration {
 	public function down()
 	{
     Schema::drop('consultations_organizations');
+
+    Schema::table('agenda_items', function (Blueprint $table) {
+      $table->dropForeign('agenda_items_consultation_id_foreign');
+      $table->dropColumn('consultation_id');
+    });
+
 		Schema::drop('consultations');
 	}
 
