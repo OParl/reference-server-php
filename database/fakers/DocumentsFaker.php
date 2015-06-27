@@ -40,6 +40,8 @@ class DocumentsFaker extends Base {
     $pdf = new mPDF();
     $pdf->ignore_invalid_utf8 = true;
 
+    $viewData['text'] = $this->generator->paragraphs(2);
+
     $view = View::make($view, $viewData);
     $pdf->WriteHTML($view);
 
@@ -51,7 +53,7 @@ class DocumentsFaker extends Base {
       'size'          => Storage::size($fileName),
       'file_created'  => $fileCreated,
       'name'          => $this->generator->optional()->word,
-      'text'          => $this->generator->optional()->paragraphs(2),
+      'text'          => $viewData['text'],
       'mime_type'     => 'application/pdf',
     ]);
 
