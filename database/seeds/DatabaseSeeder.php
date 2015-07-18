@@ -29,13 +29,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('OrganizationsTableSeeder');
     $this->call('MembershipsTableSeeder');
     $this->call('LegislativeTermsTableSeeder');
-    //$this->call('AgendaItemsTableSeeder');
-    //$this->call('MeetingsTableSeeder');
-
-    // remove unused agenda items
-    //DB::statement("DELETE FROM agenda_items WHERE meeting_id = null;");
-
-    //$this->call('PapersTableSeeder');
 
     $this->call('MeetingsSeeder');
 

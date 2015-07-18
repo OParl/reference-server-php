@@ -14,6 +14,12 @@ class MeetingsSeeder extends Seeder
 {
   protected $currentBody = 0;
 
+  /**
+   * With the current seed for the faker, the way these are initialized
+   * leads to roughly 70k Agenda Items spread over about 4.2k Meetings
+   * which is a good representation of a real world RIS according to
+   * our information.
+   */
   public function run()
   {
     // for each body
@@ -27,10 +33,15 @@ class MeetingsSeeder extends Seeder
           // create between 30 and 90 meetings
           $numberOfMeetings = static::$faker->numberBetween(30, 90);
 
+          print("\n\tSeeding organization {$organization->id} with {$numberOfMeetings} meetings\n");
           for ($i = 1; $i < $numberOfMeetings + 1; $i++)
+          {
             $this->seedMeeting($organization, $term, $i);
-
+            print(".");
+          }
         });
+
+        print("<info>\n\tSeeded: Body {$body->id} - Term {$term->id}\n</info>");
       });
     });
   }
@@ -74,7 +85,8 @@ class MeetingsSeeder extends Seeder
       $meeting->participants()->save($participant);
     });
 
-    $numberOfAgendaItems = static::$faker->numberBetween(3, 27);
+    // create between 3 and 30 agenda items
+    $numberOfAgendaItems = static::$faker->numberBetween(3, 30);
     for ($i = 0; $i < $numberOfAgendaItems; $i++)
     {
       $agendaItem = $this->seedAgendaItem($meetingNumber, $i + 1);
