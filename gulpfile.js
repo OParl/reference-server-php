@@ -25,5 +25,5 @@ elixir(function(mix) {
         'assets/js/api.js'
     ], 'public/js/api.js', 'resources');
 
-    mix.less('api.less', 'api.css');
+    mix.less('api.less', 'public/js/api.css');
 });

@@ -55,16 +55,15 @@ class Deploy extends Command {
 	{
     if ($this->willRun())
     {
-      $this->call('clear-compiled');
-      $this->call('optimize');
-
       if ($this->option('init'))
       {
         exec('npm update');
         exec('bower update --allow-root');
       }
 
-      exec('gulp');
+      $this->call('clear-compiled');
+      $this->call('optimize');
+      exec('gulp --production');
     } else
     {
       $this->info('Use --force to run deploy commands in local mode.');
