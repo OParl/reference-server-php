@@ -17,14 +17,16 @@ class Kernel extends ConsoleKernel {
   protected function schedule(Schedule $schedule)
   {
     $schedule
-      ->exec(function () {
-        exec('php artisan down');
-        exec('php artisan migrate:refresh --env=local');
-        exec('php artisan db:seed --env=local');
-        exec('php artisan up');
+      ->call(function () {
+        $this->call('down');
+
+        $this->call('migrate:refresh', ['env' => 'local']);
+        $this->call('db:seed', ['env' => 'local']);
+
+        $this->call('up');
       })
       ->dailyAt('05:00')
       ->sendOutputTo(storage_path('/logs/db_update.log'))
-      ->emailOutputTo(['stefan.graupner@gmail.com']);
+      ->emailOutputTo(['Stefan Graupner <stefan.graupner@gmail.com>']);
   }
 }
